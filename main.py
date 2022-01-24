@@ -37,7 +37,7 @@ async def help(ctx):
 -- db.twisted @человек - Свернуть шею. --
 -- db.niggers - Негры. --
 -- db.gay - Егорка or Вова) --
--- db.help - Догадайся. --
+-- db.help - Догадайся сам. --
 -- db.balls - Сочные шары. --''')
 
 
