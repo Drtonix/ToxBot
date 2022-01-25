@@ -8,7 +8,6 @@ import json
 import requests
 import discord
 import os
-import keep_alive
 import pytz
 bot = Bot(command_prefix="db.", help_command=None)
 client = discord.ext.commands.Bot(command_prefix = "db.")
