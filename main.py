@@ -12,7 +12,7 @@ import keep_alive
 import pytz
 bot = Bot(command_prefix="db.", help_command=None)
 client = discord.ext.commands.Bot(command_prefix = "db.")
-
+Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
 
 
 #лист команд
@@ -351,4 +351,4 @@ async def dorozhnoeradio(ctx):
 
 #24/7
 keep_alive.keep_alive()
-bot.run("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
+bot.run(Token)
