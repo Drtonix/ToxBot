@@ -351,4 +351,4 @@ async def dorozhnoeradio(ctx):
 
 #24/7
 keep_alive.keep_alive()
-bot.run(os.environ["OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g"])
+bot.run("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
