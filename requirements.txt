@@ -21,6 +21,8 @@ crashtest==0.3.1
 cryptography==3.4.8
 cs50==7.0.2
 cycler==0.10.0
+discord==1.7.3
+discord.py==1.7.3
 debugpy==1.2.1
 distlib==0.3.2
 docopt==0.6.2
