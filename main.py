@@ -348,7 +348,4 @@ async def dorozhnoeradio(ctx):
     await ctx.send ("Радио включено.\nИграет: Дорожное радио (Омск)")
 
 
-
-#24/7
-keep_alive.keep_alive()
 bot.run(Token)
