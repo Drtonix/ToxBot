@@ -1,5 +1,6 @@
 heroku==0.1.4
 PyNaCl==1.5.0
+ffmpeg==1.4
 absl-py==0.13.0
 antlr4-python3-runtime==4.9.2
 astunparse==1.6.3
