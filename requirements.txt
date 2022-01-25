@@ -1,7 +1,5 @@
-django
-gunicorn
-django-heroku
-requests
+discord.py==1.6.0
+heroku==0.1.4
 absl-py==0.13.0
 aiohttp==3.7.4.post0
 antlr4-python3-runtime==4.9.2
@@ -32,9 +30,6 @@ funcsigs==1.0.2
 future==0.18.2
 gast==0.3.3
 glfw==2.2.0
-google-auth==1.35.0
-google-auth-oauthlib==0.4.6
-google-pasta==0.2.0
 greenlet==1.1.1
 grpcio==1.40.0
 h5py==2.10.0
