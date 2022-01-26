@@ -114,7 +114,7 @@ async def niggers(ctx):
 #сочные шарики
 @bot.command()
 async def balls(ctx):
-    await ctx.send("https://www.youtube.com/watch?v=dQw4w9WgXcQ
+    await ctx.send("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
 
 
