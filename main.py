@@ -219,6 +219,7 @@ async def rplay(ctx, link: None):
         voice_channel = bot.get_channel(928937414913851412)
         voice_client = discord.utils.get(bot.voice_clients, guild=ctx.guild)
         if voice_client:
+            voice_client.pause()
             voice_client.play(FFmpegPCMAudio(link))
         else:
             player = await voice_channel.connect()
