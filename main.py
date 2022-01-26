@@ -212,9 +212,9 @@ async def radiolist(ctx):
 
 
 
-#ради
+#радио
 
-def rplay(ctx, link: None):
+async def rplay(ctx, link: None):
     if link != None:
         voice_channel = bot.get_channel(928937414913851412)
         voice_client = discord.utils.get(bot.voice_clients, guild=ctx.guild)
