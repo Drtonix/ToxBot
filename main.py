@@ -114,7 +114,7 @@ async def niggers(ctx):
 #сочные шарики
 @bot.command()
 async def balls(ctx):
-    await ctx.send("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    await ctx.send("https://www.youtube.com/watch?v=dQw4w9WgXcQ
 
 
 
@@ -222,7 +222,7 @@ def rplay(ctx, link: None):
             voice_client.play(FFmpegPCMAudio(link))
         else:
             player = await voice_channel.connect()
-            player.play(FFmpegPCMAudio(link)
+            player.play(FFmpegPCMAudio(link))
 
 @bot.command()
 async def shanson(ctx):
