@@ -315,7 +315,7 @@ async def dorozhnoeradio(ctx):
     await ctx.send ("Радио включено.\nИграет: Дорожное радио (Омск)")
 @bot.command()
 async def anime(ctx):
-    await rplay(ctx, "http://anison.fm/anison.m3u")
+    await rplay(ctx, "http://pool.anison.fm:9000/AniSonFM(320)")
     await ctx.send ("Радио включено. \nИграет: Аниме радио")
 
 
