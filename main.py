@@ -208,7 +208,7 @@ async def roulette6bul(ctx):
 @bot.command()
 async def radiolist(ctx):
   await ctx.send(
-"(по умолчанию радио всегда будет шансон, для того, что бы поменять\nстанцию, введите db.stop, а затем команду с нужной вам станцией)\n\nсписок всех команд на переключение радиостанций:\n\ndb.shanson - шансон\n-------------------\ndb.novradio - новое радио\n-------------------------\ndb.fmradio - фм радио\n---------------------\ndb.dorozhnoeradio - Дорожное радио (Омск)\n--------------------\ndb.radio90s - радио 90х\n-----------------------\ndb.pulsradio80s - радио 80х\n---------------------------\ndb.popradio70s - поп радио 70х\n------------------------------\ndb.counthitsradio - хиты кантри\n-------------------------------\ndb.rockhitsradio - хиты рока\n----------------------------\ndb.rockfmradio - рок фм\n-----------------------\ndb.ruyalretradio - ретро\n------------------------\ndb.psychedcradio - психоделик\n-----------------------------\ndb.classicrock - классический рок\n------------------------------\ndb.rertofm -  ретро фм\n----------------------\ndb.heavymetal - хевиметал\n-------------------------\ndb.radiorelaxua - украинское радио релакс\n-----------------------------------------\ndb.korolishyt - радио Король и Шут\n----------------------------------\ndb.letov - радио Гражданская оборона\n--------------------------------\ndb.rammstein - радио Раммштайн\n---------------------------------\ndb.radiosssr - ссср радио\n-------------------------\ndb.radiodetyam - детское радио\n-----------------------------\ndb.redhotchilradio - red hot chili peppers радио\n\nсписок будет дополняться")
+"(по умолчанию радио всегда будет шансон, для того, что бы поменять\nстанцию, введите db.stop, а затем команду с нужной вам станцией)\n\nсписок всех команд на переключение радиостанций:\n\ndb.anime - аниме радио\n\ndb.shanson - шансон\n-------------------\ndb.novradio - новое радио\n-------------------------\ndb.fmradio - фм радио\n---------------------\ndb.dorozhnoeradio - Дорожное радио (Омск)\n--------------------\ndb.radio90s - радио 90х\n-----------------------\ndb.pulsradio80s - радио 80х\n---------------------------\ndb.popradio70s - поп радио 70х\n------------------------------\ndb.counthitsradio - хиты кантри\n-------------------------------\ndb.rockhitsradio - хиты рока\n----------------------------\ndb.rockfmradio - рок фм\n-----------------------\ndb.ruyalretradio - ретро\n------------------------\ndb.psychedcradio - психоделик\n-----------------------------\ndb.classicrock - классический рок\n------------------------------\ndb.rertofm -  ретро фм\n----------------------\ndb.heavymetal - хевиметал\n-------------------------\ndb.radiorelaxua - украинское радио релакс\n-----------------------------------------\ndb.korolishyt - радио Король и Шут\n----------------------------------\ndb.letov - радио Гражданская оборона\n--------------------------------\ndb.rammstein - радио Раммштайн\n---------------------------------\ndb.radiosssr - ссср радио\n-------------------------\ndb.radiodetyam - детское радио\n-----------------------------\ndb.redhotchilradio - red hot chili peppers радио\n\nсписок будет дополняться")
 
 
 
@@ -263,7 +263,7 @@ async def royalretradio(ctx):
     await ctx.send ("Радио включено.\nИграет: Ретро")
 @bot.command()
 async def psychedcradio(ctx):
-    await rplay("http://psyprog.rupsy.ru:8000/psyprog")
+    await rplay(ctx, "http://psyprog.rupsy.ru:8000/psyprog")
     await ctx.send ("Радио включено.\nИграет: Психоделик")
 @bot.command()
 async def radiodetyam(ctx):
@@ -313,6 +313,10 @@ async def pulsradio80s(ctx):
 async def dorozhnoeradio(ctx):
     await rplay(ctx, "https://str.pcradio.ru/dorozhnoe_omsk-hi")
     await ctx.send ("Радио включено.\nИграет: Дорожное радио (Омск)")
+@bot.command()
+async def anime(ctx):
+    await rplay(ctx, "http://anison.fm/anison.m3u")
+    await ctx.send ("Радио включено. \nИграет: Аниме радио")
 
 
 bot.run(Token)
