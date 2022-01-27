@@ -319,7 +319,7 @@ async def anime(ctx):
     await ctx.send ("Радио включено. \nИграет: Аниме радио")
 
 @bot.command()
-async def mechanic(ctx, *, link: None):
+async def mechanic(ctx, *, link: str):
     if link != None:
         rplay(ctx, str(link))
         await ctx.send("удачно поставлено")
