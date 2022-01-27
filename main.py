@@ -318,5 +318,12 @@ async def anime(ctx):
     await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
     await ctx.send ("Радио включено. \nИграет: Аниме радио")
 
+@bot.command()
+async def mechanic(ctx, *, link: None):
+    if link != None:
+        rplay(ctx, link)
+        await ctx.send("удачно поставлено")
+    else:
+        await ctx.send("вставьте ссылку")
 
 bot.run(Token)
