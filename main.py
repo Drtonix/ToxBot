@@ -322,8 +322,8 @@ async def anime(ctx):
 async def mechanic(ctx, *, link: str):
     if link != None:
         await rplay(ctx, str(link))
-        await ctx.send("удачно поставлено")
+        await ctx.send("Удачно поставлено.")
     else:
-        await ctx.send("вставьте ссылку")
+        await ctx.send("Вставьте ссылку.")
 
 bot.run(Token)
