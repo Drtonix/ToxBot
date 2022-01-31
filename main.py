@@ -14,6 +14,7 @@ client = discord.ext.commands.Bot(command_prefix = "db.")
 Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
 
 
+
 #лист команд
 @bot.command()
 async def help(ctx):
@@ -34,34 +35,15 @@ async def help(ctx):
 -- db.fuck @человек - Выебать. --
 -- db.kill @человек - Убить. --
 -- db.twisted @человек - Свернуть шею. --
+-- db.google *текст* - Ссылка на запрос гугл. --
+-- db.yandex *текст* - Ссылка на запрос яндекс. --
+-- db.duckduck *текст* - Ссылка на запрос duckduckgo.
+   (*Поиск пока работает только на одно слово.*) --
 -- db.niggers - Негры. --
 -- db.gay - Егорка or Вова) --
 -- db.help - Догадайся сам. --
 -- db.balls - Сочные шары. --''')
 
-@bot.command()
-async def rule34(ctx, *, tags: str):
-    await ctx.channel.trigger_typing()
-    try:
-        data = requests.get(
-            "https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&tags={}".format(tags),
-            headers={"User-Agent": "linux:ToxBot:v1.0.0"})
-    except json.JSONDecodeError:
-        await ctx.send(("nsfw.no_results_found", ctx).format(tags))
-        return
-    dt2 = data.json()
-    count = len(dt2)
-    if count == 0:
-        await ctx.send(("nsfw.no_results_found", ctx).format(tags))
-    return
-    image_count = 4
-    if count < 4:
-        image_count = count
-    images = []
-    for i in range(image_count):
-        image = dt2[random.randint(0, count)]
-        images.append("http://img.rule34.xxx/images/{}/{}".format(image["directory"], image["image"]))
-    await ctx.send(("nsfw.results", ctx).format(image_count, count, tags, "\n".join(images)))
 
 #fuck_you
 @bot.command()
@@ -222,6 +204,32 @@ async def roulette5bul(ctx):
 async def roulette6bul(ctx):
   author = ctx.message.author
   await ctx.send(f'{author.mention} застрелился от своей тупости.')
+
+
+
+
+
+#поиск в гугле, яндексе и дакдак
+@bot.command()
+async def google(ctx, text):
+	text = str(text)
+	link = (f"https://www.google.ru/search?q={text}")
+	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+
+@bot.command()
+async def yandex(ctx, text):
+	text = str(text)
+	link = (f"https://yandex.ru/search/?text={text}")
+	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+
+@bot.command()
+async def duckduck(ctx, text):
+	text = str(text)
+	link = (f"https://duckduckgo.com/?q={text}")
+	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+
+
+
 
 
 
