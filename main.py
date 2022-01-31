@@ -40,7 +40,7 @@ async def help(ctx):
 -- db.balls - Сочные шары. --''')
 
 @bot.command()
-async def rule34(self, ctx, *, tags: str):
+async def rule34(ctx, *, tags: str):
     await ctx.channel.trigger_typing()
     try:
         data = requests.get(
