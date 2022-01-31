@@ -49,8 +49,8 @@ async def rule34(ctx, *, tags: str):
     except json.JSONDecodeError:
         await ctx.send(("nsfw.no_results_found", ctx).format(tags))
         return
-
-    count = len(data)
+    dt2 = data.json()
+    count = len(dt2)
     if count == 0:
         await ctx.send(("nsfw.no_results_found", ctx).format(tags))
     return
