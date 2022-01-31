@@ -47,6 +47,7 @@ async def help(ctx):
 -- db.gay - Егорка or Вова) --
 -- db.help - Догадайся сам. --
 -- db.balls - Сочные шары. --
+-- db.cum - Cum. --
 ''')
 
 
