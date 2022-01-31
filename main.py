@@ -31,14 +31,16 @@ async def help(ctx):
 -- db.coin - Игра в монетку. --
 -- db.randomto - Рандом от одного до любого числа. --
 -- db.roulette - Русская рулетка.
-   (*Число от 1 до 5 с приставкой* **bul** *добавляет пули.*) --
+   (*Число от 1 до 5 с приставкой* **bul** *добавляет пули,
+   	 пример: db.roulette5bul*) --
 -- db.fuck @человек - Выебать. --
 -- db.kill @человек - Убить. --
 -- db.twisted @человек - Свернуть шею. --
 -- db.google *текст* - Ссылка на запрос гугл. --
 -- db.yandex *текст* - Ссылка на запрос яндекс. --
 -- db.duckduck *текст* - Ссылка на запрос duckduckgo.
-   (*Поиск пока работает только на одно слово.*) --
+   (*Для более одного слова используйте +, 
+   	 пример: db.google рыжие+коты.*) --
 -- db.niggers - Негры. --
 -- db.gay - Егорка or Вова) --
 -- db.help - Догадайся сам. --
@@ -134,6 +136,11 @@ async def randomto(ctx, text):
   num2 = str(text)
   rndm = str(random.randint(1, int(num2[num2.find(" ")+1:len(num2)])))
   await ctx.send("Выпало число " + rndm +".")
+#да или нет
+@bot.command()
+async def danet(ctx, text):
+  danet = ['да.'] * 25 + ['нет.'] * 25 + ['скорее всего.'] * 25 + ['наверное.'] * 25
+  await ctx.send(f"Я думаю что {random.choice(danet)}")
 
 
 
