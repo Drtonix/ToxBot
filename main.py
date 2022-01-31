@@ -59,7 +59,7 @@ async def rule34(ctx, *, tags: str):
         image_count = count
     images = []
     for i in range(image_count):
-        image = data[random.randint(0, count)]
+        image = dt2[random.randint(0, count)]
         images.append("http://img.rule34.xxx/images/{}/{}".format(image["directory"], image["image"]))
     await ctx.send(("nsfw.results", ctx).format(image_count, count, tags, "\n".join(images)))
 
