@@ -39,7 +39,30 @@ async def help(ctx):
 -- db.help - Догадайся сам. --
 -- db.balls - Сочные шары. --''')
 
+@bot.command()
+async def rule34(self, ctx, *, tags: str):
+    await ctx.channel.trigger_typing()
+    try:
+        data = requests.get(
+            "http://rule34.xxx/index.php?page=dapi&s=post&q=index&json=1&limit={}&tags={}".f
+ormat(tags), 
+            headers={"User-Agent": "linux:ToxBot:v1.0.0"})
+    except json.JSONDecodeError:
+        await ctx.send(("nsfw.no_results_found", ctx).format(tags))
+        return
 
+    count = len(data)
+    if count == 0:
+        await ctx.send(("nsfw.no_results_found", ctx).format(tags))
+    return
+    image_count = 4
+    if count < 4:
+        image_count = count
+    images = []
+    for i in range(image_count):
+        image = data[random.randint(0, count)]
+        images.append("http://img.rule34.xxx/images/{}/{}".format(image["directory"], image["image"]))
+    await ctx.send(("nsfw.results", ctx).format(image_count, count, tags, "\n".join(images)))
 
 #fuck_you
 @bot.command()
