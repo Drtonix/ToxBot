@@ -33,6 +33,7 @@ async def help(ctx):
 -- db.roulette - Русская рулетка.
    (*Число от 1 до 5 с приставкой* **bul** *добавляет пули,
    	 пример: db.roulette5bul*) --
+-- db.slots - Слоты как в казино --
 -- db.fuck @человек - Выебать. --
 -- db.kill @человек - Убить. --
 -- db.twisted @человек - Свернуть шею. --
@@ -45,7 +46,8 @@ async def help(ctx):
 -- db.niggers - Негры. --
 -- db.gay - Егорка or Вова) --
 -- db.help - Догадайся сам. --
--- db.balls - Сочные шары. --''')
+-- db.balls - Сочные шары. --
+''')
 
 
 #fuck_you
@@ -136,13 +138,20 @@ async def coin(ctx):
 async def randomto(ctx, text):
   num2 = str(text)
   rndm = str(random.randint(1, int(num2[num2.find(" ")+1:len(num2)])))
-  await ctx.send("Выпало число " + rndm +".")
+  if num2.find("@here") == -1 and num2.find("@everyone") == -1:
+  	await ctx.send("Выпало число " + rndm +".")
+  else:
+    await ctx.send("Иди нахуй. Я ебал твою маму.")
+
+
 #да или нет
 @bot.command()
 async def danet(ctx, text):
   danet = ['да.'] * 25 + ['нет.'] * 25 + ['скорее всего.'] * 25 + ['наверное.'] * 25
-  await ctx.send(f"Я думаю что {random.choice(danet)}")
-
+  if num2.find("@here") == -1 and num2.find("@everyone") == -1:
+  	await ctx.send(f"Я думаю что {random.choice(danet)}")
+  else:
+    await ctx.send("Иди нахуй. Я ебал твою маму.")
 
 
 #fuck табуретка
@@ -220,26 +229,46 @@ async def roulette6bul(ctx):
 #поиск в гугле, яндексе и дакдак
 @bot.command()
 async def google(ctx, text):
-	text = str(text)
-	link = (f"https://www.google.ru/search?q={text}")
-	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+ text = str(text)
+ link = (f"https://www.google.ru/search?q={text}")
+ if text.find("@here") == -1 and num2.find("@everyone") == -1:
+ 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+ else:
+ 	await ctx.send("Иди нахуй. Я ебал твою маму.")
+
 
 @bot.command()
 async def yandex(ctx, text):
-	text = str(text)
-	link = (f"https://yandex.ru/search/?text={text}")
-	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+ text = str(text)
+ link = (f"https://yandex.ru/search/?text={text}")
+ if text.find("@here") == -1 and num2.find("@everyone") == -1:
+ 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+ else:
+ 	await ctx.send("Иди нахуй. Я ебал твою маму.")
 
 @bot.command()
 async def duckduck(ctx, text):
-	text = str(text)
-	link = (f"https://duckduckgo.com/?q={text}")
-	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+ text = str(text)
+ link = (f"https://duckduckgo.com/?q={text}")
+ if text.find("@here") == -1 and num2.find("@everyone") == -1:
+ 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+ else:
+ 	await ctx.send("Иди нахуй. Я ебал твою маму.")
 
 #ссылка на рандомную стим игру
 @bot.command()
 async def steam(ctx):
 	await ctx.send("Ссылка на рандомную игру из стима:\n<https://store.steampowered.com/explore/random>")
+
+
+@bot.command()
+async def slots(ctx):
+	slots = ["🍓", "🍉","🍋", "🍒"]
+	r1 = random.choice(slots)
+	r2 = random.choice(slots)
+	r3 = random.choice(slots)
+	await ctx.send(str(r1) + str(r2) + str(r3))
+
 
 
 
@@ -257,7 +286,7 @@ async def radiolist(ctx):
 
 
 #радио
-
+@bot.command()
 async def rplay(ctx, link: None):
     if link != None:
         voice_channel = bot.get_channel(928937414913851412)
