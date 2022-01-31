@@ -110,6 +110,15 @@ async def cat(ctx):
     embed = discord.Embed(color = 0x8b0000, title = "Fucking cat.")
     embed.set_image(url = json_data["link"])
     await ctx.send(embed = embed)
+
+@bot.command()
+async def cum(ctx):
+    response = requests.get("http://www.hudeem-s-profi.ru/files/images/6zqbxxxljrnpsdldhcxz.jpg")
+    json_data = json.loads(response.text)
+
+    embed = discord.Embed(color = 0xffffff, title = "Cum")
+    embed.set_image(url = json_data["link"])
+    await ctx.send(embed = embed)
 #gay
 @bot.command()
 async def gay(ctx):
