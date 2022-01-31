@@ -113,12 +113,8 @@ async def cat(ctx):
 
 @bot.command()
 async def cum(ctx):
-    response = requests.get("http://www.hudeem-s-profi.ru/files/images/6zqbxxxljrnpsdldhcxz.jpg")
-    json_data = json.loads(response.text)
-
-    embed = discord.Embed(color = 0xffffff, title = "Cum")
-    embed.set_image(url = json_data["link"])
-    await ctx.send(embed = embed)
+  response = ("http://www.hudeem-s-profi.ru/files/images/6zqbxxxljrnpsdldhcxz.jpg")
+  await ctx.send(response)
 #gay
 @bot.command()
 async def gay(ctx):
