@@ -44,7 +44,7 @@ async def rule34(ctx, *, tags: str):
     await ctx.channel.trigger_typing()
     try:
         data = requests.get(
-            "http://rule34.xxx/index.php?page=dapi&s=post&q=index&json=1&limit={}&tags={}".format(tags, tags),
+            "https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&tags={}".format(tags),
             headers={"User-Agent": "linux:ToxBot:v1.0.0"})
     except json.JSONDecodeError:
         await ctx.send(("nsfw.no_results_found", ctx).format(tags))
