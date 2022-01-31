@@ -31,17 +31,17 @@ async def help(ctx):
 -- db.coin - Игра в монетку. --
 -- db.randomto - Рандом от одного до любого числа. --
 -- db.roulette - Русская рулетка.
-   (*Число от 1 до 5 с приставкой* **bul** *добавляет пули
-   	 Пример: db.roulette5bul*) --
+   (*Число от 1 до 5 с приставкой* **bul** *добавляет пули,
+   	 пример: db.roulette5bul*) --
 -- db.fuck @человек - Выебать. --
 -- db.kill @человек - Убить. --
 -- db.twisted @человек - Свернуть шею. --
 -- db.google *текст* - Ссылка на запрос гугл. --
 -- db.yandex *текст* - Ссылка на запрос яндекс. --
 -- db.duckduck *текст* - Ссылка на запрос duckduckgo.
-   (*Для более одного слова используйте +
-   	 Пример: db.google рыжие+коты.*) --
--- db.danet *вопрос*? - Бот ответит на ваш вопрос. --
+   (*Для более одного слова используйте +, 
+   	 пример: db.google рыжие+коты.*) --
+-- db.steam - Ссылка на рандомную игру из стима. --
 -- db.niggers - Негры. --
 -- db.gay - Егорка or Вова) --
 -- db.help - Догадайся сам. --
@@ -235,6 +235,11 @@ async def duckduck(ctx, text):
 	text = str(text)
 	link = (f"https://duckduckgo.com/?q={text}")
 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+
+#ссылка на рандомную стим игру
+@bot.command()
+async def steam(ctx):
+	await ctx.send("Ссылка на рандомную игру из стима:\n<https://store.steampowered.com/explore/random>")
 
 
 
