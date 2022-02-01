@@ -271,20 +271,20 @@ async def steam(ctx):
 @bot.command()
 async def slots(ctx):
 	slots = ["🍓", "🍉","🍋", "🍒"]
-	r1 = r.choice(slots)
+	r1 = random.choice(slots)
 	msg = await ctx.send(r1 + ":grey_question:" + ":grey_question:")
 	for x in range(5):
-		r1 = r.choice(slots)
+		r1 = random.choice(slots)
 		await asyncio.sleep(0.5)
 		await msg.edit(content=r1 + ":grey_question:" + ":grey_question:")
-	r2 = r.choice(slots)
+	r2 = random.choice(slots)
 	for x in range(5):
-		r2 = r.choice(slots)
+		r2 = random.choice(slots)
 		await asyncio.sleep(0.5)
 		await msg.edit(content=r1 + r2 + ":grey_question:")
-	r3 = r.choice(slots)
+	r3 = random.choice(slots)
 	for x in range(5):
-		r3 = r.choice(slots)
+		r3 = random.choice(slots)
 		await asyncio.sleep(0.5)
 		await msg.edit(content=r1 + r2 + r3)
 
