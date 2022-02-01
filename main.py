@@ -273,17 +273,17 @@ async def slots(ctx):
 	slots = ["🍓", "🍉","🍋", "🍒"]
 	r1 = random.choice(slots)
 	msg = await ctx.send(r1 + ":grey_question:" + ":grey_question:")
-	for x in range(6):
+	for x in range(4):
 		r1 = random.choice(slots)
 		await asyncio.sleep(0.2)
 		await msg.edit(content=r1 + ":grey_question:" + ":grey_question:")
 	r2 = random.choice(slots)
-	for x in range(6):
+	for x in range(4):
 		r2 = random.choice(slots)
 		await asyncio.sleep(0.2)
 		await msg.edit(content=r1 + r2 + ":grey_question:")
 	r3 = random.choice(slots)
-	for x in range(6):
+	for x in range(4):
 		r3 = random.choice(slots)
 		await asyncio.sleep(0.2)
 		await msg.edit(content=r1 + r2 + r3)
