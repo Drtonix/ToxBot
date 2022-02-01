@@ -10,8 +10,8 @@ import requests
 import discord
 import os
 import pytz
-bot = Bot(command_prefix="db.", help_command=None)
-client = discord.ext.commands.Bot(command_prefix = "db.")
+bot = Bot(command_prefix="++", help_command=None)
+client = discord.ext.commands.Bot(command_prefix = "++")
 Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
 
 
@@ -22,33 +22,33 @@ async def help(ctx):
   await ctx.send('''
 лист всех команд на данный момент:
 
--- db.fuck_you - Бот пошлёт тебя. --
--- db.radiolist - Список всех радиостанций. --
--- db.time - Время по мск. --
--- db.stop - Отключение бота от войса-выключить шансон. --
--- db.cat - Рандомные фото кисок. --
--- db.dog - Рандомные фото собак. --
--- db.fox - Рандомные фото лисичек. --
--- db.coin - Игра в монетку. --
--- db.randomto - Рандом от одного до любого числа. --
--- db.roulette - Русская рулетка.
+-- ++fuck_you - Бот пошлёт тебя. --
+-- ++radiolist - Список всех радиостанций. --
+-- ++time - Время по мск. --
+-- ++stop - Отключение бота от войса-выключить шансон. --
+-- ++cat - Рандомные фото кисок. --
+-- ++dog - Рандомные фото собак. --
+-- ++fox - Рандомные фото лисичек. --
+-- ++coin - Игра в монетку. --
+-- ++randomto - Рандом от одного до любого числа. --
+-- ++roulette - Русская рулетка.
    (*Число от 1 до 5 с приставкой* **bul** *добавляет пули,
    	 пример: db.roulette5bul*) --
--- db.slots - Слоты как в казино --
--- db.fuck @человек - Выебать. --
--- db.kill @человек - Убить. --
--- db.twisted @человек - Свернуть шею. --
--- db.google *текст* - Ссылка на запрос гугл. --
--- db.yandex *текст* - Ссылка на запрос яндекс. --
--- db.duckduck *текст* - Ссылка на запрос duckduckgo.
+-- ++slots - Слоты как в казино --
+-- ++fuck @человек - Выебать. --
+-- ++kill @человек - Убить. --
+-- ++twisted @человек - Свернуть шею. --
+-- ++google *текст* - Ссылка на запрос гугл. --
+-- ++yandex *текст* - Ссылка на запрос яндекс. --
+-- ++duckduck *текст* - Ссылка на запрос duckduckgo.
    (*Для более одного слова используйте +, 
    	 пример: db.google рыжие+коты.*) --
--- db.steam - Ссылка на рандомную игру из стима. --
--- db.niggers - Негры. --
--- db.gay - Егорка or Вова) --
--- db.help - Догадайся сам. --
--- db.balls - Сочные шары. --
--- db.cum - Cum. --
+-- ++steam - Ссылка на рандомную игру из стима. --
+-- ++niggers - Негры. --
+-- ++gay - Егорка or Вова) --
+-- ++help - Догадайся сам. --
+-- ++balls - Сочные шары. --
+-- ++cum - Cum. --
 ''')
 
 
@@ -273,19 +273,19 @@ async def slots(ctx):
 	slots = ["🍓", "🍉","🍋", "🍒"]
 	r1 = random.choice(slots)
 	msg = await ctx.send(r1 + ":grey_question:" + ":grey_question:")
-	for x in range(5):
+	for x in range(6):
 		r1 = random.choice(slots)
-		await asyncio.sleep(0.5)
+		await asyncio.sleep(0.2)
 		await msg.edit(content=r1 + ":grey_question:" + ":grey_question:")
 	r2 = random.choice(slots)
-	for x in range(5):
+	for x in range(6):
 		r2 = random.choice(slots)
-		await asyncio.sleep(0.5)
+		await asyncio.sleep(0.2)
 		await msg.edit(content=r1 + r2 + ":grey_question:")
 	r3 = random.choice(slots)
-	for x in range(5):
+	for x in range(6):
 		r3 = random.choice(slots)
-		await asyncio.sleep(0.5)
+		await asyncio.sleep(0.2)
 		await msg.edit(content=r1 + r2 + r3)
 
 
