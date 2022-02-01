@@ -33,7 +33,7 @@ async def help(ctx):
 -- ++randomto - Рандом от одного до любого числа. --
 -- ++roulette - Русская рулетка.
    (*Число от 1 до 5 с приставкой* **bul** *добавляет пули,
-   	 пример: db.roulette5bul*) --
+   	 пример: ++roulette5bul*) --
 -- ++slots - Слоты как в казино --
 -- ++fuck @человек - Выебать. --
 -- ++kill @человек - Убить. --
@@ -42,7 +42,7 @@ async def help(ctx):
 -- ++yandex *текст* - Ссылка на запрос яндекс. --
 -- ++duckduck *текст* - Ссылка на запрос duckduckgo.
    (*Для более одного слова используйте +, 
-   	 пример: db.google рыжие+коты.*) --
+   	 пример: ++google рыжие+коты.*) --
 -- ++steam - Ссылка на рандомную игру из стима. --
 -- ++niggers - Негры. --
 -- ++gay - Егорка or Вова) --
@@ -81,6 +81,9 @@ async def stop(ctx):
     await ctx.voice_client.disconnect()
     await ctx.send("Радио остановленно.")
 
+@bot.command()
+async def c(ctx):
+	await ctx.send("Ты еблан?")
 
 
 
@@ -88,106 +91,106 @@ async def stop(ctx):
 #дог фокс гей егор энд кет
 @bot.command()
 async def dog(ctx):
-    response = requests.get("https://some-random-api.ml/img/dog")
-    json_data = json.loads(response.text)
+	response = requests.get("https://some-random-api.ml/img/dog")
+	json_data = json.loads(response.text)
 
-    embed = discord.Embed(color = 0x8b0000, title = "Fucking dog.")
-    embed.set_image(url = json_data["link"])
-    await ctx.send(embed = embed)
+	embed = discord.Embed(color = 0x8b0000, title = "Fucking dog.")
+	embed.set_image(url = json_data["link"])
+	await ctx.send(embed = embed)
 #fox
 @bot.command()
 async def fox(ctx):
-    response = requests.get("https://some-random-api.ml/img/fox")
-    json_data = json.loads(response.text)
+	response = requests.get("https://some-random-api.ml/img/fox")
+	json_data = json.loads(response.text)
 
-    embed = discord.Embed(color = 0x8b0000, title = "Fucking fox.")
-    embed.set_image(url = json_data["link"])
-    await ctx.send(embed = embed)
+	embed = discord.Embed(color = 0x8b0000, title = "Fucking fox.")
+	embed.set_image(url = json_data["link"])
+	await ctx.send(embed = embed)
 #cat
 @bot.command()
 async def cat(ctx):
-    response = requests.get("https://some-random-api.ml/img/cat")
-    json_data = json.loads(response.text)
+	response = requests.get("https://some-random-api.ml/img/cat")
+	json_data = json.loads(response.text)
 
-    embed = discord.Embed(color = 0x8b0000, title = "Fucking cat.")
-    embed.set_image(url = json_data["link"])
-    await ctx.send(embed = embed)
+	embed = discord.Embed(color = 0x8b0000, title = "Fucking cat.")
+	embed.set_image(url = json_data["link"])
+	await ctx.send(embed = embed)
 
 @bot.command()
 async def cum(ctx):
-  response = ("http://www.hudeem-s-profi.ru/files/images/6zqbxxxljrnpsdldhcxz.jpg")
-  await ctx.send(response)
+	response = ("http://www.hudeem-s-profi.ru/files/images/6zqbxxxljrnpsdldhcxz.jpg")
+	await ctx.send(response)
 #gay
 @bot.command()
 async def gay(ctx):
-  strings = ["https://media.discordapp.net/attachments/674594514303975434/931593784259674142/b95400d0-b508-4244-9bc5-a8b098f8a80e.png", "https://media.discordapp.net/attachments/762655570221203466/931594108580008026/unknown.png", "https://media.discordapp.net/attachments/674594514303975434/931602635189002240/7f6a9091-9a0b-40be-902e-85ac93930b36.png", "https://media.discordapp.net/attachments/678564352164495387/932670407876702228/unknown.png?width=455&height=675"]
-  await ctx.send(random.choice(strings))
+	strings = ["https://media.discordapp.net/attachments/674594514303975434/931593784259674142/b95400d0-b508-4244-9bc5-a8b098f8a80e.png", "https://media.discordapp.net/attachments/762655570221203466/931594108580008026/unknown.png", "https://media.discordapp.net/attachments/674594514303975434/931602635189002240/7f6a9091-9a0b-40be-902e-85ac93930b36.png", "https://media.discordapp.net/attachments/678564352164495387/932670407876702228/unknown.png?width=455&height=675"]
+	await ctx.send(random.choice(strings))
 #nig
 @bot.command()
 async def niggers(ctx):
-  strings = ["http://3.bp.blogspot.com/-yf3xMdLObGk/T3fON3wZurI/AAAAAAAA4tQ/QT5PT9q_tAY/s1600/Daddy838.jpg", "https://famt.ru/wp-content/uploads/2019/07/k-chemu-snitsya-negr-muzhchina.jpg", "https://otvet.imgsmail.ru/download/u_08aceead9e79f1fa2d6d289905d78e8d_800.jpg", "https://themancrushblog.com/wp-content/uploads/2013/11/daniel-louisy+5.jpg", "https://www.timeout.ru/img/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0/%D0%9A%D0%B8%D0%BD%D0%BE/%D1%81%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B%202020/C4D_SHwWQAA2FZR.jpg","https://s00.yaplakal.com/pics/pics_original/1/6/3/14400361.jpg", "https://bi.im-g.pl/im/2/11093/z11093482IER.jpg","https://www.meme-arsenal.com/memes/f8fb9c33e73272021defca88c110cac8.jpg","https://i.imgur.com/Ogcuewp.jpg", "http://risovach.ru/upload/2018/12/generator/negr_194265628_orig_.jpg","http://prettymalemodels.com/wp-content/uploads/2017/03/DSC_7241-Edit.jpg","https://yt3.ggpht.com/-D6fqV6rRmRQ/AAAAAAAAAAI/AAAAAAAAAAA/UkT41uCEBZw/s900-c-k-no/photo.jpg","https://w7.pngwing.com/pngs/505/138/png-transparent-jay-rock-rapper-follow-me-home-musician-black-friday-jay-z-tshirt-arm-abdomen.png","https://mypersonalbroker.files.wordpress.com/2017/11/04.jpg"]
-  await ctx.send(random.choice(strings))
+	strings = ["http://3.bp.blogspot.com/-yf3xMdLObGk/T3fON3wZurI/AAAAAAAA4tQ/QT5PT9q_tAY/s1600/Daddy838.jpg", "https://famt.ru/wp-content/uploads/2019/07/k-chemu-snitsya-negr-muzhchina.jpg", "https://otvet.imgsmail.ru/download/u_08aceead9e79f1fa2d6d289905d78e8d_800.jpg", "https://themancrushblog.com/wp-content/uploads/2013/11/daniel-louisy+5.jpg", "https://www.timeout.ru/img/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0/%D0%9A%D0%B8%D0%BD%D0%BE/%D1%81%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B%202020/C4D_SHwWQAA2FZR.jpg","https://s00.yaplakal.com/pics/pics_original/1/6/3/14400361.jpg", "https://bi.im-g.pl/im/2/11093/z11093482IER.jpg","https://www.meme-arsenal.com/memes/f8fb9c33e73272021defca88c110cac8.jpg","https://i.imgur.com/Ogcuewp.jpg", "http://risovach.ru/upload/2018/12/generator/negr_194265628_orig_.jpg","http://prettymalemodels.com/wp-content/uploads/2017/03/DSC_7241-Edit.jpg","https://yt3.ggpht.com/-D6fqV6rRmRQ/AAAAAAAAAAI/AAAAAAAAAAA/UkT41uCEBZw/s900-c-k-no/photo.jpg","https://w7.pngwing.com/pngs/505/138/png-transparent-jay-rock-rapper-follow-me-home-musician-black-friday-jay-z-tshirt-arm-abdomen.png","https://mypersonalbroker.files.wordpress.com/2017/11/04.jpg"]
+	await ctx.send(random.choice(strings))
 #сочные шарики
 @bot.command()
 async def balls(ctx):
-  strings = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ","https://i.ytimg.com/vi/qJPq0EaCRck/maxresdefault.jpg","https://ae01.alicdn.com/kf/HLB1y77JaOrxK1RkHFCcq6AQCVXaf.jpg", "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/60c2c9c4-c5db-443a-ba53-0acc0a5875e7/d2m8je7-0a3eb7d7-5b0c-44d7-a536-bc4db8844b4a.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi82MGMyYzljNC1jNWRiLTQ0M2EtYmE1My0wYWNjMGE1ODc1ZTcvZDJtOGplNy0wYTNlYjdkNy01YjBjLTQ0ZDctYTUzNi1iYzRkYjg4NDRiNGEuanBnIn1dXX0.K08BpRRTK3Oqw_r-PQWbDQ_Ur-H80hIk86LW1grED5Q"]
-  await ctx.send(random.choice(strings))
+	strings = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ","https://i.ytimg.com/vi/qJPq0EaCRck/maxresdefault.jpg","https://ae01.alicdn.com/kf/HLB1y77JaOrxK1RkHFCcq6AQCVXaf.jpg", "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/60c2c9c4-c5db-443a-ba53-0acc0a5875e7/d2m8je7-0a3eb7d7-5b0c-44d7-a536-bc4db8844b4a.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi82MGMyYzljNC1jNWRiLTQ0M2EtYmE1My0wYWNjMGE1ODc1ZTcvZDJtOGplNy0wYTNlYjdkNy01YjBjLTQ0ZDctYTUzNi1iYzRkYjg4NDRiNGEuanBnIn1dXX0.K08BpRRTK3Oqw_r-PQWbDQ_Ur-H80hIk86LW1grED5Q"]
+	await ctx.send(random.choice(strings))
 
 
 
 #рандом
 @bot.command()
 async def coin(ctx):
-  monetka = ['Орел.'] * 49 + ['Решка.'] * 49 + ['Ребро!'] * 2
-  await ctx.send(random.choice(monetka))
+	monetka = ['Орел.'] * 49 + ['Решка.'] * 49 + ['Ребро!'] * 2
+	await ctx.send(random.choice(monetka))
 #и ещё рандом
 @bot.command()
 async def randomto(ctx, text):
-  num2 = str(text)
-  rndm = str(random.randint(1, int(num2[num2.find(" ")+1:len(num2)])))
-  if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-  	await ctx.send("Выпало число " + rndm +".")
-  else:
-    await ctx.send("Иди нахуй. Я ебал твою маму.")
+	num2 = str(text)
+	rndm = str(random.randint(1, int(num2[num2.find(" ")+1:len(num2)])))
+	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
+		await ctx.send("Выпало число " + rndm +".")
+	else:
+	  await ctx.send("Иди нахуй. Я ебал твою маму.")
 
 
 #да или нет
 @bot.command()
 async def danet(ctx, text):
-  danet = ['да.'] * 25 + ['нет.'] * 25 + ['скорее всего.'] * 25 + ['наверное.'] * 25
-  if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-  	await ctx.send(f"Я думаю что {random.choice(danet)}")
-  else:
-    await ctx.send("Иди нахуй. Я ебал твою маму.")
+	danet = ['да.'] * 25 + ['нет.'] * 25 + ['скорее всего.'] * 25 + ['наверное.'] * 25
+	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
+		await ctx.send(f"Я думаю что {random.choice(danet)}")
+	else:
+	  await ctx.send("Иди нахуй. Я ебал твою маму.")
 
 
 #fuck табуретка
 @bot.command()
 async def fuck(ctx, text):
-  author = ctx.message.author
-  num2 = str(text)
-  if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-    await ctx.send(f"{author.mention} выебал " + num2 + ".")
-  else:
-    await ctx.send("Иди нахуй. Я ебал.")
+	author = ctx.message.author
+	num2 = str(text)
+	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
+	  await ctx.send(f"{author.mention} выебал " + num2 + ".")
+	else:
+	  await ctx.send("Иди нахуй. Я ебал.")
 # нет блять kill стол
 @bot.command()
 async def kill(ctx, text):
-  author = ctx.message.author
-  num2 = str(text)
-  if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-    await ctx.send(f"{author.mention} убил " + num2 + ".")
-  else:
-    await ctx.send("Иди нахуй. Я ебал твою собаку.")
+	author = ctx.message.author
+	num2 = str(text)
+	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
+	  await ctx.send(f"{author.mention} убил " + num2 + ".")
+	else:
+	  await ctx.send("Иди нахуй. Я ебал твою собаку.")
 #да блять twisted свернул шею двери
 @bot.command()
 async def twisted(ctx, text):
-  author = ctx.message.author
-  num2 = str(text)
-  if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-    await ctx.send(f"{author.mention} свернул шею " + num2 + ".")
-  else:
-    await ctx.send("Иди нахуй. Я ебал твою маму.")
+	author = ctx.message.author
+	num2 = str(text)
+	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
+	  await ctx.send(f"{author.mention} свернул шею " + num2 + ".")
+	else:
+	  await ctx.send("Иди нахуй. Я ебал твою маму.")
 
 
 
@@ -196,34 +199,34 @@ async def twisted(ctx, text):
 #рулетка
 @bot.command()
 async def roulette(ctx):
-  author = ctx.message.author
-  ruletka = [f'Пусто, {author.mention} остался в живых.'] * 5 + [f'Выстрел, {author.mention} застрелился.'] * 1
-  await ctx.send(random.choice(ruletka))
+	author = ctx.message.author
+	ruletka = [f'Пусто, {author.mention} остался в живых.'] * 5 + [f'Выстрел, {author.mention} застрелился.'] * 1
+	await ctx.send(random.choice(ruletka))
 #рулетка на две пули
 @bot.command()
 async def roulette2bul(ctx):
-  author = ctx.message.author
-  ruletka = [f'Пусто, {author.mention} остался в живых.'] * 4 + [f'Выстрел, {author.mention} застрелился.'] * 2
-  await ctx.send(random.choice(ruletka))
+	author = ctx.message.author
+	ruletka = [f'Пусто, {author.mention} остался в живых.'] * 4 + [f'Выстрел, {author.mention} застрелился.'] * 2
+	await ctx.send(random.choice(ruletka))
 #рулетка на три пули
 @bot.command()
 async def roulette3bul(ctx):
-  author = ctx.message.author
-  ruletka = [f'Пусто, {author.mention} остался в живых.'] * 3 + [f'Выстрел, {author.mention} застрелился.'] * 3
-  await ctx.send(random.choice(ruletka))
-  #рулетка на четыре пули
+	author = ctx.message.author
+	ruletka = [f'Пусто, {author.mention} остался в живых.'] * 3 + [f'Выстрел, {author.mention} застрелился.'] * 3
+	await ctx.send(random.choice(ruletka))
+#рулетка на четыре пули
 @bot.command()
 async def roulette4bul(ctx):
-  author = ctx.message.author
-  ruletka = [f'Пусто, {author.mention} остался в живых.'] * 2 + [f'Выстрел, {author.mention} застрелился.'] * 4
-  await ctx.send(random.choice(ruletka))
-  #рулетка на пять пуль
+	author = ctx.message.author
+	ruletka = [f'Пусто, {author.mention} остался в живых.'] * 2 + [f'Выстрел, {author.mention} застрелился.'] * 4
+	await ctx.send(random.choice(ruletka))
+#рулетка на пять пуль
 @bot.command()
 async def roulette5bul(ctx):
-  author = ctx.message.author
-  ruletka = [f'Пусто, {author.mention} остался в живых.'] * 1 + [f'Выстрел, {author.mention} застрелился.'] * 5
-  await ctx.send(random.choice(ruletka))
-  #рулетка на шесть пуль?
+	author = ctx.message.author
+	ruletka = [f'Пусто, {author.mention} остался в живых.'] * 1 + [f'Выстрел, {author.mention} застрелился.'] * 5
+	await ctx.send(random.choice(ruletka))
+#рулетка на шесть пуль?
 @bot.command()
 async def roulette6bul(ctx):
   author = ctx.message.author
@@ -236,31 +239,31 @@ async def roulette6bul(ctx):
 #поиск в гугле, яндексе и дакдак
 @bot.command()
 async def google(ctx, text):
- text = str(text)
- link = (f"https://www.google.ru/search?q={text}")
- if text.find("@here") == -1 and num2.find("@everyone") == -1:
- 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
- else:
- 	await ctx.send("Иди нахуй. Я ебал твою маму.")
+	text = str(text)
+	link = (f"https://www.google.ru/search?q={text}")
+	if text.find("@here") == -1 and num2.find("@everyone") == -1:
+		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+	else:
+		await ctx.send("Иди нахуй. Я ебал твою маму.")
 
 
 @bot.command()
 async def yandex(ctx, text):
- text = str(text)
- link = (f"https://yandex.ru/search/?text={text}")
- if text.find("@here") == -1 and num2.find("@everyone") == -1:
- 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
- else:
- 	await ctx.send("Иди нахуй. Я ебал твою маму.")
+	text = str(text)
+	link = (f"https://yandex.ru/search/?text={text}")
+	if text.find("@here") == -1 and num2.find("@everyone") == -1:
+		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+	else:
+		await ctx.send("Иди нахуй. Я ебал твою маму.")
 
 @bot.command()
 async def duckduck(ctx, text):
- text = str(text)
- link = (f"https://duckduckgo.com/?q={text}")
- if text.find("@here") == -1 and num2.find("@everyone") == -1:
- 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
- else:
- 	await ctx.send("Иди нахуй. Я ебал твою маму.")
+	text = str(text)
+	link = (f"https://duckduckgo.com/?q={text}")
+	if text.find("@here") == -1 and num2.find("@everyone") == -1:
+		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+	else:
+		await ctx.send("Иди нахуй. Я ебал твою маму.")
 
 #ссылка на рандомную стим игру
 @bot.command()
@@ -294,8 +297,8 @@ async def slots(ctx):
 #список радиостанций:
 @bot.command()
 async def radiolist(ctx):
-  await ctx.send(
-"\n\Список всех команд на переключение радиостанций:\n\ndb.anime - аниме радио\n----------------------\ndb.shanson - шансон\n-------------------\ndb.novradio - новое радио\n-------------------------\ndb.fmradio - фм радио\n---------------------\ndb.dorozhnoeradio - Дорожное радио (Омск)\n--------------------\ndb.radio90s - радио 90х\n-----------------------\ndb.pulsradio80s - радио 80х\n---------------------------\ndb.popradio70s - поп радио 70х\n------------------------------\ndb.counthitsradio - хиты кантри\n-------------------------------\ndb.rockhitsradio - хиты рока\n----------------------------\ndb.rockfmradio - рок фм\n-----------------------\ndb.ruyalretradio - ретро\n------------------------\ndb.psychedcradio - психоделик\n-----------------------------\ndb.classicrock - классический рок\n------------------------------\ndb.rertofm -  ретро фм\n----------------------\ndb.heavymetal - хевиметал\n-------------------------\ndb.radiorelaxua - украинское радио релакс\n-----------------------------------------\ndb.korolishyt - радио Король и Шут\n----------------------------------\ndb.letov - радио Гражданская оборона\n--------------------------------\ndb.rammstein - радио Раммштайн\n---------------------------------\ndb.radiosssr - ссср радио\n-------------------------\ndb.radiodetyam - детское радио\n-----------------------------\ndb.redhotchilradio - red hot chili peppers радио\n\nсписок будет дополняться")
+	await ctx.send(
+"\n\Список всех команд на переключение радиостанций:\n\n++anime - аниме радио\n----------------------\n++shanson - шансон\n-------------------\n++novradio - новое радио\n-------------------------\n++fmradio - фм радио\n---------------------\n++dorozhnoeradio - Дорожное радио (Омск)\n--------------------\n++radio90s - радио 90х\n-----------------------\n++pulsradio80s - радио 80х\n---------------------------\n++popradio70s - поп радио 70х\n------------------------------\n++counthitsradio - хиты кантри\n-------------------------------\n++rockhitsradio - хиты рока\n----------------------------\n++rockfmradio - рок фм\n-----------------------\n++ruyalretradio - ретро\n------------------------\n++psychedcradio - психоделик\n-----------------------------\n++classicrock - классический рок\n------------------------------\n++rertofm -  ретро фм\n----------------------\n++heavymetal - хевиметал\n-------------------------\n++radiorelaxua - украинское радио релакс\n-----------------------------------------\n++korolishyt - радио Король и Шут\n----------------------------------\n++letov - радио Гражданская оборона\n--------------------------------\n++rammstein - радио Раммштайн\n---------------------------------\n++radiosssr - ссср радио\n-------------------------\n++radiodetyam - детское радио\n-----------------------------\n++redhotchilradio - red hot chili peppers радио\n\nсписок будет дополняться")
 
 
 
