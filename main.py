@@ -272,7 +272,7 @@ async def steam(ctx):
 async def slots(ctx):
 	slots = ["🍓", "🍉","🍋", "🍒"]
 	r1 = r.choice(slots)
-    msg = await ctx.send(r1 + ":grey_question:" + ":grey_question:")
+	msg = await ctx.send(r1 + ":grey_question:" + ":grey_question:")
     for x in range(5):
         r1 = r.choice(slots)
         await asyncio.sleep(0.5)
