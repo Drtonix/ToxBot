@@ -257,8 +257,9 @@ async def roulette6bul(ctx):
 @bot.command()
 async def google(ctx, text):
 	text = str(text)
+	num2 = str(text)
 	link = (f"https://www.google.ru/search?q={text}")
-	if text.find("@here") == -1 and num2.find("@everyone") == -1:
+	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 	else:
 		await ctx.send("Иди нахуй. Я ебал твою маму.")
@@ -267,8 +268,9 @@ async def google(ctx, text):
 @bot.command()
 async def yandex(ctx, text):
 	text = str(text)
+	num2 = str(text)
 	link = (f"https://yandex.ru/search/?text={text}")
-	if text.find("@here") == -1 and num2.find("@everyone") == -1:
+	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 	else:
 		await ctx.send("Иди нахуй. Я ебал твою маму.")
@@ -276,8 +278,9 @@ async def yandex(ctx, text):
 @bot.command()
 async def duckduck(ctx, text):
 	text = str(text)
+	num2 = str(text)
 	link = (f"https://duckduckgo.com/?q={text}")
-	if text.find("@here") == -1 and num2.find("@everyone") == -1:
+	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 	else:
 		await ctx.send("Иди нахуй. Я ебал твою маму.")
