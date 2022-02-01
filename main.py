@@ -173,6 +173,7 @@ async def randomto(ctx, text):
 #да или нет
 @bot.command()
 async def danet(ctx, text):
+	num2 = str(text)
 	danet = ['да.'] * 25 + ['нет.'] * 25 + ['скорее всего.'] * 25 + ['наверное.'] * 25
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send(f"Я думаю что {random.choice(danet)}")
@@ -291,7 +292,7 @@ async def steam(ctx):
 async def slots(ctx):
 	slots = ["🍓", "🍉","🍋", "🍒"]
 	r1 = random.choice(slots)
-	embed = discord.Embed(title="ToxCasino777", description=r1 + ":grey_question:" + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
+	embed = discord.Embed(title="ToxCasino777", description=r1 + ":grey_question:" + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(0,254,39))
 	embed.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 	msg = await ctx.send(embed=embed)
 	for x in range(4):
