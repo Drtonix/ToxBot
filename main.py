@@ -19,7 +19,7 @@ Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
 #лист команд
 @bot.command()
 async def help(ctx):
-  await ctx.send('''
+	await ctx.send('''
 лист всех команд на данный момент:
 
 -- ++fuck_you - Бот пошлёт тебя. --
@@ -52,34 +52,47 @@ async def help(ctx):
 ''')
 
 
+#инфо
+@bot.command()
+async def info(ctx):
+	await ctx.send('''
+---------------------------------------------------------
+-- Работают над ботом: Tonix#5322 , 410#0797 
+------------------------------------------------------------
+-- Помогал: plаyer210#9142                          
+-------------------------------------------------------
+-- Пожертвования на разработку:                            
+-- <https://yoomoney.ru/to/4100112019491157>      
+------------------------------------------------------------''')
+
 #fuck_you
 @bot.command()
 async def fuck_you(ctx):
-    author = ctx.message.author
-    await ctx.send(f"No, {author.mention}, fuck you!")
+	author = ctx.message.author
+	await ctx.send(f"No, {author.mention}, fuck you!")
 
 
 
 #time
 @bot.command()
 async def time(ctx):
-  tz_Moscow = pytz.timezone('Europe/Moscow')
-  datetime_Moscow = datetime.now(tz_Moscow)
-  await ctx.send(datetime_Moscow.strftime("%H:%M:%S"))
+	tz_Moscow = pytz.timezone('Europe/Moscow')
+	datetime_Moscow = datetime.now(tz_Moscow)
+	await ctx.send(datetime_Moscow.strftime("%H:%M:%S"))
 
 
 
 #db.addevery
 @bot.event
 async def on_ready() -> None:
-    voice_channel = bot.get_channel(928937414913851412)
-    player = await voice_channel.connect()
-    player.play(FFmpegPCMAudio("http://chanson.hostingradio.ru:8041/chanson256.mp3"))
+	voice_channel = bot.get_channel(928937414913851412)
+	player = await voice_channel.connect()
+	player.play(FFmpegPCMAudio("http://chanson.hostingradio.ru:8041/chanson256.mp3"))
 #db.stop
 @bot.command()
 async def stop(ctx):
-    await ctx.voice_client.disconnect()
-    await ctx.send("Радио остановленно.")
+	await ctx.voice_client.disconnect()
+	await ctx.send("Радио остановленно.")
 
 @bot.command()
 async def c(ctx):
@@ -161,7 +174,7 @@ async def danet(ctx, text):
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send(f"Я думаю что {random.choice(danet)}")
 	else:
-	  await ctx.send("Иди нахуй. Я ебал твою маму.")
+		await ctx.send("Иди нахуй. Я ебал твою маму.")
 
 
 #fuck табуретка
@@ -170,27 +183,27 @@ async def fuck(ctx, text):
 	author = ctx.message.author
 	num2 = str(text)
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-	  await ctx.send(f"{author.mention} выебал " + num2 + ".")
+		await ctx.send(f"{author.mention} выебал " + num2 + ".")
 	else:
-	  await ctx.send("Иди нахуй. Я ебал.")
+		await ctx.send("Иди нахуй. Я ебал.")
 # нет блять kill стол
 @bot.command()
 async def kill(ctx, text):
 	author = ctx.message.author
 	num2 = str(text)
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-	  await ctx.send(f"{author.mention} убил " + num2 + ".")
+		await ctx.send(f"{author.mention} убил " + num2 + ".")
 	else:
-	  await ctx.send("Иди нахуй. Я ебал твою собаку.")
+		await ctx.send("Иди нахуй. Я ебал твою собаку.")
 #да блять twisted свернул шею двери
 @bot.command()
 async def twisted(ctx, text):
 	author = ctx.message.author
 	num2 = str(text)
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-	  await ctx.send(f"{author.mention} свернул шею " + num2 + ".")
+		await ctx.send(f"{author.mention} свернул шею " + num2 + ".")
 	else:
-	  await ctx.send("Иди нахуй. Я ебал твою маму.")
+		await ctx.send("Иди нахуй. Я ебал твою маму.")
 
 
 
@@ -229,8 +242,8 @@ async def roulette5bul(ctx):
 #рулетка на шесть пуль?
 @bot.command()
 async def roulette6bul(ctx):
-  author = ctx.message.author
-  await ctx.send(f'{author.mention} застрелился от своей тупости.')
+	author = ctx.message.author
+	await ctx.send(f'{author.mention} застрелился от своей тупости.')
 
 
 
@@ -305,115 +318,115 @@ async def radiolist(ctx):
 #радио
 @bot.command()
 async def rplay(ctx, link: None):
-    if link != None:
-        voice_channel = bot.get_channel(928937414913851412)
-        voice_client = discord.utils.get(bot.voice_clients, guild=ctx.guild)
-        if voice_client:
-            voice_client.pause()
-            voice_client.play(FFmpegPCMAudio(link))
-        else:
-            player = await voice_channel.connect()
-            player.play(FFmpegPCMAudio(link))
+	if link != None:
+		voice_channel = bot.get_channel(928937414913851412)
+		voice_client = discord.utils.get(bot.voice_clients, guild=ctx.guild)
+		if voice_client:
+			voice_client.pause()
+			voice_client.play(FFmpegPCMAudio(link))
+		else:
+			player = await voice_channel.connect()
+			player.play(FFmpegPCMAudio(link))
 
 @bot.command()
 async def shanson(ctx):
-    await rplay(ctx, "http://chanson.hostingradio.ru:8041/chanson256.mp3")
-    await ctx.send ("Радио включено.\nИграет: Шансон")
+	await rplay(ctx, "http://chanson.hostingradio.ru:8041/chanson256.mp3")
+	await ctx.send ("Радио включено.\nИграет: Шансон")
 @bot.command()
 async def novradio(ctx):
-    await rplay(ctx, "http://live.novoeradio.by:8000/novoeradio-128k")
-    await ctx.send ("Радио включено.\nИграет: Новое радио")
+	await rplay(ctx, "http://live.novoeradio.by:8000/novoeradio-128k")
+	await ctx.send ("Радио включено.\nИграет: Новое радио")
 @bot.command()
 async def fmradio(ctx):
-    await rplay(ctx, "http://listen.teploe.net:8100/npkfm")
-    await ctx.send ("Радио включено.\nИграет: Фм радио")
+	await rplay(ctx, "http://listen.teploe.net:8100/npkfm")
+	await ctx.send ("Радио включено.\nИграет: Фм радио")
 @bot.command()
 async def radio90s(ctx):
-    await rplay(ctx, "http://prmstrm.1.fm:8000/90s")
-    await ctx.send ("Радио включено.\nИграет: Радио 80х")
+	await rplay(ctx, "http://prmstrm.1.fm:8000/90s")
+	await ctx.send ("Радио включено.\nИграет: Радио 80х")
 @bot.command()
 async def popradio70s(ctx):
-    await rplay(ctx, "http://prmstrm.1.fm:8000/70s")
-    await ctx.send ("Радио включено.\nИграет: Поп радио 70х")
+	await rplay(ctx, "http://prmstrm.1.fm:8000/70s")
+	await ctx.send ("Радио включено.\nИграет: Поп радио 70х")
 @bot.command()
 async def counthitsradio(ctx):
-    await rplay("http://prmstrm.1.fm:8000/acountry")
-    await ctx.send ("Радио включено.\nИграет: Хиты кантри")
+	await rplay("http://prmstrm.1.fm:8000/acountry")
+	await ctx.send ("Радио включено.\nИграет: Хиты кантри")
 @bot.command()
 async def rockhitsradio(ctx):
-    await rplay(ctx, "http://prmstrm.1.fm:8000/x")
-    await ctx.send ("Радио включено.\nИграет: Хиты рока")
+	await rplay(ctx, "http://prmstrm.1.fm:8000/x")
+	await ctx.send ("Радио включено.\nИграет: Хиты рока")
 @bot.command()
 async def rockfmradio(ctx):
-    await rplay(ctx, "http://jfm1.hostingradio.ru:14536/rock00.mp3")
-    await ctx.send ("Радио включено.\nИграет: Рок фм радио")
+	await rplay(ctx, "http://jfm1.hostingradio.ru:14536/rock00.mp3")
+	await ctx.send ("Радио включено.\nИграет: Рок фм радио")
 @bot.command()
 async def royalretradio(ctx):
-    await rplay(ctx, "http://185.39.195.90:8000/nostalgia")
-    await ctx.send ("Радио включено.\nИграет: Ретро")
+	await rplay(ctx, "http://185.39.195.90:8000/nostalgia")
+	await ctx.send ("Радио включено.\nИграет: Ретро")
 @bot.command()
 async def psychedcradio(ctx):
-    await rplay(ctx, "http://psyprog.rupsy.ru:8000/psyprog")
-    await ctx.send ("Радио включено.\nИграет: Психоделик")
+	await rplay(ctx, "http://psyprog.rupsy.ru:8000/psyprog")
+	await ctx.send ("Радио включено.\nИграет: Психоделик")
 @bot.command()
 async def radiodetyam(ctx):
-    await rplay(ctx, "https://str.pcradio.ru/rusradio_deti-hi")
-    await ctx.send ("Радио включено.\nИграет: Детское радио")
+	await rplay(ctx, "https://str.pcradio.ru/rusradio_deti-hi")
+	await ctx.send ("Радио включено.\nИграет: Детское радио")
 @bot.command()
 async def retrofm(ctx):
-    await rplay(ctx, "https://str.pcradio.ru/retrofm_ru-hi")
-    await ctx.send ("Радио включено.\nИграет: Ретро фм")
+	await rplay(ctx, "https://str.pcradio.ru/retrofm_ru-hi")
+	await ctx.send ("Радио включено.\nИграет: Ретро фм")
 @bot.command()
 async def radiosssr(ctx):
-    await rplay(ctx, "https://str.pcradio.ru/SSSR-hi")
-    await ctx.send ("Радио включено.\nИграет: Ссср радио")
+	await rplay(ctx, "https://str.pcradio.ru/SSSR-hi")
+	await ctx.send ("Радио включено.\nИграет: Ссср радио")
 @bot.command()
 async def radiorelaxua(ctx):
-    await rplay(ctx, "https://str.pcradio.ru/radiorelax_ua-hi")
-    await ctx.send ("Радио включено.\nИграет: Украинское радио релакс")
+	await rplay(ctx, "https://str.pcradio.ru/radiorelax_ua-hi")
+	await ctx.send ("Радио включено.\nИграет: Украинское радио релакс")
 @bot.command()
 async def korolishyt(ctx):
-    await rplay(ctx, "https://str.pcradio.ru/Korol_i_Shut-hi")
-    await ctx.send ("Радио включено.\nИграет: Радио Король и Шут")
+	await rplay(ctx, "https://str.pcradio.ru/Korol_i_Shut-hi")
+	await ctx.send ("Радио включено.\nИграет: Радио Король и Шут")
 @bot.command()
 async def letov(ctx):
-    await rplay(ctx, "https://str.pcradio.ru/Grazhdanskaja_oborona-hi")
-    await ctx.send ("Радио включено.\nИграет: Радио Гражданская оборона")
+	await rplay(ctx, "https://str.pcradio.ru/Grazhdanskaja_oborona-hi")
+	await ctx.send ("Радио включено.\nИграет: Радио Гражданская оборона")
 @bot.command()
 async def classicrock(ctx):
-    await rplay(ctx, "https://str.pcradio.ru/rpr1_de_clasro-hi")
-    await ctx.send ("Радио включено.\nИграет: Классический рок")
+	await rplay(ctx, "https://str.pcradio.ru/rpr1_de_clasro-hi")
+	await ctx.send ("Радио включено.\nИграет: Классический рок")
 @bot.command()
 async def heavymetal(ctx):
-    await rplay(ctx, "https://str.pcradio.ru/rpr1_de_metal-hi")
-    await ctx.send ("Радио включено.\nИграет: Хевиметал")
+	await rplay(ctx, "https://str.pcradio.ru/rpr1_de_metal-hi")
+	await ctx.send ("Радио включено.\nИграет: Хевиметал")
 @bot.command()  
 async def rammstein(ctx):
-    await rplay(ctx, "https://str.pcradio.ru/Rammstein-hi")
-    await ctx.send ("Радио включено.\nИграет: Раммштайн")
+	await rplay(ctx, "https://str.pcradio.ru/Rammstein-hi")
+	await ctx.send ("Радио включено.\nИграет: Раммштайн")
 @bot.command()
 async def redhotchilradio(ctx):
-    await rplay(ctx, "https://str.pcradio.ru/red_hot_chili_peppers-hi")
-    await ctx.send ("Радио включено.\nИграет: Red Hot Chili Peppers радио")
+	await rplay(ctx, "https://str.pcradio.ru/red_hot_chili_peppers-hi")
+	await ctx.send ("Радио включено.\nИграет: Red Hot Chili Peppers радио")
 @bot.command()
 async def pulsradio80s(ctx):
-    await rplay(ctx, "https://str.pcradio.ru/pulsradio_80s-hi")
-    await ctx.send ("Радио включено.\nИграет: Радио 80х")
+	await rplay(ctx, "https://str.pcradio.ru/pulsradio_80s-hi")
+	await ctx.send ("Радио включено.\nИграет: Радио 80х")
 @bot.command()
 async def dorozhnoeradio(ctx):
-    await rplay(ctx, "https://str.pcradio.ru/dorozhnoe_omsk-hi")
-    await ctx.send ("Радио включено.\nИграет: Дорожное радио (Омск)")
+	await rplay(ctx, "https://str.pcradio.ru/dorozhnoe_omsk-hi")
+	await ctx.send ("Радио включено.\nИграет: Дорожное радио (Омск)")
 @bot.command()
 async def anime(ctx):
-    await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
-    await ctx.send ("Радио включено. \nИграет: Аниме радио")
+	await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
+	await ctx.send ("Радио включено. \nИграет: Аниме радио")
 
 @bot.command()
 async def mechanic(ctx, *, link: str):
-    if link != None:
-        await rplay(ctx, str(link))
-        await ctx.send("Удачно поставлено.")
-    else:
-        await ctx.send("Вставьте ссылку.")
+	if link != None:
+		await rplay(ctx, str(link))
+		await ctx.send("Удачно поставлено.")
+	else:
+		await ctx.send("Вставьте ссылку.")
 
 bot.run(Token)
