@@ -75,7 +75,6 @@ async def fuck_you(ctx):
 	await ctx.send(f"No, {author.mention}, fuck you!")
 
 
-
 #time
 @bot.command()
 async def time(ctx):
@@ -178,7 +177,7 @@ async def randomto(ctx, text):
 
 #да или нет
 @bot.command()
-async def danet(ctx, text):
+async def danet(ctx, *, text):
 	num2 = str(text)
 	danet = ['да.'] * 25 + ['нет.'] * 25 + ['скорее всего.'] * 25 + ['наверное.'] * 25
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
@@ -189,7 +188,7 @@ async def danet(ctx, text):
 
 #fuck табуретка
 @bot.command()
-async def fuck(ctx, text):
+async def fuck(ctx, *, text):
 	author = ctx.message.author
 	num2 = str(text)
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
@@ -198,7 +197,7 @@ async def fuck(ctx, text):
 		await ctx.send("Иди нахуй. Я ебал.")
 # нет блять kill стол
 @bot.command()
-async def kill(ctx, text):
+async def kill(ctx, *, text):
 	author = ctx.message.author
 	num2 = str(text)
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
@@ -207,7 +206,7 @@ async def kill(ctx, text):
 		await ctx.send("Иди нахуй. Я ебал твою собаку.")
 #да блять twisted свернул шею двери
 @bot.command()
-async def twisted(ctx, text):
+async def twisted(ctx, *, text):
 	author = ctx.message.author
 	num2 = str(text)
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
@@ -261,7 +260,7 @@ async def roulette6bul(ctx):
 
 #поиск в гугле, яндексе и дакдак
 @bot.command()
-async def google(ctx, text):
+async def google(ctx, *, text):
 	text = str(text)
 	num2 = str(text)
 	link = (f"https://www.google.ru/search?q={text}")
@@ -272,7 +271,7 @@ async def google(ctx, text):
 
 
 @bot.command()
-async def yandex(ctx, text):
+async def yandex(ctx, *, text):
 	text = str(text)
 	num2 = str(text)
 	link = (f"https://yandex.ru/search/?text={text}")
@@ -282,7 +281,7 @@ async def yandex(ctx, text):
 		await ctx.send("Иди нахуй. Я ебал твою маму.")
 
 @bot.command()
-async def duckduck(ctx, text):
+async def duckduck(ctx, *, text):
 	text = str(text)
 	num2 = str(text)
 	link = (f"https://duckduckgo.com/?q={text}")
@@ -334,7 +333,7 @@ async def slots(ctx):
 @bot.command()
 async def radiolist(ctx):
 	await ctx.send(
-"\n\Список всех команд на переключение радиостанций:\n\n++anime - аниме радио\n----------------------\n++shanson - шансон\n-------------------\n++novradio - новое радио\n-------------------------\n++fmradio - фм радио\n---------------------\n++dorozhnoeradio - Дорожное радио (Омск)\n--------------------\n++radio90s - радио 90х\n-----------------------\n++pulsradio80s - радио 80х\n---------------------------\n++popradio70s - поп радио 70х\n------------------------------\n++counthitsradio - хиты кантри\n-------------------------------\n++rockhitsradio - хиты рока\n----------------------------\n++rockfmradio - рок фм\n-----------------------\n++ruyalretradio - ретро\n------------------------\n++psychedcradio - психоделик\n-----------------------------\n++classicrock - классический рок\n------------------------------\n++retrofm -  ретро фм\n----------------------\n++heavymetal - хевиметал\n-------------------------\n++radiorelaxua - украинское радио релакс\n-----------------------------------------\n++korolishyt - радио Король и Шут\n----------------------------------\n++letov - радио Гражданская оборона\n--------------------------------\n++rammstein - радио Раммштайн\n---------------------------------\n++radiosssr - ссср радио\n-------------------------\n++radiodetyam - детское радио\n-----------------------------\n++redhotchilradio - red hot chili peppers радио\n\nсписок будет дополняться")
+"\n\Список всех команд на переключение радиостанций:\n\n++anime - аниме радио\n----------------------\n++radiodacha - радио дача\n--------------------------\n++shanson - шансон\n-------------------\n++novradio - новое радио\n-------------------------\n++fmradio - фм радио\n---------------------\n++dorozhnoeradio - Дорожное радио (Омск)\n--------------------\n++radio90s - радио 90х\n-----------------------\n++pulsradio80s - радио 80х\n---------------------------\n++popradio70s - поп радио 70х\n------------------------------\n++counthitsradio - хиты кантри\n-------------------------------\n++rockhitsradio - хиты рока\n----------------------------\n++rockfmradio - рок фм\n-----------------------\n++ruyalretradio - ретро\n------------------------\n++psychedcradio - психоделик\n-----------------------------\n++classicrock - классический рок\n------------------------------\n++retrofm -  ретро фм\n----------------------\n++heavymetal - хевиметал\n-------------------------\n++radiorelaxua - украинское радио релакс\n-----------------------------------------\n++korolishyt - радио Король и Шут\n----------------------------------\n++letov - радио Гражданская оборона\n--------------------------------\n++rammstein - радио Раммштайн\n---------------------------------\n++radiosssr - ссср радио\n-------------------------\n++radiodetyam - детское радио\n-----------------------------\n++redhotchilradio - red hot chili peppers радио\n------------------------------------------------\n\nсписок будет дополняться")
 
 
 
@@ -444,7 +443,7 @@ async def anime(ctx):
 	await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
 	await ctx.send ("Радио включено. \nИграет: Аниме радио")
 @bot.command()
-async def anime(ctx):
+async def radiodacha(ctx):
 	await rplay(ctx, "http://178.217.40.125:8000/rdsat")
 	await ctx.send ("Радио включено. \nИграет: Радио дача")
 
