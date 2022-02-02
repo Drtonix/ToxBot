@@ -443,12 +443,19 @@ async def dorozhnoeradio(ctx):
 async def anime(ctx):
 	await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
 	await ctx.send ("Радио включено. \nИграет: Аниме радио")
+@bot.command()
+async def anime(ctx):
+	await rplay(ctx, "http://178.217.40.125:8000/rdsat")
+	await ctx.send ("Радио включено. \nИграет: Радио дача")
+
+
+
 
 @bot.command()
 async def mechanic(ctx, *, link: str):
 	if link != None:
 		await rplay(ctx, str(link))
-		await ctx.send("Удачно поставлено.")
+		await ctx.send("Радио включено. \nИграет: str(link)")
 	else:
 		await ctx.send("Вставьте ссылку.")
 
