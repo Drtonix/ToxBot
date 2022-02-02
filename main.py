@@ -172,7 +172,7 @@ async def randomto(ctx, text):
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send("Выпало число " + rndm +".")
 	else:
-	  await ctx.send("Иди нахуй. Я ебал твою маму.")
+	  await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
 
 
 #да или нет
@@ -183,7 +183,7 @@ async def danet(ctx, *, text):
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send(f"Я думаю что {random.choice(danet)}")
 	else:
-		await ctx.send("Иди нахуй. Я ебал твою маму.")
+		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
 
 
 #fuck табуретка
@@ -194,7 +194,7 @@ async def fuck(ctx, *, text):
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send(f"{author.mention} выебал " + num2 + ".")
 	else:
-		await ctx.send("Иди нахуй. Я ебал.")
+		await ctx.send("Иди нахуй. Я ебал.",  delete_after=5)
 # нет блять kill стол
 @bot.command()
 async def kill(ctx, *, text):
@@ -203,7 +203,7 @@ async def kill(ctx, *, text):
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send(f"{author.mention} убил " + num2 + ".")
 	else:
-		await ctx.send("Иди нахуй. Я ебал твою собаку.")
+		await ctx.send("Иди нахуй. Я ебал твою собаку.",  delete_after=5)
 #да блять twisted свернул шею двери
 @bot.command()
 async def twisted(ctx, *, text):
@@ -212,7 +212,7 @@ async def twisted(ctx, *, text):
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send(f"{author.mention} свернул шею " + num2 + ".")
 	else:
-		await ctx.send("Иди нахуй. Я ебал твою маму.")
+		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
 
 
 
@@ -267,7 +267,7 @@ async def google(ctx, *, text):
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 	else:
-		await ctx.send("Иди нахуй. Я ебал твою маму.")
+		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
 
 
 @bot.command()
@@ -278,7 +278,7 @@ async def yandex(ctx, *, text):
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 	else:
-		await ctx.send("Иди нахуй. Я ебал твою маму.")
+		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
 
 @bot.command()
 async def duckduck(ctx, *, text):
@@ -288,7 +288,7 @@ async def duckduck(ctx, *, text):
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
 		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 	else:
-		await ctx.send("Иди нахуй. Я ебал твою маму.")
+		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
 
 #ссылка на рандомную стим игру
 @bot.command()
