@@ -23,7 +23,7 @@ async def help(ctx):
 лист всех команд на данный момент:
 
 -- ++fuck_you - Бот пошлёт тебя. --
--- ++radiolist - Список всех радиостанций. --
+-- ++rlist - Список всех радиостанций. --
 -- ++time - Время по мск. --
 -- ++stop - Отключение бота от войса-выключить шансон. --
 -- ++cat - Рандомные фото кисок. --
@@ -331,10 +331,66 @@ async def slots(ctx):
 
 #список радиостанций:
 @bot.command()
-async def radiolist(ctx):
-	await ctx.send(
-"\n\Список всех команд на переключение радиостанций:\n\n++anime - аниме радио\n----------------------\n++radiodacha - радио дача\n--------------------------\n++shanson - шансон\n-------------------\n++novradio - новое радио\n-------------------------\n++fmradio - фм радио\n---------------------\n++dorozhnoeradio - Дорожное радио (Омск)\n--------------------\n++radio90s - радио 90х\n-----------------------\n++pulsradio80s - радио 80х\n---------------------------\n++popradio70s - поп радио 70х\n------------------------------\n++counthitsradio - хиты кантри\n-------------------------------\n++rockhitsradio - хиты рока\n----------------------------\n++rockfmradio - рок фм\n-----------------------\n++ruyalretradio - ретро\n------------------------\n++psychedcradio - психоделик\n-----------------------------\n++classicrock - классический рок\n------------------------------\n++retrofm -  ретро фм\n----------------------\n++heavymetal - хевиметал\n-------------------------\n++radiorelaxua - украинское радио релакс\n-----------------------------------------\n++korolishyt - радио Король и Шут\n----------------------------------\n++letov - радио Гражданская оборона\n--------------------------------\n++rammstein - радио Раммштайн\n---------------------------------\n++radiosssr - ссср радио\n-------------------------\n++radiodetyam - детское радио\n-----------------------------\n++redhotchilradio - red hot chili peppers радио\n------------------------------------------------\n\nсписок будет дополняться")
-
+async def rlist(ctx):
+	await ctx.send('''
+<><><><><><><><><><><><><><><><><><><><><><>
+- Список всех команд на переключение радиостанций: -
+<><><><><><><><><><><><><><><><><><><><><><>
+-----------------------------------
+ ++p1 - аниме радио
+---------------------------------
+ ++p2 - радио дача
+------------------------------------
+ ++p3 - шансон
+--------------------------------
+ ++p4 - новое радио
+------------------------------------
+ ++p5 - фм радио
+------------------------------------------------
+ ++p6 - Дорожное радио (Омск)
+--------------------------------------------
+ ++p7 - поп радио 70х
+--------------------------------------
+ ++p8 - радио 80х
+-------------------------------------------
+ ++p9 - радио 90х
+----------------------------------------
+ ++p10 - хиты кантри
+-------------------------------------------
+ ++p11 - хиты рока
+------------------------------------
+ ++p12 - рок фм
+--------------------------------------
+ ++p13 - ретро
+------------------------------------
+ ++p14 - психоделик
+----------------------------------------
+ ++p15 - классический рок
+------------------------------------------
+ ++p16 -  ретро фм
+---------------------------------
+ ++p17 - хевиметал
+----------------------------------------------------
+ ++p18 - украинское радио релакс
+-----------------------------------------------
+ ++p19 - детское радио
+-------------------------------------
+ ++p20 - ссср радио
+---------------------------------------
+ ++pRMS - радио Раммштайн
+----------------------------------------------------
+ ++pRHCP - red hot chili peppers радио
+-------------------------------------------------------
+ ++pKISH - радио Король и Шут
+------------------------------------------------
+ ++pL - радио Гражданская оборона
+----------------------------------------------------
+ ++p0 "*ссылка на поток*" - своё радио
+----------------------------------------------
+<><><><><><><><><><><><>
+- список будет дополняться -
+<><><><><><><><><><><><>
+''')
 
 
 #радио
@@ -351,99 +407,99 @@ async def rplay(ctx, link: None):
 			player.play(FFmpegPCMAudio(link))
 
 @bot.command()
-async def shanson(ctx):
+async def p3(ctx):
 	await rplay(ctx, "http://chanson.hostingradio.ru:8041/chanson256.mp3")
 	await ctx.send ("Радио включено.\nИграет: Шансон")
 @bot.command()
-async def novradio(ctx):
+async def p4(ctx):
 	await rplay(ctx, "http://live.novoeradio.by:8000/novoeradio-128k")
 	await ctx.send ("Радио включено.\nИграет: Новое радио")
 @bot.command()
-async def fmradio(ctx):
+async def p5(ctx):
 	await rplay(ctx, "http://listen.teploe.net:8100/npkfm")
 	await ctx.send ("Радио включено.\nИграет: Фм радио")
 @bot.command()
-async def radio90s(ctx):
+async def p9(ctx):
 	await rplay(ctx, "http://prmstrm.1.fm:8000/90s")
-	await ctx.send ("Радио включено.\nИграет: Радио 80х")
+	await ctx.send ("Радио включено.\nИграет: Радио 90х")
 @bot.command()
-async def popradio70s(ctx):
+async def p7(ctx):
 	await rplay(ctx, "http://prmstrm.1.fm:8000/70s")
 	await ctx.send ("Радио включено.\nИграет: Поп радио 70х")
 @bot.command()
-async def counthitsradio(ctx):
+async def p10(ctx):
 	await rplay("http://prmstrm.1.fm:8000/acountry")
 	await ctx.send ("Радио включено.\nИграет: Хиты кантри")
 @bot.command()
-async def rockhitsradio(ctx):
+async def p11(ctx):
 	await rplay(ctx, "http://prmstrm.1.fm:8000/x")
 	await ctx.send ("Радио включено.\nИграет: Хиты рока")
 @bot.command()
-async def rockfmradio(ctx):
+async def p12(ctx):
 	await rplay(ctx, "http://jfm1.hostingradio.ru:14536/rock00.mp3")
 	await ctx.send ("Радио включено.\nИграет: Рок фм радио")
 @bot.command()
-async def royalretradio(ctx):
+async def p13(ctx):
 	await rplay(ctx, "http://185.39.195.90:8000/nostalgia")
 	await ctx.send ("Радио включено.\nИграет: Ретро")
 @bot.command()
-async def psychedcradio(ctx):
+async def p14(ctx):
 	await rplay(ctx, "http://psyprog.rupsy.ru:8000/psyprog")
 	await ctx.send ("Радио включено.\nИграет: Психоделик")
 @bot.command()
-async def radiodetyam(ctx):
+async def p19(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/rusradio_deti-hi")
 	await ctx.send ("Радио включено.\nИграет: Детское радио")
 @bot.command()
-async def retrofm(ctx):
+async def p16(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/retrofm_ru-hi")
 	await ctx.send ("Радио включено.\nИграет: Ретро фм")
 @bot.command()
-async def radiosssr(ctx):
+async def p20(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/SSSR-hi")
 	await ctx.send ("Радио включено.\nИграет: Ссср радио")
 @bot.command()
-async def radiorelaxua(ctx):
+async def p18(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/radiorelax_ua-hi")
 	await ctx.send ("Радио включено.\nИграет: Украинское радио релакс")
 @bot.command()
-async def korolishyt(ctx):
+async def pKISH(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/Korol_i_Shut-hi")
 	await ctx.send ("Радио включено.\nИграет: Радио Король и Шут")
 @bot.command()
-async def letov(ctx):
+async def pL(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/Grazhdanskaja_oborona-hi")
 	await ctx.send ("Радио включено.\nИграет: Радио Гражданская оборона")
 @bot.command()
-async def classicrock(ctx):
+async def p15(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/rpr1_de_clasro-hi")
 	await ctx.send ("Радио включено.\nИграет: Классический рок")
 @bot.command()
-async def heavymetal(ctx):
+async def p17(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/rpr1_de_metal-hi")
 	await ctx.send ("Радио включено.\nИграет: Хевиметал")
 @bot.command()  
-async def rammstein(ctx):
+async def pRMS(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/Rammstein-hi")
 	await ctx.send ("Радио включено.\nИграет: Раммштайн")
 @bot.command()
-async def redhotchilradio(ctx):
+async def pRHCP(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/red_hot_chili_peppers-hi")
 	await ctx.send ("Радио включено.\nИграет: Red Hot Chili Peppers радио")
 @bot.command()
-async def pulsradio80s(ctx):
+async def p8(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/pulsradio_80s-hi")
 	await ctx.send ("Радио включено.\nИграет: Радио 80х")
 @bot.command()
-async def dorozhnoeradio(ctx):
+async def p6(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/dorozhnoe_omsk-hi")
 	await ctx.send ("Радио включено.\nИграет: Дорожное радио (Омск)")
 @bot.command()
-async def anime(ctx):
+async def p1(ctx):
 	await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
 	await ctx.send ("Радио включено. \nИграет: Аниме радио")
 @bot.command()
-async def radiodacha(ctx):
+async def p2(ctx):
 	await rplay(ctx, "http://178.217.40.125:8000/rdsat")
 	await ctx.send ("Радио включено. \nИграет: Радио дача")
 
@@ -451,7 +507,7 @@ async def radiodacha(ctx):
 
 
 @bot.command()
-async def mechanic(ctx, *, link: str):
+async def p0(ctx, *, link: str):
 	if link != None:
 		await rplay(ctx, str(link))
 		await ctx.send("Радио включено. \nИграет: str(link)")
