@@ -83,6 +83,12 @@ async def time(ctx):
 	datetime_Moscow = datetime.now(tz_Moscow)
 	await ctx.send(datetime_Moscow.strftime("%H:%M:%S"))
 
+#пинг
+@bot.command()
+async def ping(ctx):
+    embed = discord.Embed(title="ping", description=f" {round(bot.latency * 1000)} ms", colour = discord.Colour.from_rgb(230,0,0))
+    await ctx.send(embed=embed)
+
 
 
 #db.addevery
@@ -295,7 +301,7 @@ async def steam(ctx):
 async def slots(ctx):
 	slots = ["🍓", "🍉","🍋", "🍒"]
 	r1 = random.choice(slots)
-	embed = discord.Embed(title="ToxCasino777", description=r1 + ":grey_question:" + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(0,254,39))
+	embed = discord.Embed(title="ToxCasino777", description=r1 + ":grey_question:" + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
 	embed.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 	msg = await ctx.send(embed=embed)
 	for x in range(4):
