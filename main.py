@@ -337,11 +337,11 @@ async def rlist(ctx):
 - Список всех команд на переключение радиостанций: -
 <><><><><><><><><><><><><><><><><><><><><><>
 -----------------------------------
- ++p1 - аниме радио
+ ++p1 - шансон
 ---------------------------------
  ++p2 - радио дача
 ------------------------------------
- ++p3 - шансон
+ ++p3 - хуй забей радио
 --------------------------------
  ++p4 - новое радио
 ------------------------------------
@@ -360,9 +360,9 @@ async def rlist(ctx):
  ++p11 - хиты рока
 ------------------------------------
  ++p12 - рок фм
---------------------------------------
- ++p13 - ретро
-------------------------------------
+-----------------------------------------
+ ++p13 - Христианское радио
+-------------------------------------
  ++p14 - психоделик
 ----------------------------------------
  ++p15 - классический рок
@@ -407,7 +407,7 @@ async def rplay(ctx, link: None):
 			player.play(FFmpegPCMAudio(link))
 
 @bot.command()
-async def p3(ctx):
+async def p1(ctx):
 	await rplay(ctx, "http://chanson.hostingradio.ru:8041/chanson256.mp3")
 	await ctx.send ("Радио включено.\nИграет: Шансон")
 @bot.command()
@@ -428,7 +428,7 @@ async def p7(ctx):
 	await ctx.send ("Радио включено.\nИграет: Поп радио 70х")
 @bot.command()
 async def p10(ctx):
-	await rplay("http://prmstrm.1.fm:8000/acountry")
+	await rplay(ctx, "http://prmstrm.1.fm:8000/acountry")
 	await ctx.send ("Радио включено.\nИграет: Хиты кантри")
 @bot.command()
 async def p11(ctx):
@@ -440,8 +440,8 @@ async def p12(ctx):
 	await ctx.send ("Радио включено.\nИграет: Рок фм радио")
 @bot.command()
 async def p13(ctx):
-	await rplay(ctx, "http://185.39.195.90:8000/nostalgia")
-	await ctx.send ("Радио включено.\nИграет: Ретро")
+	await rplay(ctx, "https://str.pcradio.ru/radio123_by-hi")
+	await ctx.send ("Радио включено.\nИграет: Христианское радио")
 @bot.command()
 async def p14(ctx):
 	await rplay(ctx, "http://psyprog.rupsy.ru:8000/psyprog")
@@ -495,9 +495,9 @@ async def p6(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/dorozhnoe_omsk-hi")
 	await ctx.send ("Радио включено.\nИграет: Дорожное радио (Омск)")
 @bot.command()
-async def p1(ctx):
-	await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
-	await ctx.send ("Радио включено. \nИграет: Аниме радио")
+async def p3(ctx):
+	await rplay(ctx, "https://str.pcradio.ru/Hui_Zabey-hi")
+	await ctx.send ("Радио включено. \nИграет: Хуй Забей радио")
 @bot.command()
 async def p2(ctx):
 	await rplay(ctx, "http://178.217.40.125:8000/rdsat")
@@ -510,7 +510,7 @@ async def p2(ctx):
 async def p0(ctx, *, link: str):
 	if link != None:
 		await rplay(ctx, str(link))
-		await ctx.send("Радио включено. \nИграет: str(link)")
+		await ctx.send(f"Радио включено. \nИграет: {str(link)}")
 	else:
 		await ctx.send("Вставьте ссылку.")
 
