@@ -377,6 +377,8 @@ async def rlist(ctx):
 -------------------------------------
  ++p20 - ссср радио
 ---------------------------------------
+ ++p21 - радио аниме из Осаки.
+ ----------------------------------------------
  ++pRMS - радио Раммштайн
 ----------------------------------------------------
  ++pRHCP - red hot chili peppers радио
@@ -394,7 +396,6 @@ async def rlist(ctx):
 
 
 #радио
-@bot.command()
 async def rplay(ctx, link: None):
 	if link != None:
 		voice_channel = bot.get_channel(928937414913851412)
@@ -502,9 +503,10 @@ async def p3(ctx):
 async def p2(ctx):
 	await rplay(ctx, "http://178.217.40.125:8000/rdsat")
 	await ctx.send ("Радио включено. \nИграет: Радио дача")
-
-
-
+@bot.command()
+async def p21(ctx):
+	await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
+	await ctx.send ("Радио включено. \nИграет: Аниме радио из Осаки.")
 
 @bot.command()
 async def p0(ctx, *, link: str):
