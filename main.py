@@ -330,7 +330,7 @@ async def rlist(ctx):
 ---------------------------------
  ++p2 - радио дача
 ------------------------------------
- ++p3 - хуй забей радио
+ ++p3 - х_й забей радио
 --------------------------------
  ++p4 - новое радио
 ------------------------------------
@@ -486,7 +486,7 @@ async def p6(ctx):
 @bot.command()
 async def p3(ctx):
 	await rplay(ctx, "https://str.pcradio.ru/Hui_Zabey-hi")
-	await ctx.send ("Радио включено. \nИграет: Хуй Забей радио")
+	await ctx.send ("Радио включено. \nИграет: Х_й Забей радио")
 @bot.command()
 async def p2(ctx):
 	await rplay(ctx, "http://178.217.40.125:8000/rdsat")
