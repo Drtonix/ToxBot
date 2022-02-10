@@ -16,9 +16,9 @@ Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
 
 @bot.event
 async def on_ready():
-    activity = discord.Game(name="++help", type=3)
-    await bot.change_presence(status=discord.Status.idle, activity=activity)
-    print("Бот cumming")
+	activity = discord.Game(name="++help", type=3)
+	await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="++help"))
+	print("Бот успешно cumming!")
 
 
 
