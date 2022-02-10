@@ -14,6 +14,12 @@ bot = Bot(command_prefix="++", help_command=None)
 client = discord.ext.commands.Bot(command_prefix = "++")
 Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
 
+@bot.event
+async def on_ready():
+    activity = discord.Game(name="++help", type=3)
+    await bot.change_presence(status=discord.Status.idle, activity=activity)
+    print("Бот cumming")
+
 
 
 #лист команд
@@ -43,6 +49,7 @@ async def help(ctx):
 -
 - ++steam - Ссылка на рандомную игру из стима.
 ''')
+
 
 
 #инфо
@@ -85,7 +92,7 @@ async def ping(ctx):
 
 #db.addevery
 @bot.event
-async def on_ready() -> None:
+async def rplayer() -> None:
 	voice_channel = bot.get_channel(928937414913851412)
 	player = await voice_channel.connect()
 	player.play(FFmpegPCMAudio("http://chanson.hostingradio.ru:8041/chanson256.mp3"))
@@ -258,7 +265,7 @@ async def google(ctx, *, text):
 	num2 = str(text)
 	link = (f"https://www.google.ru/search?q={text}")
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+		await ctx.send(f"Ссылка :dbToxCoin: на поиск по запросу {text}:  \n{link}.")
 	else:
 		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
 
