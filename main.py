@@ -2,6 +2,7 @@ from discord import FFmpegPCMAudio, Activity, ActivityType
 from discord.ext.commands import Bot
 from discord.ext import commands
 from datetime import datetime
+from discord_slash import SlashCommand, SlashContext
 import time
 import random
 import asyncio
@@ -13,13 +14,14 @@ import pytz
 bot = Bot(command_prefix="++", help_command=None)
 client = discord.ext.commands.Bot(command_prefix = "++")
 Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
+intents = discord.Intents.all()
+slash = SlashCommand(client, sync_commands=True)
+
 
 @bot.event
 async def on_ready():
-	activity = discord.Game(name="++help", type=3)
 	await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="++help"))
 	print("Бот успешно cumming!")
-
 
 
 #лист команд
@@ -51,7 +53,6 @@ async def help(ctx):
 ''')
 
 
-
 #инфо
 @bot.command()
 async def info(ctx):
@@ -68,12 +69,12 @@ async def info(ctx):
 ----------------------------------------------------------
 ''')
 
+
 #fuck_you
 @bot.command()
 async def fuck_you(ctx):
 	author = ctx.message.author
 	await ctx.send(f"No, {author.mention}, fuck you!")
-
 
 #time
 @bot.command()
@@ -87,8 +88,6 @@ async def time(ctx):
 async def ping(ctx):
     embed = discord.Embed(title="ping", description=f" {round(bot.latency * 1000)} ms", colour = discord.Colour.from_rgb(230,0,0))
     await ctx.send(embed=embed)
-
-
 
 #db.addevery
 @bot.event
@@ -105,8 +104,6 @@ async def stop(ctx):
 @bot.command()
 async def c(ctx):
 	await ctx.send("Ты еблан?")
-
-
 
 
 #дог фокс гей егор энд кет
@@ -137,6 +134,7 @@ async def cat(ctx):
 	embed.set_image(url = json_data["link"])
 	await ctx.send(embed = embed)
 
+
 @bot.command()
 async def cum(ctx):
 	response = ("http://www.hudeem-s-profi.ru/files/images/6zqbxxxljrnpsdldhcxz.jpg")
@@ -158,7 +156,6 @@ async def balls(ctx):
 	await ctx.send(random.choice(strings))
 
 
-
 #рандом
 @bot.command()
 async def coin(ctx):
@@ -173,8 +170,6 @@ async def randomto(ctx, text):
 		await ctx.send("Выпало число " + rndm +".")
 	else:
 	  await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
-
-
 #да или нет
 @bot.command()
 async def danet(ctx, *, text):
@@ -215,9 +210,6 @@ async def twisted(ctx, *, text):
 		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
 
 
-
-
-
 #рулетка
 @bot.command()
 async def roulette(ctx):
@@ -255,9 +247,6 @@ async def roulette6bul(ctx):
 	await ctx.send(f'{author.mention} застрелился от своей тупости.')
 
 
-
-
-
 #поиск в гугле, яндексе и дакдак
 @bot.command()
 async def google(ctx, *, text):
@@ -268,8 +257,6 @@ async def google(ctx, *, text):
 		await ctx.send(f"Ссылка :dbToxCoin: на поиск по запросу {text}:  \n{link}.")
 	else:
 		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
-
-
 @bot.command()
 async def yandex(ctx, *, text):
 	text = str(text)
@@ -279,7 +266,6 @@ async def yandex(ctx, *, text):
 		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 	else:
 		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
-
 @bot.command()
 async def duckduck(ctx, *, text):
 	text = str(text)
@@ -289,6 +275,7 @@ async def duckduck(ctx, *, text):
 		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 	else:
 		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
+
 
 #ссылка на рандомную стим игру
 @bot.command()
@@ -323,11 +310,8 @@ async def slots(ctx):
 		new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2  + r3  + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
 		new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 		await msg.edit(embed=new_emb)
-
 	await ctx.send("конец игры")
 
-
-#очень много радиостанций
 
 #список радиостанций:
 @bot.command()
@@ -404,6 +388,7 @@ async def rplay(ctx, link: None):
 		else:
 			player = await voice_channel.connect()
 			player.play(FFmpegPCMAudio(link))
+
 
 @bot.command()
 async def p1(ctx):
