@@ -1,7 +1,9 @@
+#hello, Its ToxBot for discord.
 from discord import FFmpegPCMAudio, Activity, ActivityType
 from discord.ext.commands import Bot
 from discord.ext import commands
 from datetime import datetime
+from random import randrange
 import time
 import random
 import asyncio
@@ -13,6 +15,7 @@ import pytz
 bot = Bot(command_prefix="++", help_command=None)
 client = discord.ext.commands.Bot(command_prefix = "++")
 Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
+
 
 
 @bot.event
@@ -55,12 +58,15 @@ async def help(ctx):
 async def info(ctx):
 	await ctx.send('''
 ---------------------------------------------------------
--- Работают над ботом: Tonix#5322 , 410#0797 
+-- Работают над ботом: Tonix#5322 , 410#0797
 ------------------------------------------------------------
--- Помогал: plаyer210#9142                          
+-- Помогал: plаyer210#9142
 ------------------------------------------------------
--- Пожертвования на разработку:                            
--- <https://yoomoney.ru/to/4100112019491157>      
+-- Пожертвования на разработку:
+-- Юmoney:
+-- <https://yoomoney.ru/to/4100112019491157>
+-- Qiwi:
+-- TONIXX
 ------------------------------------------------------------
 -- Донатеры: Porg_Studio
 ----------------------------------------------------------
