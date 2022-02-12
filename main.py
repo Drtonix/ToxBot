@@ -187,19 +187,19 @@ async def danet(ctx, *, text):
 async def fuck(ctx, *, text):
 	author = ctx.message.author
 	txt = discord.utils.escape_mentions(text)
-	await ctx.send("{author.mention} выебал {}.".format(txt))
+	await ctx.send(f"{author.mention} выебал {txt}.")
 # нет блять kill стол
 @bot.command()
 async def kill(ctx, *, text):
 	author = ctx.message.author
 	txt = discord.utils.escape_mentions(text)
-	await ctx.send("{author.mention} убил {}.".format(txt))
+	await ctx.send(f"{author.mention} убил {txt}.")
 #да блять twisted свернул шею двери
 @bot.command()
 async def twisted(ctx, *, text):
 	author = ctx.message.author
 	txt = discord.utils.escape_mentions(text)
-	await ctx.send("{author.mention} свернул шею {}.".format(txt))
+	await ctx.send(f"{author.mention} свернул шею {txt}.")
 
 
 #рулетка
