@@ -2,7 +2,6 @@ from discord import FFmpegPCMAudio, Activity, ActivityType
 from discord.ext.commands import Bot
 from discord.ext import commands
 from datetime import datetime
-from discord_slash import SlashCommand, SlashContext
 import time
 import random
 import asyncio
@@ -14,8 +13,6 @@ import pytz
 bot = Bot(command_prefix="++", help_command=None)
 client = discord.ext.commands.Bot(command_prefix = "++")
 Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
-intents = discord.Intents.all()
-slash = SlashCommand(client, sync_commands=True)
 
 
 @bot.event
