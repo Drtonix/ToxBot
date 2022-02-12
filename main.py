@@ -257,7 +257,7 @@ async def google(ctx, *, text):
 	num2 = str(text)
 	link = (f"https://www.google.ru/search?q={text}")
 	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-		await ctx.send(f"Ссылка :dbToxCoin: на поиск по запросу {text}:  \n{link}.")
+		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 	else:
 		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
 @bot.command()
