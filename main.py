@@ -59,8 +59,6 @@ async def info(ctx):
 	await ctx.send('''
 ---------------------------------------------------------
 -- Работают над ботом: Tonix#5322 , 410#0797
-------------------------------------------------------------
--- Помогал: plаyer210#9142
 ------------------------------------------------------
 -- Пожертвования на разработку:
 -- Юmoney:
@@ -188,29 +186,20 @@ async def danet(ctx, *, text):
 @bot.command()
 async def fuck(ctx, *, text):
 	author = ctx.message.author
-	num2 = str(text)
-	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-		await ctx.send(f"{author.mention} выебал " + num2 + ".")
-	else:
-		await ctx.send("Иди нахуй. Я ебал.",  delete_after=5)
+	txt = discord.utils.escape_mentions(text)
+	await ctx.send(f"{author.mention} выебал", txt + ".")
 # нет блять kill стол
 @bot.command()
 async def kill(ctx, *, text):
 	author = ctx.message.author
-	num2 = str(text)
-	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-		await ctx.send(f"{author.mention} убил " + num2 + ".")
-	else:
-		await ctx.send("Иди нахуй. Я ебал твою собаку.",  delete_after=5)
+	txt = discord.utils.escape_mentions(text)
+	await ctx.send(f"{author.mention} убил", txt + ".")
 #да блять twisted свернул шею двери
 @bot.command()
 async def twisted(ctx, *, text):
 	author = ctx.message.author
-	num2 = str(text)
-	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-		await ctx.send(f"{author.mention} свернул шею " + num2 + ".")
-	else:
-		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
+	txt = discord.utils.escape_mentions(text)
+	await ctx.send(f"{author.mention} свернул шею", txt + ".")
 
 
 #рулетка
