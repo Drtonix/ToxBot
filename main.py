@@ -4,6 +4,7 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 from datetime import datetime
 from random import randrange
+import string
 import time
 import random
 import asyncio
@@ -43,6 +44,7 @@ async def help(ctx):
 -
 - ++kill @человек - Убить.
 - ++twisted @человек - Свернуть шею.
+- ++laugh - Бот посмеётся.
 -
 - ++google *текст* - Ссылка на запрос гугл.
 - ++yandex *текст* - Ссылка на запрос яндекс.
@@ -69,6 +71,13 @@ async def info(ctx):
 -- Донатеры: Porg_Studio
 ----------------------------------------------------------
 ''')
+
+
+@bot.command()
+async def laugh(ctx):
+	def rnd_str(min_chars=6, max_chars=10, alphabet=("А", "Х", "П", "а", "х", "п")):
+		return ''.join(random.choices(alphabet, k=random.randint(min_chars, max_chars)))
+	await ctx.send(f"{(rnd_str(6, 10))}!!!")
 
 
 #fuck_you
@@ -157,6 +166,7 @@ async def balls(ctx):
 	await ctx.send(random.choice(strings))
 
 
+
 #рандом
 @bot.command()
 async def coin(ctx):
@@ -167,19 +177,13 @@ async def coin(ctx):
 async def randomto(ctx, text):
 	num2 = str(text)
 	rndm = str(random.randint(1, int(num2[num2.find(" ")+1:len(num2)])))
-	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-		await ctx.send("Выпало число " + rndm +".")
-	else:
-	  await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
+	await ctx.send("Выпало число " + rndm +".")
 #да или нет
 @bot.command()
 async def danet(ctx, *, text):
 	num2 = str(text)
 	danet = ['да.'] * 25 + ['нет.'] * 25 + ['скорее всего.'] * 25 + ['наверное.'] * 25
-	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-		await ctx.send(f"Я думаю что {random.choice(danet)}")
-	else:
-		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
+	await ctx.send(f"Я думаю что {random.choice(danet)}")
 
 
 #fuck табуретка
@@ -242,31 +246,22 @@ async def roulette6bul(ctx):
 #поиск в гугле, яндексе и дакдак
 @bot.command()
 async def google(ctx, *, text):
-	text = str(text)
+	text = discord.utils.escape_mentions(str(text))
 	num2 = str(text)
 	link = (f"https://www.google.ru/search?q={text}")
-	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
-	else:
-		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
+	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 @bot.command()
 async def yandex(ctx, *, text):
-	text = str(text)
+	text = discord.utils.escape_mentions(str(text))
 	num2 = str(text)
 	link = (f"https://yandex.ru/search/?text={text}")
-	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
-	else:
-		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
+	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 @bot.command()
 async def duckduck(ctx, *, text):
-	text = str(text)
+	text = discord.utils.escape_mentions(str(text))
 	num2 = str(text)
 	link = (f"https://duckduckgo.com/?q={text}")
-	if num2.find("@here") == -1 and num2.find("@everyone") == -1:
-		await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
-	else:
-		await ctx.send("Иди нахуй. Я ебал твою маму.",  delete_after=5)
+	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 
 
 #ссылка на рандомную стим игру
