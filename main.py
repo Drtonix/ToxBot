@@ -46,9 +46,10 @@ async def help(ctx):
 - ++twisted @человек - Свернуть шею.
 - ++laugh - Бот посмеётся.
 -
-- ++google *текст* - Ссылка на запрос гугл.
-- ++yandex *текст* - Ссылка на запрос яндекс.
+- ++google *текст* - Ссылка на запрос google.
+- ++yandex *текст* - Ссылка на запрос yandex.
 - ++duckduck *текст* - Ссылка на запрос duckduckgo.
+- ++yahoo *текст* - Ссылка на запрос yahoo.
 - (*Для более одного слова используйте +, пример: ++google рыжие+коты.*)
 -
 - ++steam - Ссылка на рандомную игру из стима.
@@ -72,6 +73,9 @@ async def info(ctx):
 ----------------------------------------------------------
 ''')
 
+@bot.command()
+async def nothing(ctx):
+	await ctx.send("** **")
 
 @bot.command()
 async def laugh(ctx):
@@ -121,7 +125,6 @@ async def c(ctx):
 async def dog(ctx):
 	response = requests.get("https://some-random-api.ml/img/dog")
 	json_data = json.loads(response.text)
-
 	embed = discord.Embed(color = 0x8b0000, title = "Fucking dog.")
 	embed.set_image(url = json_data["link"])
 	await ctx.send(embed = embed)
@@ -130,7 +133,6 @@ async def dog(ctx):
 async def fox(ctx):
 	response = requests.get("https://some-random-api.ml/img/fox")
 	json_data = json.loads(response.text)
-
 	embed = discord.Embed(color = 0x8b0000, title = "Fucking fox.")
 	embed.set_image(url = json_data["link"])
 	await ctx.send(embed = embed)
@@ -139,7 +141,6 @@ async def fox(ctx):
 async def cat(ctx):
 	response = requests.get("https://some-random-api.ml/img/cat")
 	json_data = json.loads(response.text)
-
 	embed = discord.Embed(color = 0x8b0000, title = "Fucking cat.")
 	embed.set_image(url = json_data["link"])
 	await ctx.send(embed = embed)
@@ -247,20 +248,22 @@ async def roulette6bul(ctx):
 @bot.command()
 async def google(ctx, *, text):
 	text = discord.utils.escape_mentions(str(text))
-	num2 = str(text)
 	link = (f"https://www.google.ru/search?q={text}")
 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 @bot.command()
 async def yandex(ctx, *, text):
 	text = discord.utils.escape_mentions(str(text))
-	num2 = str(text)
 	link = (f"https://yandex.ru/search/?text={text}")
 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 @bot.command()
 async def duckduck(ctx, *, text):
 	text = discord.utils.escape_mentions(str(text))
-	num2 = str(text)
 	link = (f"https://duckduckgo.com/?q={text}")
+	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
+@bot.command()
+async def yahoo(ctx, *, text):
+	text = discord.utils.escape_mentions(str(text))
+	link = (f"https://search.yahoo.com/search?p={text}")
 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 
 
