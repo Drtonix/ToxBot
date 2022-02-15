@@ -22,15 +22,16 @@ Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
 @bot.command()
 async def ver(ctx):
 		embed = discord.Embed(title="ToxBot", description=
-'''Tox 0.4.7!
+'''Tox 0.4.7.2!
 
 Что нового:
 ++ver - Версия бота.
-++cal (+,-,/,*) (*числа*) - Калькулятор.
+++cal (+,-,/,*) (числа через пробел) - Калькулятор.
 
 
 Прочее:
-Фиксы. ''', colour = discord.Colour.from_rgb(230,0,0))
+Фиксы.
+Фиксы фиксов.''', colour = discord.Colour.from_rgb(230,0,0))
 		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		msg = await ctx.send(embed=embed)
 		await msg.edit(embed=new_emb)
@@ -72,7 +73,7 @@ async def help(ctx):
 - ++laugh - Бот посмеётся.
 -
 - ++ver - Текущая версия бота.
-- ++cal (+,-,/,*) (*числа*) - Калькулятор.
+- ++cal (+,-,/,*) (числа через пробел) - Калькулятор.
 - ++google *текст* - Ссылка на запрос google.
 - ++yandex *текст* - Ссылка на запрос yandex.
 - ++duckduck *текст* - Ссылка на запрос duckduckgo.
