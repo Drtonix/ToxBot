@@ -1,4 +1,4 @@
-#hello, Its ToxBot for discord.
+#hello, Its ToxBot0.4.7 for discord.
 from discord import FFmpegPCMAudio, Activity, ActivityType
 from discord.ext.commands import Bot
 from discord.ext import commands
@@ -17,6 +17,31 @@ bot = Bot(command_prefix="++", help_command=None)
 client = discord.ext.commands.Bot(command_prefix = "++")
 Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
 
+
+
+@bot.command()
+async def ver(ctx):
+		embed = discord.Embed(title="ToxBot", description=
+'''Tox 0.4.7!
+
+Что нового:
+++ver - Версия бота.
+++cal *+,-,/,** *числа* - Калькулятор.
+
+
+Прочее:
+Фиксы. ''', colour = discord.Colour.from_rgb(230,0,0))
+		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+		msg = await ctx.send(embed=embed)
+		await msg.edit(embed=new_emb)
+
+
+@bot.command()
+async def cal(ctx, operation, *nums):
+	if operation not in ['+', '-', '*', '/']:
+		await ctx.send('Пожалуйста введите команду правильно.')
+	var = f' {operation} '.join(nums)
+	await ctx.send(f'{var} = {eval(var)}')
 
 
 @bot.event
@@ -46,6 +71,8 @@ async def help(ctx):
 - ++twisted @человек - Свернуть шею.
 - ++laugh - Бот посмеётся.
 -
+- ++ver - Текущая версия бота.
+- ++cal *+,-,/,** *числа* - Калькулятор.
 - ++google *текст* - Ссылка на запрос google.
 - ++yandex *текст* - Ссылка на запрос yandex.
 - ++duckduck *текст* - Ссылка на запрос duckduckgo.
@@ -273,6 +300,7 @@ async def steam(ctx):
 	await ctx.send("Ссылка на рандомную игру из стима:\n<https://store.steampowered.com/explore/random>")
 
 
+#казино
 @bot.command()
 async def slots(ctx):
 	slots = ["🍓", "🍉","🍋", "🍒"]
