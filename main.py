@@ -1,4 +1,4 @@
-#hello, Its ToxBot0.4.7 for discord.
+#hello, Its ToxBot for discord.
 from discord import FFmpegPCMAudio, Activity, ActivityType
 from discord.ext.commands import Bot
 from discord.ext import commands
@@ -22,16 +22,18 @@ Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
 @bot.command()
 async def ver(ctx):
 		embed = discord.Embed(title="ToxBot", description=
-'''Tox 0.4.7.2!
+'''Tox 0.4.7.3!
 
 Что нового:
-++ver - Версия бота.
-++cal (+,-,/,*) (числа через пробел) - Калькулятор.
+Кмх....
 
 
 Прочее:
 Фиксы.
-Фиксы фиксов.''', colour = discord.Colour.from_rgb(230,0,0))
+Фиксы.
+Фиксы фиксов.
+создатель понял что есть ctx.reply
+создатель переделал пару команд''', colour = discord.Colour.from_rgb(230,0,0))
 		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		msg = await ctx.send(embed=embed)
 		await msg.edit(embed=new_emb)
@@ -40,9 +42,9 @@ async def ver(ctx):
 @bot.command()
 async def cal(ctx, operation, *nums):
 	if operation not in ['+', '-', '*', '/']:
-		await ctx.send('Пожалуйста введите команду правильно.')
+		await ctx.reply('Пожалуйста введите команду правильно.')
 	var = f' {operation} '.join(nums)
-	await ctx.send(f'{var} = {eval(var)}')
+	await ctx.reply(f'{var} = {eval(var)}')
 
 
 @bot.event
@@ -73,7 +75,7 @@ async def help(ctx):
 - ++laugh - Бот посмеётся.
 -
 - ++ver - Текущая версия бота.
-- ++cal (+,-,/,*) (числа через пробел) - Калькулятор.
+- ++cal *+,-,/,** *числа* - Калькулятор.
 - ++google *текст* - Ссылка на запрос google.
 - ++yandex *текст* - Ссылка на запрос yandex.
 - ++duckduck *текст* - Ссылка на запрос duckduckgo.
@@ -116,7 +118,7 @@ async def laugh(ctx):
 @bot.command()
 async def fuck_you(ctx):
 	author = ctx.message.author
-	await ctx.send(f"No, {author.mention}, fuck you!")
+	await ctx.reply(f"No, {author.mention}, fuck you!")
 
 #time
 @bot.command()
@@ -145,7 +147,8 @@ async def stop(ctx):
 
 @bot.command()
 async def c(ctx):
-	await ctx.send("Ты еблан?")
+	author = ctx.message.author
+	await ctx.reply(f"{author.mention} ты еблан?")
 
 
 #дог фокс гей егор энд кет
@@ -329,7 +332,7 @@ async def slots(ctx):
 		new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2  + r3  + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
 		new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 		await msg.edit(embed=new_emb)
-	await ctx.send("конец игры")
+	await ctx.reply("Конец игры.")
 
 
 #список радиостанций:
