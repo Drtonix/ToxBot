@@ -22,21 +22,21 @@ Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
 @bot.command()
 async def ver(ctx):
 		embed = discord.Embed(title="ToxBot", description=
-'''Tox 0.4.7.3!
+'''Tox 0.4.7.5!
 
 Что нового:
-Кмх....
+Команды стали немного лучше выглядить,
+например попробуйте ввести ++time.
 
 
 Прочее:
-Фиксы.
-Фиксы.
-Фиксы фиксов.
-создатель понял что есть ctx.reply
-создатель переделал пару команд''', colour = discord.Colour.from_rgb(230,0,0))
+Ещё больше фиксов.
+Разраб научился ставить реакции.
+*В боте уже 530 строк кода кек.* ''', colour = discord.Colour.from_rgb(230,0,0))
 		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		msg = await ctx.send(embed=embed)
-		await msg.edit(embed=new_emb)
+		emoji = "💩"
+		await msg.add_reaction(emoji)
 
 
 @bot.command()
@@ -56,7 +56,7 @@ async def on_ready():
 #лист команд
 @bot.command()
 async def help(ctx):
-	await ctx.send('''
+		embed = discord.Embed(title="ToxBot", description='''
 - лист всех команд на данный момент: -
 
 - ++rlist - Список всех радиостанций.
@@ -83,13 +83,15 @@ async def help(ctx):
 - (*Для более одного слова используйте +, пример: ++google рыжие+коты.*)
 -
 - ++steam - Ссылка на рандомную игру из стима.
-''')
+''', colour = discord.Colour.from_rgb(230,0,0))
+		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+		msg = await ctx.send(embed=embed)
 
 
 #инфо
 @bot.command()
 async def info(ctx):
-	await ctx.send('''
+		embed = discord.Embed(title="ToxBot", description='''
 ---------------------------------------------------------
 -- Работают над ботом: Tonix#5322 , 410#0797
 ------------------------------------------------------
@@ -101,7 +103,9 @@ async def info(ctx):
 ------------------------------------------------------------
 -- Донатеры: Porg_Studio
 ----------------------------------------------------------
-''')
+''', colour = discord.Colour.from_rgb(230,0,0))
+		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+		msg = await ctx.send(embed=embed)
 
 @bot.command()
 async def nothing(ctx):
@@ -125,12 +129,13 @@ async def fuck_you(ctx):
 async def time(ctx):
 	tz_Moscow = pytz.timezone('Europe/Moscow')
 	datetime_Moscow = datetime.now(tz_Moscow)
-	await ctx.send(datetime_Moscow.strftime("%H:%M:%S"))
-
+	embed = discord.Embed(title="ToxBot", description=datetime_Moscow.strftime("%H:%M:%S"), colour = discord.Colour.from_rgb(230,0,0))
+	embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+	msg = await ctx.send(embed=embed)
 #пинг
 @bot.command()
 async def ping(ctx):
-    embed = discord.Embed(title="ping", description=f" {round(bot.latency * 1000)} ms", colour = discord.Colour.from_rgb(230,0,0))
+    embed = discord.Embed(title="Понг!", description=f" {round(bot.latency * 1000)} мс.", colour = discord.Colour.from_rgb(230,0,0))
     await ctx.send(embed=embed)
 
 #db.addevery
