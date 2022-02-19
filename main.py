@@ -22,17 +22,15 @@ Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
 @bot.command()
 async def ver(ctx):
 		embed = discord.Embed(title="ToxBot", description=
-'''Tox 0.4.7.5!
+'''Tox 0.4.7.6!
 
 Что нового:
-Команды стали немного лучше выглядеть,
-например попробуйте ввести ++time.
+Допил браузеров.
+фикс команды ++p0 в радио
 
 
 Прочее:
-Ещё больше фиксов.
-Разраб научился ставить реакции.
-*В боте уже 530 строк кода кек.* ''', colour = discord.Colour.from_rgb(230,0,0))
+Идёт разработка ToxBot 0.5 .''', colour = discord.Colour.from_rgb(230,0,0))
 		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		msg = await ctx.send(embed=embed)
 		emoji = "💩"
@@ -286,22 +284,26 @@ async def roulette6bul(ctx):
 @bot.command()
 async def google(ctx, *, text):
 	text = discord.utils.escape_mentions(str(text))
-	link = (f"https://www.google.ru/search?q={text}")
+	textb = text.replace(' ', '+')
+	link = (f"https://www.google.ru/search?q={textb}")
 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 @bot.command()
 async def yandex(ctx, *, text):
 	text = discord.utils.escape_mentions(str(text))
-	link = (f"https://yandex.ru/search/?text={text}")
+	textb = text.replace(' ', '+')
+	link = (f"https://yandex.ru/search/?text={textb}")
 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 @bot.command()
 async def duckduck(ctx, *, text):
 	text = discord.utils.escape_mentions(str(text))
-	link = (f"https://duckduckgo.com/?q={text}")
+	textb = text.replace(' ', '+')
+	link = (f"https://duckduckgo.com/?q={textb}")
 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 @bot.command()
 async def yahoo(ctx, *, text):
 	text = discord.utils.escape_mentions(str(text))
-	link = (f"https://search.yahoo.com/search?p={text}")
+	textb = text.replace(' ', '+')
+	link = (f"https://search.yahoo.com/search?p={textb}")
 	await ctx.send(f"Ссылка на поиск по запросу {text}:  \n{link}.")
 
 
