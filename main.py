@@ -522,10 +522,12 @@ async def p21(ctx):
 
 @bot.command()
 async def p0(ctx, *, link: str):
+	txt = discord.utils.escape_mentions(link)
 	if link != None:
-		await rplay(ctx, str(link))
-		await ctx.send(f"Радио включено. \nИграет: {str(link)}")
+		await rplay(ctx, str(txt))
+		await ctx.send(f"Радио включено. \nИграет: {str(txt)}")
 	else:
 		await ctx.send("Вставьте ссылку.")
+
 
 bot.run(Token)
