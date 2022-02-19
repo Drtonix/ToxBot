@@ -101,7 +101,9 @@ async def info(ctx):
 -- Qiwi:
 -- TONIXX
 ------------------------------------------------------------
--- Донатеры: Porg_Studio
+-- Донатеры:
+-- Porg_Studio - dlc для Dead Sells
+-- Ampernic - 50 рублей ежемесячно
 ----------------------------------------------------------
 ''', colour = discord.Colour.from_rgb(230,0,0))
 		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
