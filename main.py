@@ -35,7 +35,7 @@ async def ver(ctx):
  (на английском)
 
 Прочее:
-Бот перешёл на новый сервер.
+Бот почти перешёл на новый сервер.
 Убраны все комменты🤡''', colour = discord.Colour.from_rgb(230,0,0))
 		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		msg = await ctx.send(embed=embed)
