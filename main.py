@@ -5,6 +5,7 @@ from discord.ext import commands
 from datetime import datetime
 from random import randrange, choice
 from pyrandmeme import *
+import pyrandmeme
 import string
 import time
 import random
