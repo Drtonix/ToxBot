@@ -4,8 +4,6 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 from datetime import datetime
 from random import randrange, choice
-from pyrandmeme import *
-import pyrandmeme
 import string
 import time
 import random
@@ -31,8 +29,7 @@ async def ver(ctx):
 '''ToxBot 0.4.8!
 
 Что нового:
-++meme - рандомный мем
- (на английском)
+Почти ничего :/
 
 Прочее:
 Бот почти перешёл на новый сервер.
@@ -161,11 +158,6 @@ async def dog(ctx):
 	embed = discord.Embed(color = 0x8b0000, title = "Fucking dog.")
 	embed.set_image(url = json_data["link"])
 	await ctx.send(embed = embed)
-
-
-@bot.command()
-async def meme(ctx):
-    await ctx.send(embed=await pyrandmeme())
 
 
 @bot.command()
