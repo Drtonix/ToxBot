@@ -12,10 +12,16 @@ import json
 import requests
 import discord
 import os
+import sqlite3
 import pytz
 bot = Bot(command_prefix="++", help_command=None)
 client = discord.ext.commands.Bot(command_prefix = "++")
 Token = ("OTMxMjI3NDIwNzMwNzM2Njgx.YeBXHg.gZW15MNP6W-55N-rVZZYcntDV6g")
+conn = sqlite3.connect('Poor_Warrior_of_Christ.db')
+cursor = conn.cursor()
+cursor.execute('''CREATE TABLE IF NOT EXISTS economy (
+	"id"	INT,
+	"money"	INT)''')
 
 @bot.event
 async def on_ready():
