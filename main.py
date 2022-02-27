@@ -32,14 +32,14 @@ async def on_ready():
 @bot.command()
 async def ver(ctx):
 		embed = discord.Embed(title="ToxBot", description=
-'''ToxBot 0.4.8!
+'''ToxBot 0.4.8.2!
 
 Что нового:
-Почти ничего :/
+Две новые станции
 
 Прочее:
-Бот почти перешёл на новый сервер.
-Убраны все комменты🤡''', colour = discord.Colour.from_rgb(230,0,0))
+Ещё чуть чуть...
+''', colour = discord.Colour.from_rgb(230,0,0))
 		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		msg = await ctx.send(embed=embed)
 
@@ -341,6 +341,7 @@ async def slots(ctx):
 	await ctx.reply("Конец игры.")
 
 
+
 @bot.command()
 async def rlist(ctx):
 	await ctx.send('''
@@ -388,7 +389,11 @@ async def rlist(ctx):
  ++p20 - ссср радио
 ---------------------------------------
  ++p21 - радио аниме из Осаки.
- ----------------------------------------------
+----------------------------------------------
+ ++p22 - джаз.
+--------------------------------------------
+ ++p23 - lofi.
+----------------------------------------------
  ++pRMS - радио Раммштайн
 ----------------------------------------------------
  ++pRHCP - red hot chili peppers радио
@@ -522,6 +527,15 @@ async def p2(ctx):
 async def p21(ctx):
 	await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
 	await ctx.send("Радио включено. \nИграет: Аниме радио из Осаки.")
+@bot.command()
+async def p22(ctx):
+	await rplay(ctx, "http://jfm1.hostingradio.ru:14536/jlstream.mp3")
+	await ctx.send("Радио включено. \nИграет: Джаз.")
+@bot.command()
+async def p23(ctx):
+	await rplay(ctx, "https://usa9.fastcast4u.com/proxy/jamz?mp=/1")
+	await ctx.send("Радио включено. \nИграет: Lofi.")
+
 
 @bot.command()
 async def p0(ctx, *, link: str):
