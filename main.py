@@ -4,6 +4,9 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 from datetime import datetime
 from random import randrange, choice
+from youtube_dl import YoutubeDL
+from asyncio import sleep
+import subprocess
 import string
 import time
 import random
@@ -23,6 +26,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS economy (
 	"id"	INT,
 	"money"	INT)''')
 
+
 @bot.event
 async def on_ready():
 	await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="++help"))
@@ -32,13 +36,14 @@ async def on_ready():
 @bot.command()
 async def ver(ctx):
 		embed = discord.Embed(title="ToxBot", description=
-'''ToxBot 0.4.8.2!
+'''ToxBot 0.4.9!
 
 Что нового:
-Две новые станции
+Воспроизведение видео с ютуба
+++play **ссылка**
 
 Прочее:
-Ещё чуть чуть...
+Теперь точно работает с сервера.
 ''', colour = discord.Colour.from_rgb(230,0,0))
 		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		msg = await ctx.send(embed=embed)
@@ -80,7 +85,7 @@ async def help(ctx):
 async def info(ctx):
 		embed = discord.Embed(title="ToxBot", description='''
 ---------------------------------------------------
--- Работают над ботом: Tonix#5322 , 410#0797
+-- Работают над ботом: Tonix#5322 , 410#0797, Ampernic#9707
 -- Работа над серверной частью: Ampernic#9707
 -------------------------------------------------
 -- Пожертвования на разработку:
@@ -408,10 +413,58 @@ async def rlist(ctx):
 ''')
 
 
+YDL_OPTIONS = {'format': 'worstaudio/best',
+				'noplaylist': 'True', 'simulate': 'True', 'preferredquality': '192', 'preferredcodec': 'mp3', 'key': 'FFmpegExtractAudio'}
+FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+
+
+@bot.command()
+async def play(ctx, arg):
+	global vc
+
+	try:
+		voice_channel = ctx.message.author.voice.channel
+		vc = await voice_channel.connect()
+	except Exception as e:
+		print('Уже подключен или не удалось подключиться.')
+
+	if vc.is_playing():
+		await ctx.send(f'{ctx.message.author.mention}, музыка уже проигрывается.')
+
+	else:
+		with YoutubeDL(YDL_OPTIONS) as ydl:
+			info = ydl.extract_info(arg, download=False)
+
+		URL = info['formats'][1]['url']
+
+		#1 - Win, 0 - Deb
+		OS = 0
+		if (OS==1):
+			try:
+				vc.play(discord.FFmpegPCMAudio(executable=r"./ffmpeg/ffmpeg.exe", source = URL, **FFMPEG_OPTIONS))
+				await ctx.send(f"Включено.")
+			except Exception as e:
+				await ctx.send(f"Ошибка: " + str(e))
+				print("Ошибка: " + str(e))
+		if (OS==0):
+			try:
+				print(URL)
+				vc.play(discord.FFmpegPCMAudio(executable="ffmpeg", source = URL, **FFMPEG_OPTIONS))
+				await ctx.send(f"Включено.")
+			except Exception as e:
+				await ctx.send(f"Ошибка: " + str(e))
+				print("Ошибка: " + str(e))
+		
+		while vc.is_playing():			
+			await sleep(1)
+		if not vc.is_paused():
+			await vc.disconnect()
+
+
 @bot.command()
 async def stop(ctx):
 	await ctx.voice_client.disconnect()
-	await ctx.send("Радио остановленно.")
+	await ctx.send("Воспроизведение остановленно.")
 
 
 async def rplay(ctx, link: None):
@@ -544,6 +597,5 @@ async def p0(ctx, *, link: str):
 		await ctx.send(f"Радио включено. \nИграет: {str(txt)}")
 	else:
 		await ctx.send("Вставьте ссылку.")
-
 
 bot.run(Token)
