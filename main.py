@@ -36,14 +36,16 @@ async def on_ready():
 @bot.command()
 async def ver(ctx):
 		embed = discord.Embed(title="ToxBot", description=
-'''ToxBot 0.4.9!
+'''ToxBot 0.4.9.2!
 
 Что нового:
 Воспроизведение видео с ютуба
 ++play **ссылка**
+++xoxol
 
 Прочее:
 Теперь точно работает с сервера.
+Санкции.
 ''', colour = discord.Colour.from_rgb(230,0,0))
 		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		msg = await ctx.send(embed=embed)
