@@ -481,7 +481,7 @@ if(init_successful):
 				if (data["OS"]==1):
 					try:
 						vc.play(discord.FFmpegPCMAudio(executable=r"./ffmpeg/ffmpeg.exe", source = URL, **FFMPEG_OPTIONS))
-						await ctx.send(f"Включено. Сейчас играет: " + tname)
+						await ctx.send(f"Включено.\nИграет: " + tname)
 						print_log("info", "Включен трек: " + tname)
 					except Exception as e:
 						await ctx.send(f"Ошибка: " + str(e))
@@ -490,7 +490,7 @@ if(init_successful):
 					try:
 						print(URL)
 						vc.play(discord.FFmpegPCMAudio(executable="ffmpeg", source = URL, **FFMPEG_OPTIONS))
-						await ctx.send(f"Включено. Сейчас играет: " + tname)
+						await ctx.send(f"Включено.\nИграет: " + tname)
 						print_log("info", "Включен трек: " + tname)
 					except Exception as e:
 						await ctx.send(f"Ошибка: " + str(e))
