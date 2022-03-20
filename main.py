@@ -1,31 +1,27 @@
-from discord import FFmpegPCMAudio, Activity, ActivityType
-from discord.ext.commands import Bot
-from discord.ext import commands
-from datetime import datetime
-from random import randrange, choice
-from youtube_dl import YoutubeDL
-from asyncio import sleep
-import subprocess
-import string
-import time
-import random
-import asyncio
-import json
-import requests
-import discord
-import os
-import sqlite3
-import pytz
-import simplejson as json
-from colorama import init
-from termcolor import colored
-from core.toxbot_core import *
+from    discord                 import 		FFmpegPCMAudio, Activity, ActivityType
+from    discord.ext.commands    import		Bot
+from 	discord.ext 			import 		commands
+from 	datetime 				import		datetime
+from 	random 					import 		randrange, choice
+import 	simplejson 				as 			json
+from 	asyncio 				import 		sleep
+import 	subprocess
+import 	string
+import 	time
+import 	random
+import 	asyncio
+import 	json
+import 	requests
+import 	discord
+import 	os
+import 	sqlite3
+import 	pytz
+from 	colorama 				import 		init
+from 	termcolor 				import 		colored
+from 	core.toxbot_core 		import *
 ##############################################
 #				 Переменные                  #
 ##############################################
-global OS 
-global first_boot
-global Token
 global data
 data = None
 init_successful = False
@@ -72,7 +68,7 @@ except Exception as e:
 if(init_successful):
 	@bot.command()
 	async def ver(ctx):
-		embed = discord.Embed(title="ToxBot", description=text_ver.format(num_ver), colour = discord.Colour.from_rgb(230,0,0))
+		embed = discord.Embed(title="ToxBot {}!".format(num_ver), description=text_ver.format(num_ver), colour = discord.Colour.from_rgb(230,0,0))
 		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		msg = await ctx.send(embed=embed)
 
@@ -106,6 +102,12 @@ if(init_successful):
 	-
 	- ++steam - Ссылка на рандомную игру из стима.
 	- Тайных команд: 14.
+	- 
+	-           Модуль ToxBotYT:          -
+	- ++p *название или ссылка на трек* - включить трек
+	- ++rpl *all|one|off* - Включить/выключить повтор
+	- ++skip - пропустить трек
+	- ++stop - остановить воспроизведение
 	''', colour = discord.Colour.from_rgb(230,0,0))
 			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 			msg = await ctx.send(embed=embed)
@@ -381,7 +383,7 @@ if(init_successful):
 			await msg.edit(embed=new_emb)
 		await ctx.reply("Конец игры.")
 
-
+	FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
 
 	@bot.command()
 	async def rlist(ctx):
@@ -389,23 +391,23 @@ if(init_successful):
 	- Список всех команд на переключение радиостанций: -
 
 	-----------------------------------
-	 ++p1 - шансон
+	 ++p1 - Шансон
 	---------------------------------
-	 ++p2 - радио дача
+	 ++p2 - Радио Дача
 	------------------------------------
-	 ++p3 - х_й забей радио
+	 ++p3 - Х*й забей радио
 	--------------------------------
-	 ++p4 - новое радио
+	 ++p4 - Новое Радио
 	------------------------------------
-	 ++p5 - фм радио
+	 ++p5 - FM радио
 	------------------------------------------------
-	 ++p6 - Дорожное радио (Омск)
+	 ++p6 - Дорожное Радио (Омск)
 	--------------------------------------------
-	 ++p7 - поп радио 70х
+	 ++p7 - POP радио 70х
 	--------------------------------------
-	 ++p8 - радио 80х
+	 ++p8 - Радио 80х
 	-------------------------------------------
-	 ++p9 - радио 90х
+	 ++p9 - Радио 90х
 	----------------------------------------
 	 ++p10 - хиты кантри
 	-------------------------------------------
@@ -419,11 +421,11 @@ if(init_successful):
 	----------------------------------------
 	 ++p15 - классический рок
 	------------------------------------------
-	 ++p16 -  ретро фм
+	 ++p16 - Ретро FM
 	---------------------------------
-	 ++p17 - хевиметал
+	 ++p17 - Хевиметал
 	----------------------------------------------------
-	 ++p18 - украинское радио релакс
+	 ++p18 - Украинское Радио Релакс
 	-----------------------------------------------
 	 ++p19 - детское радио
 	-------------------------------------
@@ -431,205 +433,176 @@ if(init_successful):
 	---------------------------------------
 	 ++p21 - радио аниме из Осаки.
 	----------------------------------------------
-	 ++p22 - джаз.
+	 ++p22 - Джаз.
 	--------------------------------------------
 	 ++p23 - lofi.
 	----------------------------------------------
-	 ++pRMS - радио Раммштайн
+	 ++pRMS - Радио "RAMSHTEIN"
 	----------------------------------------------------
-	 ++pRHCP - red hot chili peppers радио
+	 ++pRHCP - "Red Hot Chili Peppers" радио
 	-------------------------------------------------------
-	 ++pKISH - радио Король и Шут
+	 ++pKISH - Радио "Король и Шут""
 	------------------------------------------------
-	 ++pL - радио Гражданская оборона
+	 ++pL - Радио "Гражданская оборона"
 	----------------------------------------------------
-	 ++p0 "*ссылка на поток*" - своё радио
+	 ++p0 "*ссылка на поток*" - Своё радио
 	----------------------------------------------
 
 	- список будет дополняться -
 	''')
-
-
-	YDL_OPTIONS = {'format': 'worstaudio/best',
-					'noplaylist': 'True', 'simulate': 'True', 'preferredquality': '192', 'preferredcodec': 'mp3', 'key': 'FFmpegExtractAudio', 'quiet': 'True', "external_downloader_args": ['-loglevel', 'panic']}
-	FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
-
-
-	@bot.command()
-	async def play(ctx, arg):
-		global vc
-
-		try:
-			voice_channel = ctx.message.author.voice.channel
-			vc = await voice_channel.connect()
-		except Exception as e:
-			print('Уже подключен или не удалось подключиться.')
-			print_log("err", "Ошибка: " + str(e))
-
-		if vc.is_playing():
-			await ctx.send(f'{ctx.message.author.mention}, музыка уже проигрывается.')
-
-		else:
-			try:
-				with YoutubeDL(YDL_OPTIONS) as ydl:
-					info = ydl.extract_info(arg, download=False)
-
-				URL = info['formats'][1]['url']
-				tname = info['title']
-
-				#1 - Win, 0 - Deb
-				if (data["OS"]==1):
-					try:
-						vc.play(discord.FFmpegPCMAudio(executable=r"./ffmpeg/ffmpeg.exe", source = URL, **FFMPEG_OPTIONS))
-						await ctx.send(f"Включено. Сейчас играет: " + tname)
-						print_log("info", "Включен трек: " + tname)
-					except Exception as e:
-						await ctx.send(f"Ошибка: " + str(e))
-						print_log("err", "Ошибка: " + str(e))
-				if (data["OS"]==0):
-					try:
-						print(URL)
-						vc.play(discord.FFmpegPCMAudio(executable="ffmpeg", source = URL, **FFMPEG_OPTIONS))
-						await ctx.send(f"Включено. Сейчас играет: " + tname)
-						print_log("info", "Включен трек: " + tname)
-					except Exception as e:
-						await ctx.send(f"Ошибка: " + str(e))
-						print_log("err", "Ошибка: " + str(e))
-			except Exception as e:
-				print_log("err", "Ошибка: " + str(e))
-
-			while vc.is_playing():			
-				await sleep(1)
-			if not vc.is_paused():
-				await vc.disconnect()
-
-
-	@bot.command()
-	async def stop(ctx):
-		await ctx.voice_client.disconnect()
-		await ctx.send("Воспроизведение остановленно.")
-
-
 	async def rplay(ctx, link: None):
 		if link != None:
 			voice_channel = ctx.author.voice.channel
 			voice_client = discord.utils.get(bot.voice_clients, guild=ctx.guild)
 			if voice_client:
 				voice_client.pause()
-				voice_client.play(FFmpegPCMAudio(link))
+				if(data["OS"]==1):
+					player.play(discord.FFmpegPCMAudio(executable=r"./ffmpeg/ffmpeg.exe", source = link, **FFMPEG_OPTIONS))
+				elif(data["OS"]==0):
+					voice_client.play(discord.FFmpegPCMAudio(executable="ffmpeg", source = link, **FFMPEG_OPTIONS))
 			else:
 				player = await voice_channel.connect()
-				player.play(FFmpegPCMAudio(link))
+				if(data["OS"]==1):
+					player.play(discord.FFmpegPCMAudio(executable=r"./ffmpeg/ffmpeg.exe", source = link, **FFMPEG_OPTIONS))
+				elif(data["OS"]==0):
+					voice_client.play(discord.FFmpegPCMAudio(executable="ffmpeg", source = link, **FFMPEG_OPTIONS))
 
 
 	@bot.command()
 	async def p1(ctx):
-		await rplay(ctx, "http://chanson.hostingradio.ru:8041/chanson256.mp3")
+		await rplay(ctx, "http://chanson.hostingradio.ru:8041/chanson256.mp3", )
 		await ctx.send("Радио включено.\nИграет: Шансон")
+		print_log('info', "Радио включено: Шансон")
 	@bot.command()
 	async def p4(ctx):
 		await rplay(ctx, "http://live.novoeradio.by:8000/novoeradio-128k")
 		await ctx.send("Радио включено.\nИграет: Новое радио")
+		print_log('info', "Радио включено: Новое радио")
 	@bot.command()
 	async def p5(ctx):
 		await rplay(ctx, "http://listen.teploe.net:8100/npkfm")
-		await ctx.send("Радио включено.\nИграет: Фм радио")
+		await ctx.send("Радио включено.\nИграет: FM радио")
+		print_log('info', "Радио включено: FM радио")
 	@bot.command()
 	async def p9(ctx):
 		await rplay(ctx, "http://prmstrm.1.fm:8000/90s")
 		await ctx.send("Радио включено.\nИграет: Радио 90х")
+		print_log('info', "Радио включено: Радио 90х")
 	@bot.command()
 	async def p7(ctx):
 		await rplay(ctx, "http://prmstrm.1.fm:8000/70s")
 		await ctx.send("Радио включено.\nИграет: Поп радио 70х")
+		print_log('info', "Радио включено: Поп радио 70х")
 	@bot.command()
 	async def p10(ctx):
 		await rplay(ctx, "http://prmstrm.1.fm:8000/acountry")
 		await ctx.send("Радио включено.\nИграет: Хиты кантри")
+		print_log('info', "Радио включено: Хиты кантри")
 	@bot.command()
 	async def p11(ctx):
 		await rplay(ctx, "http://prmstrm.1.fm:8000/x")
 		await ctx.send("Радио включено.\nИграет: Хиты рока")
+		print_log('info', "Радио включено: Хиты рока")
 	@bot.command()
 	async def p12(ctx):
 		await rplay(ctx, "http://jfm1.hostingradio.ru:14536/rock00.mp3")
-		await ctx.send("Радио включено.\nИграет: Рок фм радио")
+		await ctx.send("Радио включено.\nИграет: Рок FM")
+		print_log('info', "Радио включено: Рок FM")
 	@bot.command()
 	async def p13(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/radio123_by-hi")
 		await ctx.send("Радио включено.\nИграет: Христианское радио")
+		print_log('info', "Радио включено: Христианское радио")
 	@bot.command()
 	async def p14(ctx):
 		await rplay(ctx, "http://psyprog.rupsy.ru:8000/psyprog")
 		await ctx.send("Радио включено.\nИграет: Психоделик")
+		print_log('info', "Радио включено: Психоделик")
 	@bot.command()
 	async def p19(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/rusradio_deti-hi")
 		await ctx.send("Радио включено.\nИграет: Детское радио")
+		print_log('info', "Радио включено: Детское радио")
 	@bot.command()
 	async def p16(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/retrofm_ru-hi")
-		await ctx.send("Радио включено.\nИграет: Ретро фм")
+		await ctx.send("Радио включено.\nИграет: Ретро FM")
+		print_log('info', "Радио включено: Ретро FM")
 	@bot.command()
 	async def p20(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/SSSR-hi")
-		await ctx.send("Радио включено.\nИграет: Ссср радио")
+		await ctx.send("Радио включено.\nИграет: СССР радио")
+		print_log('info', "Радио включено: СССР радио")
 	@bot.command()
 	async def p18(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/radiorelax_ua-hi")
 		await ctx.send("Радио включено.\nИграет: Украинское радио релакс")
+		print_log('info', "Радио включено: Украинское радио релакс")
 	@bot.command()
 	async def pKISH(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/Korol_i_Shut-hi")
 		await ctx.send("Радио включено.\nИграет: Радио Король и Шут")
+		print_log('info', "Радио включено: Радио Король и Шут")
 	@bot.command()
 	async def pL(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/Grazhdanskaja_oborona-hi")
 		await ctx.send("Радио включено.\nИграет: Радио Гражданская оборона")
+		print_log('info', "Радио включено: Радио Гражданская оборона")
 	@bot.command()
 	async def p15(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/rpr1_de_clasro-hi")
 		await ctx.send("Радио включено.\nИграет: Классический рок")
+		print_log('info', "Радио включено: Классический рок")
 	@bot.command()
 	async def p17(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/rpr1_de_metal-hi")
 		await ctx.send("Радио включено.\nИграет: Хевиметал")
+		print_log('info', "Радио включено: Хевиметал")
 	@bot.command()  
 	async def pRMS(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/Rammstein-hi")
 		await ctx.send("Радио включено.\nИграет: Раммштайн")
+		print_log('info', "Радио включено: Раммштайн")
 	@bot.command()
 	async def pRHCP(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/red_hot_chili_peppers-hi")
 		await ctx.send("Радио включено.\nИграет: Red Hot Chili Peppers радио")
+		print_log('info', "Радио включено: Red Hot Chili Peppers радио")
 	@bot.command()
 	async def p8(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/pulsradio_80s-hi")
 		await ctx.send("Радио включено.\nИграет: Радио 80х")
+		print_log('info', "Радио включено: Радио 80х")
 	@bot.command()
 	async def p6(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/dorozhnoe_omsk-hi")
 		await ctx.send("Радио включено.\nИграет: Дорожное радио (Омск)")
+		print_log('info', "Радио включено: Дорожное радио (Омск)")
 	@bot.command()
 	async def p3(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/Hui_Zabey-hi")
-		await ctx.send("Радио включено. \nИграет: Х_й Забей радио")
+		await ctx.send("Радио включено. \nИграет: Х*й Забей радио")
+		print_log('info', "Радио включено: Х*й Забей радио")
 	@bot.command()
 	async def p2(ctx):
 		await rplay(ctx, "http://178.217.40.125:8000/rdsat")
 		await ctx.send("Радио включено. \nИграет: Радио дача")
+		print_log('info', "Радио включено: Играет: Радио дача")
 	@bot.command()
 	async def p21(ctx):
 		await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
 		await ctx.send("Радио включено. \nИграет: Аниме радио из Осаки.")
+		print_log('info', "Радио включено: Аниме радио из Осаки.")
 	@bot.command()
 	async def p22(ctx):
 		await rplay(ctx, "http://jfm1.hostingradio.ru:14536/jlstream.mp3")
 		await ctx.send("Радио включено. \nИграет: Джаз.")
+		print_log('info', "Радио включено: Джаз.")
 	@bot.command()
 	async def p23(ctx):
 		await rplay(ctx, "https://usa9.fastcast4u.com/proxy/jamz?mp=/1")
 		await ctx.send("Радио включено. \nИграет: Lofi.")
+		print_log('info', "Радио включено: Lofi.")
 
 
 	@bot.command()
@@ -638,8 +611,11 @@ if(init_successful):
 		if link != None:
 			await rplay(ctx, str(txt))
 			await ctx.send(f"Радио включено. \nИграет: {str(txt)}")
+			print_log('info', "Радио включено: Своя радиостанция (Вызвано {})".format(+ ctx.message.author.name))
 		else:
 			await ctx.send("Вставьте ссылку.")
+	
+	plgins(discord, bot, data)
 
 	bot.run(data["Token"])
 else:

@@ -1,15 +1,19 @@
-from core.toxbot_core_texts import *
-import simplejson as json
-from colorama import init
-from termcolor import colored
-import time
-import os
+from 	core.toxbot_core_texts	import 		*
+from 	core.plugins.youtube	import 		*
+import 	simplejson 				as     		json
+from 	colorama 				import 		init
+from 	termcolor 				import 		colored
+from 	discord.ext 			import 		commands
+import 	time
+import 	os
 
 
 
 ##############################################
 #              Вывод в консоль               #
 ##############################################
+global print_log
+global notfy
 def print_log(type, text):
     if(type == 'err' ):
         print(colored("[ ", "white"), 	colored(" ERROR ", "red"), 			colored(" ] {}", "white").format(text))
@@ -19,6 +23,12 @@ def print_log(type, text):
         print(colored("[ ", "white"), 	colored(" INFO  ", "green"), 		colored(" ] {}", "white").format(text))
     elif(type == 'wait'):
     	print(colored("[ ", "white"), 	colored(" . . . ", "cyan"), 		colored(" ] {}", "white").format(text))
+
+@asyncio.coroutine
+async def notfy(ctx ,text):
+	await ctx.send(f"Ошибка: " + str(text))
+	print_log("err", "Ошибка: " + str(text))
+	
 ##############################################
 #            Работа с конфигом               #
 ##############################################
@@ -81,3 +91,10 @@ def first_boot_cofigure(data):
 			os.system("clear")
 	except Exception as e:
 		print_log('err', 'Неудалось сохранить изменения! Проверьте права на запись файла.')
+
+##############################################
+#             Загрузка модулей               #
+##############################################
+
+def plgins(discord, bot, data):
+	asyncio.run(yt_play		(discord, bot, data, print_log, notfy))
