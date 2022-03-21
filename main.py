@@ -19,6 +19,7 @@ import pytz
 from colorama import init
 from termcolor import colored
 from core.toxbot_core import *
+from classes import UsTaCr
 ##############################################
 #				 Переменные                  #
 ##############################################
@@ -388,12 +389,12 @@ if(init_successful):
 		if member is None:
 			UsTaCr.author(ctx)
 			for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
-				embed = discord.Embed(title = "TOXCOINS!", description = f"баланс {ctx.message.author.display_name} токскоинов - {row[0]}", colour = discord.Colour.from_rgb(51,255,51))
+				embed = discord.Embed(title = "ToxCoins", description = f"Баланс {ctx.author.display_name} - {row[0]} ТоксКоинов.", colour = discord.Colour.from_rgb(230,0,0))
 				await ctx.send(embed=embed)
 		else:
 			UsTaCr.member(ctx, member)
 			for row in cursor.execute(f'SELECT "money" FROM economy WHERE id = {member.id}'):
-				embed = discord.Embed(title = "TOXCOINS!", description = f"баланс {member.display_name} токскоинов - {row[0]}", colour = discord.Colour.from_rgb(51,255,51))
+				embed = discord.Embed(title = "ToxCoins", description = f"Баланс {member.display_name} - {row[0]} ТоксКоинов.", colour = discord.Colour.from_rgb(230,0,0))
 				await ctx.send(embed=embed)
 	
 	@bot.command(aliases = ["pay", "заплатить", "отдать"])
@@ -404,9 +405,9 @@ if(init_successful):
 			UsTaCr.author(ctx)
 			UsTaCr.member(ctx, member)
 			if Value is None:
-				await ctx.send("Укажите количество коинов!")
+				await ctx.send("Укажите количество ТоксКоинов!")
 			elif Value <= 0:
-				await ctx.send("Нельзя передать 0 коинов или меньше!")
+				await ctx.send("Нельзя передать 0 ТоксКоинов или меньше!")
 			else:
 				ebal = 0
 				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
@@ -420,7 +421,7 @@ if(init_successful):
 					    orow2 = int(row[0])
 					    row2 = int(row[0]) + Value
 					curosr.execute(f'UPDATE economy SET money = {row2} WHERE id={member.id}')
-					embed = discord.Embed(title="Toxcoins", description=f"пользователь {ctx.author.display_name} дал {Value} коинов {member.display_name}. \nновый баланс {member.display_name} - {row2}")
+					embed = discord.Embed(title="ToxCoins", description=f"Пользователь {ctx.author.display_name} дал {Value} ТоксКоинов {member.display_name}.\nНовый баланс {member.display_name} - {row2} ТоксКоинов.")
 				else:
 					await ctx.send("Недостаточно денег!")
 
