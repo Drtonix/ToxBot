@@ -15,14 +15,14 @@
 # Мені пiхуй отсосите, я живу в іншому місті #
 #			 Що ви мені зробите?             #
 ##############################################
-#           Last update: 3/16/2022           #
+#           Last update: 03/21/2022          #
 ##############################################
 
-from 	discord 				import FFmpegPCMAudio, Activity, ActivityType
-from 	core.toxbot_core 		import *
-from 	core.toxbot_core_texts	import *
-import 	yt_dlp
-import 	asyncio
+from discord import FFmpegPCMAudio, Activity, ActivityType
+from core.toxbot_core import *
+from core.toxbot_core_texts	import *
+import yt_dlp
+import asyncio
 
 global YDL_OPTIONS
 global FFMPEG_OPTIONS
@@ -56,7 +56,7 @@ async def yt_searching(ctx, discord, track_name, q, notfy):
 					try:
 						info = ydl.extract_info(f"ytsearch:{track_name}", download=False)['entries'][0]
 					except Exception as e:
-						await notfy(ctx, "Трек не найден (" + e + ")")
+						await notfy(ctx, "Трек не найден (" + e + ").")
 				URL = info['formats'][4]['url']
 				tname = info['title']
 				tdure = info['duration_string']

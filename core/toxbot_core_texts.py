@@ -1,17 +1,11 @@
-num_ver = '''0.4.9.5y'''
+num_ver = '''0.0.0.0'''
 text_ver = '''
+Codename:
+Today I woke up to explosions...
 
-Что нового:
-Поиск треков на YT (А не ссылки)
-Функция повтора
-Скип треков
-
-++help (Смотри раздел ToxBotYT)
-
-Прочее:
-Стабильность все еще сосет, но наши 
-коллеги из BetaNet team пытаются ее
-наладить 🗿
+Fools day joke update
+Fuck Russian Special Operation!
+Make vodka, not war.
 '''
 
 header_logo = '''
