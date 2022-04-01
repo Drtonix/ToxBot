@@ -444,17 +444,6 @@ if(init_successful):
 		else:
 			await ctx.send("У вас нет прав!")
 
-	@bot.command(aliases = ["rule34", "rule34art"])
-	async def r34(ctx, *, tag: str = None):
-		if tag is None:
-			await ctx.send("Укажите тег!")
-		else:
-			for post in xmlParser.fromstring(requests.get(f"https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&tags={tag}").text).findall("post"):
-				try:
-					await ctx.send(embed=discord.Embed(title = "Rule34", description = f"Превью по запросу {tag}", url = post.attrib['file_url'], colour = discord.Colour.from_rgb(230,0,0)))
-				except:
-					await ctx.send("Ничего не найдено!")
-
 	@bot.command()
 	async def rlist(ctx):
 		await ctx.send('''
