@@ -2,6 +2,7 @@ from discord import FFmpegPCMAudio, Activity, ActivityType
 from discord.ext.commands import Bot
 from discord.ext import commands
 from datetime import datetime
+import xml.etree.ElementTree as xmlParser
 from random import randrange, choice
 import simplejson as json
 from asyncio import sleep
@@ -11,6 +12,7 @@ import time
 import random
 import asyncio
 import json
+from bs4 import BeautifulSoup
 import requests
 import discord
 import os
@@ -80,17 +82,17 @@ if(init_successful):
 	-
 	- ++time - Время по мск.
 	-
-	- ++coin - Игра в м*о*нетку.
+	- ++coin - Игра в монетку.
 	- ++randomto - Рандом от одного до любого числа.
 	- ++roulette - Русская рулетка.
 	- (*Число от 1 до 5 с приставкой* **bul** *добавляет пули, пример: ++roulette5bul*)
 	- ++slots - Слоты казино
 	-
-	- ++kill @челов*е*к - Убить.
+	- ++kill @человек - Убить.
 	- ++twisted @человек - Свернуть шею.
-	- ++laugh - Бот посмеёт*с*я.
+	- ++laugh - Бот посмеётся.
 	- ++ver - Текущая версия бота.
-	- ++cal *+,-,/,** *числа* - Кальк*у*лятор.
+	- ++cal *+,-,/,** *числа* - Калькулятор.
 	-
 	- ++google *текст* - Ссылка на запрос google.
 	- ++yandex *текст* - Ссылка на запрос yandex.
@@ -101,7 +103,7 @@ if(init_successful):
 	- 
 	- ++p *название или ссылка на трек* - Включить трек из ютуба.
 	- ++rpl *all|one|off* - Включить/выключить повтор.
-	- ++skip - Пропустить т*р*ек. 
+	- ++skip - Пропустить трек. 
 	- ++stop - Остановить воспроизведение.
 	- ++rlist - Список всех радиостанций.
 	- Тайных команд: 15.
@@ -424,6 +426,34 @@ if(init_successful):
 					embed = discord.Embed(title="ToxCoins", description=f"Пользователь {ctx.author.display_name} дал {Value} ТоксКоинов {member.display_name}.\nНовый баланс {member.display_name} - {row2} ТоксКоинов.")
 				else:
 					await ctx.send("Недостаточно денег!")
+	@bot.command(aliases = ["выдать", "поставить"])
+	async def set(ctx, member: discord.Member = None, value: int = None):
+		if ctx.autor.id == ctx.guild.owner.id or ctx.autor.id == 416669998782873612:
+			if member is None:
+				await ctx.send("Укажите цель!")
+			elif value is None:
+				UsTaCr.member(ctx, member)
+				await ctx.send("Укажите количество ТоксКоинов!")
+			else:
+				UsTaCr.member(ctx, member)
+				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={member.id}'):
+					orow = int(row[0])
+					row = int(row[0]) + value
+				cursor.execute(f'UPDATE economy SET money = {row} WHERE id={member.id}')
+				await ctx.send(f"Установлено количество ТоксКоинов {member.display_name} - {row} ТоксКоинов.")
+		else:
+			await ctx.send("У вас нет прав!")
+
+	@bot.command(aliases = ["rule34", "rule34art"])
+	async def r34(ctx, *, tag: str = None):
+		if tag is None:
+			await ctx.send("Укажите тег!")
+		else:
+			for post in xmlParser.fromstring(requests.get(f"https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&tags={tag}").text).findall("post"):
+				try:
+					await ctx.send(embed=discord.Embed(title = "Rule34", description = f"Превью по запросу {tag}", url = post.attrib['file_url'], colour = discord.Colour.from_rgb(230,0,0)))
+				except:
+					await ctx.send("Ничего не найдено!")
 
 	@bot.command()
 	async def rlist(ctx):
@@ -653,73 +683,6 @@ if(init_successful):
 			print_log('info', "Радио включено: Своя радиостанция (Вызвано {})".format(+ ctx.message.author.name))
 		else:
 			await ctx.send("Вставьте ссылку.")
-	
-
-	## Ивент на 21.03.22 (или позже) ##
-
-
-	@bot.command()
-	async def Error(ctx):
-		await ctx.send('''
-	Говорит ToxBot, если вы ввели эту команду, то вы любите загадки.
-	Если сможете отгАдать все спрятанные коMанды то в конце вас ждёт
-	спойлер к новому обнОвлению и послание от неизвестного разрабоTчика.
-	Все команды пишYтся на латинице.
-	Первая команда уже спрятана в этом сообщении, удачи.''')
-	@bot.command()
-	async def AMOTY(ctx):
-		await ctx.send('''
-	Вы смогли разгадать первую команду, поздравляю.
-	Для второй мы подготовили загадку:
-	Как зовут основателя ToxBot?''')
-	@bot.command()
-	async def Tonix(ctx):
-		await ctx.send('''
-		Как многие называют ToxBot?
-		*Писать на английском языке*''')
-	@bot.command()
-	async def Toxa(ctx):
-		await ctx.send('''
-	Всему свое время, и время всякой вещи под небом:
-	время рождаТься и время умирать… время разрушать, и время строIть…
-	время разбрасывать каМни, и время собирать камни; время обнимать,
-	и время уклоняться от объятий… врЕмя любить, и время ненавидеть;
-	время войне, и время миру. ''')
-	@bot.command()
-	async def TIME(ctx):
-		await ctx.send('''
-	Мы не стоLько любим людей за то добро, которое они нам сделали, сколько за то добро, которое мы Iм сдEлали.''')
-	@bot.command()
-	async def LIE(ctx):
-		await ctx.send('''
-	2+2/2=?''')
-	@bot.command()
-	async def three(ctx):
-		await ctx.send('''
-	Легко?
-	А теперь найдите следующую команду в списке команд.''')
-	@bot.command()
-	async def oecyp(ctx):
-		await ctx.send('''
-	https://www.youtube.com/watch?v=dQw4w9WgXcQ''')
-	@bot.command()
-	async def Q49WXQ(ctx):
-		await ctx.send('''
-	Ну а теперь финальная команда.
-	Как сначала назывался бот?
-	S####o#B##''')
-	@bot.command()
-	async def ShansonBot(ctx):
-			embed = discord.Embed(title=ToxBot, description='''
-	Поздравляю, вы отгадали все кOMанды.
-	В следующем обновлении будет очEнь много фиксов,
-	команды для донатеров и так же ноBая команда в
-	которой будет информация о ближайшем обновлении.
-	Надеюсь вам было хотя бы немHого интересно.''', colour = discord.Colour.from_rgb(230,0,0))
-	@bot.command()
-	async def OMEBH(ctx):
-		response = ("https://media.discordapp.net/attachments/944694959255191603/955195169274228736/unknown.png")
-		await ctx.send(response)
 
 	plgins(discord, bot, data)
 	bot.run(data["Token"])
