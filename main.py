@@ -136,7 +136,7 @@ if(init_successful):
 Медиа — `p`, `rpl`, `skip`, `stop`
 Список радиостанций — `rlist`
 🎲**Игры и действия**
-Действия с человеком — `kill`, `twisted`, `fuck`, `eat`
+Действия — `kill`, `twisted`, `fuck`, `eat`, `call`
 Казино игры — `roulette`, `coin`, `slots`
 📚**Инфо и полезные штуки**
 Инфо о пользователях — `stats`, `membinfo`
@@ -151,11 +151,8 @@ if(init_successful):
 		@bot.command()
 		async def info(ctx):
 			embed1 = discord.Embed(title="ToxBot Info (1)", description='''
-❤️**Донатеры**
-Ampernic - 200 рублей ежегодно
-CentrumEx - 50 рублей
-Porg_Studio - dlc для Dead Sells
 💎**Пожертвования на разработку**
+
 Юmoney:
 <https://bit.ly/3vrvWlJ>
 Qiwi:
@@ -169,7 +166,6 @@ Patreon:
 			embed2 = discord.Embed(title="ToxBot Info (2)", description='''
 🔧**Работают над ботом**
 Tonix#5322 , 410#0797, Ampernic#9707
-
 🏠**Официальный сервер бота**
 https://discord.gg/XMYZKS3b3j
 
@@ -177,11 +173,21 @@ https://discord.gg/XMYZKS3b3j
 у кого мы позаимствовали код.
  Как говорил Линус Торвальдс:
 «Программы — как секс: лучше,
- когда бесплатно.»
+ когда бесплатно.»''')
+			embed2.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+			embed3 = discord.Embed(title="ToxBot Info (2)", description='''
+❤️**Донатеры**
+
+
+Ampernic - 200 рублей ежегодно
+CentrumEx - 50 рублей
+Porg_Studio - dlc для Dead Sells
+Unikum131 - 50 рублей
+
 
 Спасибо что пользуетесь ToxBot!''')
-			embed2.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-			embeds = [embed1, embed2]
+			embed3.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+			embeds = [embed1, embed2, embed3]
 			message = await ctx.send(embed = embed1)
 			reactions = ["◀️", "▶️"]
 			page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = True, reactions = reactions, timeout = 33)
@@ -228,7 +234,6 @@ https://discord.gg/XMYZKS3b3j
 			emb.add_field(name="Зашёл на сервер:", value=member.joined_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"),inline=False)
 			await ctx.send(embed = emb)
 
-
 		@bot.command()
 		async def coin(ctx):
 			monetka = ['Орел.'] * 49 + ['Решка.'] * 49 + ['Ребро!'] * 2
@@ -244,7 +249,6 @@ https://discord.gg/XMYZKS3b3j
 
 		@bot.command()
 		async def yesorno(ctx, *, text):
-			num2 = str(text)
 			danet = ['да.'] * 25 + ['нет.'] * 25 + ['скорее всего.'] * 25 + ['наверное.'] * 25
 			await ctx.send(f"Я думаю что {random.choice(danet)}")
 
@@ -453,7 +457,7 @@ https://discord.gg/XMYZKS3b3j
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpИгры(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`kill @пользователь` - Убить.\n`twisted @пользователь` — Свернуть шею.\n`fuck @пользователь` — Изнасиловать.\n`eat @пользователь` — Съесть.\n`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.\n`coin` - Игра в монетку\n`slots` - Слоты казино.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`call *911|255* *текст* - позвонить в полицию или в пиццерию.`\n`kill @пользователь` - Убить.\n`twisted @пользователь` — Свернуть шею.\n`fuck @пользователь` — Изнасиловать.\n`eat @пользователь` — Съесть.\n`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.\n`coin` - Игра в монетку\n`slots` - Слоты казино.')
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpИнфо(ctx):
@@ -548,6 +552,79 @@ https://discord.gg/XMYZKS3b3j
 		async def balls(ctx):
 			strings = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ","https://i.ytimg.com/vi/qJPq0EaCRck/maxresdefault.jpg","https://ae01.alicdn.com/kf/HLB1y77JaOrxK1RkHFCcq6AQCVXaf.jpg", "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/60c2c9c4-c5db-443a-ba53-0acc0a5875e7/d2m8je7-0a3eb7d7-5b0c-44d7-a536-bc4db8844b4a.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi82MGMyYzljNC1jNWRiLTQ0M2EtYmE1My0wYWNjMGE1ODc1ZTcvZDJtOGplNy0wYTNlYjdkNy01YjBjLTQ0ZDctYTUzNi1iYzRkYjg4NDRiNGEuanBnIn1dXX0.K08BpRRTK3Oqw_r-PQWbDQ_Ur-H80hIk86LW1grED5Q"]
 			await ctx.send(random.choice(strings))
+
+
+		@bot.command()
+		async def pizza(ctx):
+			strings = ["https://media.discordapp.net/attachments/939136925095297055/966067143013716018/unknown.png", "https://media.discordapp.net/attachments/939136925095297055/966067143277944833/unknown.png", "https://media.discordapp.net/attachments/939136925095297055/966067143915475005/unknown.png", "https://media.discordapp.net/attachments/939136925095297055/966067144251031602/unknown.png"]
+			await ctx.send(random.choice(strings))
+		@bot.command()
+		async def coke(ctx):
+			strings = ["https://media.discordapp.net/attachments/939136925095297055/966067823459835954/unknown.png", "https://media.discordapp.net/attachments/939136925095297055/966067823707316304/unknown.png", "https://media.discordapp.net/attachments/939136925095297055/966067824009302066/unknown.png"]
+			await ctx.send(random.choice(strings))
+
+
+		@bot.command()
+		async def call(ctx, text, *, message):
+			message = message
+			text = text
+			if text == "911":
+				embed = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок.", colour=discord.Colour.from_rgb(230,0,0))
+				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				msg = await ctx.send(embed = embed)
+				await asyncio.sleep(1)
+				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок..", colour=discord.Colour.from_rgb(230,0,0))
+				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await msg.edit(embed=update_emb)
+				await asyncio.sleep(1)
+				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок...", colour=discord.Colour.from_rgb(230,0,0))
+				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await msg.edit(embed=update_emb)
+				await asyncio.sleep(1)
+				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок.", colour=discord.Colour.from_rgb(230,0,0))
+				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await msg.edit(embed=update_emb)
+				await asyncio.sleep(1)
+				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок..", colour=discord.Colour.from_rgb(230,0,0))
+				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await msg.edit(embed=update_emb)
+				await asyncio.sleep(1)
+				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок...", colour=discord.Colour.from_rgb(230,0,0))
+				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await msg.edit(embed=update_emb)
+				await asyncio.sleep(1)
+				await ctx.send(f'''
+<@&966062221589348422>
+`{message}`''')
+				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description=f'''
+Не волнуйтесь, полиция в пути.''', colour=discord.Colour.from_rgb(230,0,0))
+				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await msg.edit(embed=update_emb)
+			if text == "255":
+				embed = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок.", colour=discord.Colour.from_rgb(230,0,0))
+				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				msg = await ctx.send(embed = embed)
+				await asyncio.sleep(1)
+				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок..", colour=discord.Colour.from_rgb(230,0,0))
+				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await msg.edit(embed=update_emb)
+				await asyncio.sleep(1)
+				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок...", colour=discord.Colour.from_rgb(230,0,0))
+				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await msg.edit(embed=update_emb)
+				await asyncio.sleep(1)
+				await ctx.send(f'''
+<@&966065342390628374>
+`{message}`''')
+				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description=f'''
+Вы позвонили в пиццерию
+Ваш заказ готовится''', colour=discord.Colour.from_rgb(230,0,0))
+				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await msg.edit(embed=update_emb)
+			if text != "255" and text !="911":
+				embed = discord.Embed(title=f"Звонок на номер `{text}`", description="Номер не найден.", colour=discord.Colour.from_rgb(230,0,0))
+				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await ctx.send(embed = embed)
 
 
 
