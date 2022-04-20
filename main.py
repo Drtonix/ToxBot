@@ -24,6 +24,7 @@ from core.toxbot_core import *
 from classes import UsTaCr
 from Cybernator import Paginator as Pag
 from discord_components import DiscordComponents, Button, ButtonStyle
+import simpledemotivators
 
 #Переменные
 
@@ -136,7 +137,7 @@ if(init_successful):
 Медиа — `p`, `rpl`, `skip`, `stop`
 Список радиостанций — `rlist`
 🎲**Игры и действия**
-Действия — `kill`, `twisted`, `fuck`, `eat`, `call`
+Действия — `kill`, `twisted`, `fuck`, `eat`, `give`, `call`
 Казино игры — `roulette`, `coin`, `slots`
 📚**Инфо и полезные штуки**
 Инфо о пользователях — `stats`, `membinfo`
@@ -199,6 +200,7 @@ Unikum131 - 50 рублей
 			if isinstance(error, commands.CommandNotFound):
 				await ctx.send(embed = discord.Embed(description = f'**`{ctx.author.name}, данной команды не существует.`**'))
 
+
 		@bot.command()
 		async def cal(ctx, *, expression:str):
 			try:
@@ -220,7 +222,7 @@ Unikum131 - 50 рублей
 				d = " В сети"
 			t = member.status
 			if t == discord.Status.offline:
-				d = "⚪ Не в сети"
+				d = " Не в сети"
 			t = member.status
 			if t == discord.Status.idle:
 				d = " Не активен"
@@ -257,28 +259,27 @@ Unikum131 - 50 рублей
 		async def fuck(ctx, *, text):
 			author = ctx.message.author
 			txt = discord.utils.escape_mentions(text)
-			await ctx.send(f"Пользователь {author.mention} выебал {txt}.")
-
-
+			await ctx.send(f"{author.mention} выебал {txt}.")
 		@bot.command()
 		async def kill(ctx, *, text):
 			author = ctx.message.author
 			txt = discord.utils.escape_mentions(text)
-			await ctx.send(f"Пользователь {author.mention} убил {txt}.")
-
-
+			await ctx.send(f"{author.mention} убил {txt}.")
 		@bot.command()
 		async def eat(ctx, *, text):
 			author = ctx.message.author
 			txt = discord.utils.escape_mentions(text)
-			await ctx.send(f"Пользователь {author.mention} съел {txt}.")
-
-
+			await ctx.send(f"{author.mention} съел {txt}.")
 		@bot.command()
 		async def twisted(ctx, *, text):
 			author = ctx.message.author
 			txt = discord.utils.escape_mentions(text)
-			await ctx.send(f"Пользователь {author.mention} свернул шею {txt}.")
+			await ctx.send(f"{author.mention} свернул шею {txt}.")
+		@bot.command()
+		async def give(ctx, *, text):
+			author = ctx.message.author
+			txt = discord.utils.escape_mentions(text)
+			await ctx.send(f"{author.mention} дал {txt}.")
 
 
 		@bot.command()
@@ -312,34 +313,34 @@ Unikum131 - 50 рублей
 			await ctx.send(f'{author.mention} застрелился от своей тупости.')
 
 
-		@bot.command()
-		async def duele(ctx,member:discord.Member = None, guild: discord.Guild = None):
-			await ctx.send(
-				embed = discord.Embed(title="Приглашение на дуэль", description = f"Пользователь {ctx.author.mention} приглашает на дуэль {member.display_name}"),
-				components=[
-					Button(style=ButtonStyle.red, label="Принять", emoji="✔"),
-					Button(style=ButtonStyle.red, label="Отклонить", emoji="✖")])
-			response = await bot.wait_for("button_click")
-			if response.channel == ctx.channel:
-				if response.component.label == "Отклонить":
-					await ctx.send(embed = discord.Embed(title=f"Пользователь {member} отклонил приглашение на дуэль."))
-				else:
-					await ctx.send(
-						embed=discord.Embed(title="Дуэль началась!"),
-						components=[
-							Button(style=ButtonStyle.red, label="Выстрел", emoji="🔫"),
-							Button(style=ButtonStyle.red, label="Холостой", emoji="✴️")])
-			response = await bot.wait_for("button_click")
-			if response.channel == ctx.channel:
-				if response.component.label == "Выстрел":
-					rnmd = [f"Пользователь {member} Застрелил пользователя {ctx.author.mention}."] * 50 + [f"Пользователь {member} промахнулся."] * 50
-					await ctx.send(embed = discord.Embed(title=random.choice(rnmd)))
-				else:
-					await ctx.send(
-						embed=discord.Embed(title=f"Пользователь {member} выстрелил в небо"),
-						components=[
-							Button(style=ButtonStyle.red, label="Выстрел", emoji="🔫"),
-							Button(style=ButtonStyle.red, label="Холостой", emoji="✴️")])
+#		@bot.command()
+#		async def duele(ctx,member:discord.Member = None, guild: discord.Guild = None):
+#			await ctx.send(
+#				embed = discord.Embed(title="Приглашение на дуэль", description = f"Пользователь {ctx.author.mention} приглашает на дуэль {member.display_name}"),
+#				components=[
+#					Button(style=ButtonStyle.red, label="Принять", emoji="✔"),
+#					Button(style=ButtonStyle.red, label="Отклонить", emoji="✖")])
+#			response = await bot.wait_for("button_click")
+#			if response.channel == ctx.channel:
+#				if response.component.label == "Отклонить":
+#					await ctx.send(embed = discord.Embed(title=f"Пользователь {member} отклонил приглашение на дуэль."))
+#				else:
+#					await ctx.send(
+#						embed=discord.Embed(title="Дуэль началась!"),
+#						components=[
+#							Button(style=ButtonStyle.red, label="Выстрел", emoji="🔫"),
+#							Button(style=ButtonStyle.red, label="Холостой", emoji="✴️")])
+#			response = await bot.wait_for("button_click")
+#			if response.channel == ctx.channel:
+#				if response.component.label == "Выстрел":
+#					rnmd = [f"Пользователь {member} Застрелил пользователя {ctx.author.mention}."] * 50 + [f"Пользователь {member} промахнулся."] * 50
+#					await ctx.send(embed = discord.Embed(title=random.choice(rnmd)))
+#				else:
+#					await ctx.send(
+#						embed=discord.Embed(title=f"Пользователь {member} выстрелил в небо"),
+#						components=[
+#							Button(style=ButtonStyle.red, label="Выстрел", emoji="🔫"),
+#							Button(style=ButtonStyle.red, label="Холостой", emoji="✴️")])
 
 		@bot.command()
 		async def google(ctx, *, text):
@@ -381,69 +382,25 @@ Unikum131 - 50 рублей
 			msg = await ctx.send(embed=embed)
 			for x in range(4):
 				r1 = random.choice(slots)
-				await asyncio.sleep(0.2)
+				await asyncio.sleep(0.5)
 				new_emb = discord.Embed(title="ToxCasino777", description=r1 + ":grey_question:" + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
 				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 				await msg.edit(embed=new_emb)
 				r2 = random.choice(slots)
 			for x in range(4):
 				r2 = random.choice(slots)
-				await asyncio.sleep(0.2)
+				await asyncio.sleep(0.5)
 				new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2  + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
 				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 				await msg.edit(embed=new_emb)
 				r3 = random.choice(slots)
 			for x in range(4):
 				r3 = random.choice(slots)
-				await asyncio.sleep(0.2)
+				await asyncio.sleep(0.5)
 				new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2  + r3  + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
 				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 				await msg.edit(embed=new_emb)
 			await ctx.reply("Конец игры.")
-
-		FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
-
-
-		@bot.command(aliases = ["balance", "баланс", "деньги"])
-		async def bal(ctx, member: discord.Member = None):
-			if member is None:
-				UsTaCr.author(ctx)
-				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
-					embed = discord.Embed(title = "ToxCoins", description = f"Баланс {ctx.author.display_name} - {row[0]} ТоксКоинов.", colour = discord.Colour.from_rgb(230,0,0))
-					await ctx.send(embed=embed)
-			else:
-				UsTaCr.member(ctx, member)
-				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id = {member.id}'):
-					embed = discord.Embed(title = "ToxCoins", description = f"Баланс {member.display_name} - {row[0]} ТоксКоинов.", colour = discord.Colour.from_rgb(230,0,0))
-					await ctx.send(embed=embed)
-		
-		@bot.command(aliases = ["pay", "заплатить", "отдать"])
-		async def give(ctx, member: discord.Member = None, Value: int = None):
-			if member is None:
-				await ctx.send("Укажите цель!")
-			else:
-				UsTaCr.author(ctx)
-				UsTaCr.member(ctx, member)
-				if Value is None:
-					await ctx.send("Укажите количество ТоксКоинов!")
-				elif Value <= 0:
-					await ctx.send("Нельзя передать 0 ТоксКоинов или меньше!")
-				else:
-					ebal = 0
-					for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
-						ebal = int(row[0])
-					if ebal >= Value:
-						for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
-						    orow1 = int(row[0])
-						    row1 = int(row[0]) - Value
-						curosr.execute(f'UPDATE economy SET money = {row1} WHERE id={ctx.author.id}')
-						for row in cursor.execute(f'SELECT money FROM economy WHERE id={member.id}'):
-						    orow2 = int(row[0])
-						    row2 = int(row[0]) + Value
-						curosr.execute(f'UPDATE economy SET money = {row2} WHERE id={member.id}')
-						embed = discord.Embed(title="ToxCoins", description=f"Пользователь {ctx.author.display_name} дал {Value} ТоксКоинов {member.display_name}.\nНовый баланс {member.display_name} - {row2} ТоксКоинов.")
-					else:
-						await ctx.send("Недостаточно денег!")
 
 
 		# Помощь по командам
@@ -457,7 +414,7 @@ Unikum131 - 50 рублей
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpИгры(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`call *911|255* *текст* - позвонить в полицию или в пиццерию.`\n`kill @пользователь` - Убить.\n`twisted @пользователь` — Свернуть шею.\n`fuck @пользователь` — Изнасиловать.\n`eat @пользователь` — Съесть.\n`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.\n`coin` - Игра в монетку\n`slots` - Слоты казино.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`call *911* *текст* - позвонить в полицию (Вызвать администратора).`\n`kill` *текст* - Убить.\n`twisted` *текст* — Свернуть шею.\n`fuck` *текст* — Изнасиловать.\n`eat` *текст* — Съесть.\n`give` *текст* - Дать.\n`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.\n`coin` - Игра в монетку\n`slots` - Слоты казино.')
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpИнфо(ctx):
@@ -527,6 +484,15 @@ Unikum131 - 50 рублей
 			await ctx.send(embed = embed)
 
 		@bot.command()
+		async def bird(ctx):
+			response = requests.get("https://some-random-api.ml/img/bird")
+			json_data = json.loads(response.text)
+			embed = discord.Embed(color = 0x8b0000, title = "Fucking bird.")
+			embed.set_image(url = json_data["link"])
+			await ctx.send(embed = embed)
+
+
+		@bot.command()
 		async def cum(ctx):
 			response = ("http://www.hudeem-s-profi.ru/files/images/6zqbxxxljrnpsdldhcxz.jpg")
 			await ctx.send(response)
@@ -565,8 +531,7 @@ Unikum131 - 50 рублей
 
 
 		@bot.command()
-		async def call(ctx, text, *, message):
-			message = message
+		async def call(ctx, text):
 			text = text
 			if text == "911":
 				embed = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок.", colour=discord.Colour.from_rgb(230,0,0))
@@ -581,52 +546,60 @@ Unikum131 - 50 рублей
 				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 				await msg.edit(embed=update_emb)
 				await asyncio.sleep(1)
-				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок.", colour=discord.Colour.from_rgb(230,0,0))
-				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await msg.edit(embed=update_emb)
-				await asyncio.sleep(1)
-				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок..", colour=discord.Colour.from_rgb(230,0,0))
-				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await msg.edit(embed=update_emb)
-				await asyncio.sleep(1)
-				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок...", colour=discord.Colour.from_rgb(230,0,0))
-				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await msg.edit(embed=update_emb)
-				await asyncio.sleep(1)
 				await ctx.send(f'''
-<@&966062221589348422>
-`{message}`''')
+<@&966062221589348422>''')
 				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description=f'''
 Не волнуйтесь, полиция в пути.''', colour=discord.Colour.from_rgb(230,0,0))
 				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 				await msg.edit(embed=update_emb)
-			if text == "255":
-				embed = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок.", colour=discord.Colour.from_rgb(230,0,0))
-				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				msg = await ctx.send(embed = embed)
-				await asyncio.sleep(1)
-				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок..", colour=discord.Colour.from_rgb(230,0,0))
-				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await msg.edit(embed=update_emb)
-				await asyncio.sleep(1)
-				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок...", colour=discord.Colour.from_rgb(230,0,0))
-				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await msg.edit(embed=update_emb)
-				await asyncio.sleep(1)
-				await ctx.send(f'''
-<@&966065342390628374>
-`{message}`''')
-				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description=f'''
-Вы позвонили в пиццерию
-Ваш заказ готовится''', colour=discord.Colour.from_rgb(230,0,0))
-				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await msg.edit(embed=update_emb)
-			if text != "255" and text !="911":
+			if text !="911":
 				embed = discord.Embed(title=f"Звонок на номер `{text}`", description="Номер не найден.", colour=discord.Colour.from_rgb(230,0,0))
 				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 				await ctx.send(embed = embed)
 
 
+		@bot.command(aliases = ["balance", "баланс", "деньги"])
+		async def ballance(ctx, member: discord.Member = None):
+			if member is None:
+				UsTaCr.author(ctx)
+				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
+					embed = discord.Embed(title = "ToxCoins", description = f"Баланс {ctx.author.display_name} - {row[0]} ТоксКоинов.", colour = discord.Colour.from_rgb(230,0,0))
+					await ctx.send(embed=embed)
+			else:
+				UsTaCr.member(ctx, member)
+				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id = {member.id}'):
+					embed = discord.Embed(title = "ToxCoins", description = f"Баланс {member.display_name} - {row[0]} ТоксКоинов.", colour = discord.Colour.from_rgb(230,0,0))
+					await ctx.send(embed=embed)
+		
+		@bot.command(aliases = ["pay", "заплатить", "отдать"])
+		async def givecoins(ctx, member: discord.Member = None, Value: int = None):
+			if member is None:
+				await ctx.send("Укажите цель!")
+			else:
+				UsTaCr.author(ctx)
+				UsTaCr.member(ctx, member)
+				if Value is None:
+					await ctx.send("Укажите количество ТоксКоинов!")
+				elif Value <= 0:
+					await ctx.send("Нельзя передать 0 ТоксКоинов или меньше!")
+				else:
+					ebal = 0
+					for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
+						ebal = int(row[0])
+					if ebal >= Value:
+						for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
+							orow1 = int(row[0])
+							row1 = int(row[0]) - Value
+						curosr.execute(f'UPDATE economy SET money = {row1} WHERE id={ctx.author.id}')
+						for row in cursor.execute(f'SELECT money FROM economy WHERE id={member.id}'):
+							orow2 = int(row[0])
+							row2 = int(row[0]) + Value
+						curosr.execute(f'UPDATE economy SET money = {row2} WHERE id={member.id}')
+						embed = discord.Embed(title="ToxCoins", description=f"Пользователь {ctx.author.display_name} дал {Value} ТоксКоинов {member.display_name}.\nНовый баланс {member.display_name} - {row2} ТоксКоинов.")
+					else:
+						await ctx.send("Недостаточно денег!")
+
+		FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
 
 		@bot.command()
 		async def rlist(ctx):
