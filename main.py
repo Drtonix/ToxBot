@@ -24,7 +24,6 @@ from core.toxbot_core import *
 from classes import UsTaCr
 from Cybernator import Paginator as Pag
 from discord_components import DiscordComponents, Button, ButtonStyle
-import simpledemotivators
 
 #Переменные
 
