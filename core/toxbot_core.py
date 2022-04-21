@@ -1,5 +1,6 @@
 from 	core.toxbot_core_texts	import 		*
 from 	core.plugins.youtube	import 		*
+from 	core.plugins.calls		import		*
 import 	simplejson 				as     		json
 from 	colorama 				import 		init
 from 	termcolor 				import 		colored
@@ -91,3 +92,4 @@ def first_boot_cofigure(data):
 
 def plgins(discord, bot, data):
 	asyncio.run(yt_play		(discord, bot, data, print_log, notfy))
+	asyncio.run(calls		(discord, bot, data, print_log, notfy))

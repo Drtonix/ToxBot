@@ -16,6 +16,7 @@ import json
 import requests
 import discord
 import os
+import sys
 import pytz
 import sqlite3
 from colorama import init
@@ -529,34 +530,6 @@ Unikum131 - 50 рублей
 			await ctx.send(random.choice(strings))
 
 
-		@bot.command()
-		async def call(ctx, text):
-			text = text
-			if text == "911":
-				embed = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок.", colour=discord.Colour.from_rgb(230,0,0))
-				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				msg = await ctx.send(embed = embed)
-				await asyncio.sleep(1)
-				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок..", colour=discord.Colour.from_rgb(230,0,0))
-				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await msg.edit(embed=update_emb)
-				await asyncio.sleep(1)
-				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок...", colour=discord.Colour.from_rgb(230,0,0))
-				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await msg.edit(embed=update_emb)
-				await asyncio.sleep(1)
-				await ctx.send(f'''
-<@&966062221589348422>''')
-				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description=f'''
-Не волнуйтесь, полиция в пути.''', colour=discord.Colour.from_rgb(230,0,0))
-				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await msg.edit(embed=update_emb)
-			if text !="911":
-				embed = discord.Embed(title=f"Звонок на номер `{text}`", description="Номер не найден.", colour=discord.Colour.from_rgb(230,0,0))
-				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await ctx.send(embed = embed)
-
-
 		@bot.command(aliases = ["balance", "баланс", "деньги"])
 		async def ballance(ctx, member: discord.Member = None):
 			if member is None:
@@ -812,6 +785,10 @@ Unikum131 - 50 рублей
 		async def on_message(message):
 			if '++' in message.content:
 				await message.channel.send(f'В связи с ситуацией в украине, бот приостановил свою работу в России.')
-	bot.run(data["Token"])
+	try:
+		print_log('wait', "Попытка подключится используя токен: {}".format(data["Token"]))
+		bot.run(data["Token"])
+	except Exception as e:
+		print_log('err', 'Не удалось подключиться с указанным токеном \n ({})'.format(e))
 else:
 	print_log('err', "Инициализация прерванна.")
