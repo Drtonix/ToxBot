@@ -6,6 +6,8 @@ from random import randrange, choice
 import simplejson as json
 from asyncio import sleep
 import subprocess
+import contextlib
+import io
 import string
 import time
 import random
@@ -20,15 +22,18 @@ from colorama import init
 from termcolor import colored
 from core.toxbot_core import *
 from classes import UsTaCr
-##############################################
-#				 Переменные                  #
-##############################################
+from Cybernator import Paginator as Pag
+from discord_components import DiscordComponents, Button, ButtonStyle
+
+#Переменные
+
 global data
 data = None
 init_successful = False
-##############################################
-#               Инициализация                #
-##############################################
+intents = discord.Intents.all()
+
+#Инициализация
+
 init()
 print(header_logo)
 print_log('wait', "Ожидание:  Инициализация")
@@ -39,8 +44,8 @@ try:
 		print_log('warn', "Обнаружен первый запуск программы:  Переходим в режим настройки")
 		first_boot_cofigure(data)
 	else:
-		bot = Bot(command_prefix="++", help_command=None)
-		client = discord.ext.commands.Bot(command_prefix = "++")
+		bot = Bot(command_prefix="++", help_command=None, intents=intents)
+		client = discord.ext.commands.Bot(command_prefix = "++", intents = discord.Intents.all())
 		init_successful = True
 		if(init_successful):
 			print_log('info', "Инициализация прошла успешно")
@@ -55,17 +60,16 @@ try:
 			except Exception as e:
 				print_log('err', "Ошибка базы данных: " + e)
 
-
 		@bot.event
 		async def on_ready():
+			DiscordComponents(bot)
 			await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="++help"))
 			print_log("info", "Бот успешно cumming!")
 except Exception as e:
-	print_log('err', "Неудалось спарсить значения из конфига: " + str(e))
+	print_log('err', "Не удалось спарсить значения из конфига: " + str(e))
 
-##############################################
-#                 Комманды					 #
-##############################################
+
+
 if(init_successful):
 	tz = pytz.timezone('Europe/Moscow')
 	date = datetime.now(tz).strftime("%d%m")
@@ -73,184 +77,163 @@ if(init_successful):
 		@bot.command()
 		async def ver(ctx):
 			embed = discord.Embed(title="ToxBot {}!".format(num_ver), description=text_ver.format(num_ver), colour = discord.Colour.from_rgb(230,0,0))
-			embed.set_thumbnail(url="https://i.ibb.co/nnYfwZG/ToxDsBot.png")
+			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 			msg = await ctx.send(embed=embed)
 
+#Комманды
+		@bot.event
+		async def on_member_join(member):
+			await member.send('Добро пожаловать на сервер БДБ!\nСписок команд: ++help\nВы так же можете поддержать разработку бота: ++info')
+			for ch in bot.get_guild(member.guild.id).channels:
+				if ch.name == "💬┃био-отходняк-чат": 
+					await bot.get_channel(ch.id).send(f'Поздоровайтесь с новым участником Сервера, {member.display_name}!')
+		@bot.event
+		async def on_member_remove(member):
+			for ch in bot.get_guild(member.guild.id).channels:
+				if ch.name == "💬┃био-отходняк-чат":
+					await bot.get_channel(ch.id).send(f'К сожалению, {member.display_name} покинул нас.')
+
+		@bot.event
+		async def on_voice_state_update(member, before, after):
+			if after.channel != None:
+				if after.channel.id == 964912138923700224:
+					for guild in bot.guilds:
+						maincategory = discord.utils.get(guild.categories, id=864965395312017449)
+						channel2 = await guild.create_voice_channel(
+							f'🔉┃{member.display_name}',
+							position=3,
+							category=maincategory, 
+							bitrate=96000, 
+							reason=f"Создался войс для {member}"
+						)
+						await channel2.set_permissions(member, connect=True, mute_members=True, move_members=True, manage_channels=True)
+						await member.move_to(channel2)
+						def check(x, y, z):
+							return len(channel2.members) == 0
+						await bot.wait_for('voice_state_update', check=check)
+						await channel2.delete()
+
+
+		@bot.command()
+		async def stats(ctx):
+			mbrs = ctx.guild.members
+			online = len(list(filter(lambda x: x.status == discord.Status.online, mbrs)))
+			idle = len(list(filter(lambda x: x.status == discord.Status.idle, mbrs)))
+			offline = len(list(filter(lambda x: x.status == discord.Status.offline, mbrs)))
+			dnd = len(list(filter(lambda x: x.status == discord.Status.dnd, mbrs)))
+			allmemb = online+idle+offline+dnd
+			embed = discord.Embed(title="ToxBot", description=f'''\nОнлайн: {online}.\nОффлайн: {offline}.\nНеактивны: {idle}.\nНе беспокоить: {dnd}.\nВсего участников: {allmemb}.''', colour = discord.Colour.from_rgb(230,0,0))
+			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+			msg = await ctx.send(embed=embed)
+
+#help, info
 		@bot.command()
 		async def help(ctx):
-				embed = discord.Embed(title="ToxBot", description='''
-		- лист всех команд на данный момент: -
-		-
-		- ++time - Время по мск.
-		-
-		- ++coin - Игра в м*о*нетку.
-		- ++randomto - Рандом от одного до любого числа.
-		- ++roulette - Русская рулетка.
-		- (*Число от 1 до 5 с приставкой* **bul** *добавляет пули, пример: ++roulette5bul*)
-		- ++slots - Слоты казино
-		-
-		- ++kill @челов*е*к - Убить.
-		- ++twisted @человек - Свернуть шею.
-		- ++laugh - Бот посмеёт*с*я.
-		- ++ver - Текущая версия бота.
-		- ++cal *+,-,/,** *числа* - Кальк*у*лятор.
-		-
-		- ++google *текст* - Ссылка на запрос google.
-		- ++yandex *текст* - Ссылка на запрос yandex.
-		- ++duckduck *текст* - Ссылка на запрос duckduckgo.
-		- ++yahoo *текст* - Ссылка на запрос yahoo.
-		-
-		- ++steam - Ссылка на рандомную игру из стима.
-		- 
-		- ++p *название или ссылка на трек* - Включить трек из ютуба.
-		- ++rpl *all|one|off* - Включить/выключить повтор.
-		- ++skip - Пропустить т*р*ек. 
-		- ++stop - Остановить воспроизведение.
-		- ++rlist - Список всех радиостанций.
-		- Тайных команд: 15.
-		''', colour = discord.Colour.from_rgb(230,0,0))
-				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				msg = await ctx.send(embed=embed)
+			embed = discord.Embed(title="Используйте `++` перед \nначалом команды", description='''		
+📌**Основное**
+Инфо — `help`, `info`, `ver`
+🎧**Воспроизведение**
+Медиа — `p`, `rpl`, `skip`, `stop`
+Список радиостанций — `rlist`
+🎲**Игры и действия**
+Действия — `kill`, `twisted`, `fuck`, `eat`, `give`, `call`
+Казино игры — `roulette`, `coin`, `slots`
+📚**Инфо и полезные штуки**
+Инфо о пользователях — `stats`, `membinfo`
+Полезные команды бота — `randomto`, `cal`, `time`, `laugh`, `yesorno`
+🔎**Поиск**
+Поисковики — `google`, `yandex`, `duckduck`, `yahoo`''', colour = discord.Colour.from_rgb(230,0,0))
+			strings = ["Я слышал что если перед категорией команд слитно писать help, то что то поменяется."]* 88 + ["Шуруп, забитый молотком, держится крепче, чем гвоздь, закрученный отвёрткой."]*1 +["Обувь будет носиться значительно дольше, если не покупать новую."]*1 + ["Если сосиски отварить с кубиком говяжьего бульона - то они будут пахнуть мясом."]*1 +["Большинство электрических приборов потребляют меньше электричества в выключенном состоянии."]*1 + ["Вегетарианский суп будет питательней, если в него положить немного говядины."]*1 +["Если ваш компьютер заразил вирус - как можно скорее переформатируйте ваш жесткий диск; не давайте вирусу удовольствие самому это сделать."]*1 + ["Если вы хотите приготовить дрожжевое тесто, но у вас нет дрожжей, то ни фига у вас не получится."]*1 +["Если ваш сосед внезапно купил ружье, вам лучше завязать с музыкой."]*1 + ["Нельзя смотреться в зеркало когда ешь - счастье своё проешь. И когда пьёшь - пропьёшь. А в туалете зеркало вообще лучше не вешать.."]*1 +["Если крыть нечем - кройте матом."]*1 + ["Не стой, где попало - попадёт ещё раз"]*1 + ["Если ваша машина издает странные звуки, увеличивайте громкость радио до тех пор, пока не перестанете их слышать."]*1
+			embed.set_footer(text=random.choice(strings))
+			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+			msg = await ctx.send(embed = embed)
 
 		@bot.command()
 		async def info(ctx):
-				embed = discord.Embed(title="ToxBot", description='''
-		---------------------------------------------------
-		-- Работают над ботом:
-		-- Tonix#5322 , 410#0797, Ampernic#9707, *?*
-		-- Работа над серверной частью: Ampernic#9707
-		-------------------------------------------------
-		-- Пожертвования на разработку:
-		-- Юmoney:
-		-- <https://yoomoney.ru/to/4100112019491157>
-		-- Qiwi:
-		-- TONIXX
-		----------------------------------------------------
-		-- Донатеры:
-		-- Porg_Studio - dlc для Dead Sells
-		-- Ampernic - 50 рублей ежемесячно
-		--------------------------------------------------
-		-- Официальный сервер бота:
-		-- https://discord.gg/XMYZKS3b3j
-		-------------------------------------------
-		-- Спасибо что пользуетесь ToxBot!
-		----------------------------------------------
-		''', colour = discord.Colour.from_rgb(230,0,0))
-				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				msg = await ctx.send(embed=embed)
+			embed1 = discord.Embed(title="ToxBot Info (1)", description='''
+💎**Пожертвования на разработку**
 
-		@bot.command()
-		async def tb(ctx):
-			embed = discord.Embed(title="ToxBot", description="На месте✅", colour = discord.Colour.from_rgb(0,230,0))
-			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-			msg = await ctx.send(embed=embed)
+Юmoney:
+<https://bit.ly/3vrvWlJ>
+Qiwi:
+TONIXX
+Donationalerts:
+<https://bit.ly/3KSJ6OW>
+Patreon:
+<https://bit.ly/3xud881>
+''', colour = discord.Colour.from_rgb(230,0,0))
+			embed1.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+			embed2 = discord.Embed(title="ToxBot Info (2)", description='''
+🔧**Работают над ботом**
+Tonix#5322 , 410#0797, Ampernic#9707
+🏠**Официальный сервер бота**
+https://discord.gg/XMYZKS3b3j
+
+ Мы хотим сказать спасибо всем тем,
+у кого мы позаимствовали код.
+ Как говорил Линус Торвальдс:
+«Программы — как секс: лучше,
+ когда бесплатно.»''')
+			embed2.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+			embed3 = discord.Embed(title="ToxBot Info (2)", description='''
+❤️**Донатеры**
 
 
-		@bot.command()
-		async def cal(ctx, operation, *nums):
-			if operation not in ['+', '-', '*', '/']:
-				await ctx.reply('Пожалуйста введите команду правильно.')
-			var = f' {operation} '.join(nums)
-			await ctx.reply(f'{var} = {eval(var)}')
+Ampernic - 200 рублей ежегодно
+CentrumEx - 50 рублей
+Porg_Studio - dlc для Dead Sells
+Unikum131 - 50 рублей
 
 
-		@bot.command()
-		async def nothing(ctx):
-			await ctx.send("** **")
+Спасибо что пользуетесь ToxBot!''')
+			embed3.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+			embeds = [embed1, embed2, embed3]
+			message = await ctx.send(embed = embed1)
+			reactions = ["◀️", "▶️"]
+			page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = True, reactions = reactions, timeout = 33)
+			await page.start()
 
 
-		@bot.command()
-		async def laugh(ctx):
-			def rnd_str(min_chars=6, max_chars=10, alphabet=("А", "Х", "П", "а", "х", "п")):
-				return ''.join(random.choices(alphabet, k=random.randint(min_chars, max_chars)))
-			await ctx.send(f"{(rnd_str(6, 10))}!!!")
+		@bot.event
+		async def on_command_error(ctx, error):
+			if isinstance(error, commands.CommandNotFound):
+				await ctx.send(embed = discord.Embed(description = f'**`{ctx.author.name}, данной команды не существует.`**'))
 
 
 		@bot.command()
-		async def fuck_you(ctx):
-			author = ctx.message.author
-			await ctx.reply(f"No, {author.mention}, fuck you!")
-
-
-		@bot.command()
-		async def time(ctx):
-			tz_Moscow = pytz.timezone('Europe/Moscow')
-			datetime_Moscow = datetime.now(tz_Moscow)
-			embed = discord.Embed(title="ToxBot", description=datetime_Moscow.strftime("%H:%M:%S"), colour = discord.Colour.from_rgb(230,0,0))
-			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-			msg = await ctx.send(embed=embed)
-
+		async def cal(ctx, *, expression:str):
+			try:
+				calculation = eval(expression)
+				await ctx.send('Выражение: {}.\nОтвет: {}.'.format(expression, calculation))
+			except SyntaxError:
+				await ctx.send("Введите выражение правильно.")
+			except ValueError:
+				await ctx.send("Введите выражение правильно.")
+			except ZeroDivisionError:
+				await ctx.send("На ноль делить нельзя.")
 
 		@bot.command()
-		async def ping(ctx):
-			embed = discord.Embed(title="Понг!", description=f" {round(bot.latency * 1000)} мс.", colour = discord.Colour.from_rgb(230,0,0))
-			await ctx.send(embed=embed)
-
-
-		@bot.command()
-		async def c(ctx):
-			author = ctx.message.author
-			await ctx.reply(f"{author.mention} ты еблан?")
-
-
-		@bot.command()
-		async def dog(ctx):
-			response = requests.get("https://some-random-api.ml/img/dog")
-			json_data = json.loads(response.text)
-			embed = discord.Embed(color = 0x8b0000, title = "Fucking dog.")
-			embed.set_image(url = json_data["link"])
-			await ctx.send(embed = embed)
-
-
-		@bot.command()
-		async def fox(ctx):
-			response = requests.get("https://some-random-api.ml/img/fox")
-			json_data = json.loads(response.text)
-			embed = discord.Embed(color = 0x8b0000, title = "Fucking fox.")
-			embed.set_image(url = json_data["link"])
-			await ctx.send(embed = embed)
-
-
-		@bot.command()
-		async def cat(ctx):
-			response = requests.get("https://some-random-api.ml/img/cat")
-			json_data = json.loads(response.text)
-			embed = discord.Embed(color = 0x8b0000, title = "Fucking cat.")
-			embed.set_image(url = json_data["link"])
-			await ctx.send(embed = embed)
-
-
-		@bot.command()
-		async def cum(ctx):
-			response = ("http://www.hudeem-s-profi.ru/files/images/6zqbxxxljrnpsdldhcxz.jpg")
-			await ctx.send(response)
-
-
-		@bot.command()
-		async def xoxol(ctx):
-			response = ("https://avelita.ru/wa-data/public/shop/products/94/02/10294/images/25335/25335.650.jpg")
-			embed = discord.Embed(title="хохлы", description="В связи с ситуацией в украине, эта команда временно не работает.", colour = discord.Colour.from_rgb(230,0,0))
-			embed.set_image(url = response)
-			await ctx.send(embed = embed)
-
-
-		@bot.command()
-		async def gay(ctx):
-			strings = ["https://media.discordapp.net/attachments/674594514303975434/931593784259674142/b95400d0-b508-4244-9bc5-a8b098f8a80e.png", "https://media.discordapp.net/attachments/762655570221203466/931594108580008026/unknown.png", "https://media.discordapp.net/attachments/674594514303975434/931602635189002240/7f6a9091-9a0b-40be-902e-85ac93930b36.png", "https://media.discordapp.net/attachments/678564352164495387/932670407876702228/unknown.png?width=455&height=675"]
-			await ctx.send(random.choice(strings))
-
-
-		@bot.command()
-		async def niggers(ctx):
-			strings = ["http://3.bp.blogspot.com/-yf3xMdLObGk/T3fON3wZurI/AAAAAAAA4tQ/QT5PT9q_tAY/s1600/Daddy838.jpg", "https://famt.ru/wp-content/uploads/2019/07/k-chemu-snitsya-negr-muzhchina.jpg", "https://otvet.imgsmail.ru/download/u_08aceead9e79f1fa2d6d289905d78e8d_800.jpg", "https://themancrushblog.com/wp-content/uploads/2013/11/daniel-louisy+5.jpg", "https://www.timeout.ru/img/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0/%D0%9A%D0%B8%D0%BD%D0%BE/%D1%81%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B%202020/C4D_SHwWQAA2FZR.jpg","https://s00.yaplakal.com/pics/pics_original/1/6/3/14400361.jpg", "https://bi.im-g.pl/im/2/11093/z11093482IER.jpg","https://www.meme-arsenal.com/memes/f8fb9c33e73272021defca88c110cac8.jpg","https://i.imgur.com/Ogcuewp.jpg", "http://risovach.ru/upload/2018/12/generator/negr_194265628_orig_.jpg","http://prettymalemodels.com/wp-content/uploads/2017/03/DSC_7241-Edit.jpg","https://yt3.ggpht.com/-D6fqV6rRmRQ/AAAAAAAAAAI/AAAAAAAAAAA/UkT41uCEBZw/s900-c-k-no/photo.jpg","https://w7.pngwing.com/pngs/505/138/png-transparent-jay-rock-rapper-follow-me-home-musician-black-friday-jay-z-tshirt-arm-abdomen.png","https://mypersonalbroker.files.wordpress.com/2017/11/04.jpg"]
-			await ctx.send(random.choice(strings))
-
-
-		@bot.command()
-		async def balls(ctx):
-			strings = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ","https://i.ytimg.com/vi/qJPq0EaCRck/maxresdefault.jpg","https://ae01.alicdn.com/kf/HLB1y77JaOrxK1RkHFCcq6AQCVXaf.jpg", "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/60c2c9c4-c5db-443a-ba53-0acc0a5875e7/d2m8je7-0a3eb7d7-5b0c-44d7-a536-bc4db8844b4a.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi82MGMyYzljNC1jNWRiLTQ0M2EtYmE1My0wYWNjMGE1ODc1ZTcvZDJtOGplNy0wYTNlYjdkNy01YjBjLTQ0ZDctYTUzNi1iYzRkYjg4NDRiNGEuanBnIn1dXX0.K08BpRRTK3Oqw_r-PQWbDQ_Ur-H80hIk86LW1grED5Q"]
-			await ctx.send(random.choice(strings))
-
+		async def membinfo(ctx,member:discord.Member = None, guild: discord.Guild = None):
+			emb = discord.Embed(title=f"Информация о пользователе {member}:", color=discord.Colour.from_rgb(230,0,0))
+			emb.add_field(name="Никнейм:", value=member.display_name,inline=False)
+			t = member.status
+			if t == discord.Status.online:
+				d = " В сети"
+			t = member.status
+			if t == discord.Status.offline:
+				d = " Не в сети"
+			t = member.status
+			if t == discord.Status.idle:
+				d = " Не активен"
+			t = member.status
+			if t == discord.Status.dnd:
+				d = " Не беспокоить"
+			emb.add_field(name="Активность:", value=d,inline=False)
+			emb.add_field(name="Статус:", value=member.activity,inline=False)
+			emb.add_field(name="Роль на сервере:", value=f"{member.top_role.mention}",inline=False)
+			emb.add_field(name="Аккаунт был создан:", value=member.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"),inline=False)
+			emb.add_field(name="Зашёл на сервер:", value=member.joined_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"),inline=False)
+			await ctx.send(embed = emb)
 
 		@bot.command()
 		async def coin(ctx):
@@ -266,8 +249,7 @@ if(init_successful):
 
 
 		@bot.command()
-		async def danet(ctx, *, text):
-			num2 = str(text)
+		async def yesorno(ctx, *, text):
 			danet = ['да.'] * 25 + ['нет.'] * 25 + ['скорее всего.'] * 25 + ['наверное.'] * 25
 			await ctx.send(f"Я думаю что {random.choice(danet)}")
 
@@ -277,20 +259,26 @@ if(init_successful):
 			author = ctx.message.author
 			txt = discord.utils.escape_mentions(text)
 			await ctx.send(f"{author.mention} выебал {txt}.")
-
-
 		@bot.command()
 		async def kill(ctx, *, text):
 			author = ctx.message.author
 			txt = discord.utils.escape_mentions(text)
 			await ctx.send(f"{author.mention} убил {txt}.")
-
-
+		@bot.command()
+		async def eat(ctx, *, text):
+			author = ctx.message.author
+			txt = discord.utils.escape_mentions(text)
+			await ctx.send(f"{author.mention} съел {txt}.")
 		@bot.command()
 		async def twisted(ctx, *, text):
 			author = ctx.message.author
 			txt = discord.utils.escape_mentions(text)
 			await ctx.send(f"{author.mention} свернул шею {txt}.")
+		@bot.command()
+		async def give(ctx, *, text):
+			author = ctx.message.author
+			txt = discord.utils.escape_mentions(text)
+			await ctx.send(f"{author.mention} дал {txt}.")
 
 
 		@bot.command()
@@ -323,6 +311,35 @@ if(init_successful):
 			author = ctx.message.author
 			await ctx.send(f'{author.mention} застрелился от своей тупости.')
 
+
+#		@bot.command()
+#		async def duele(ctx,member:discord.Member = None, guild: discord.Guild = None):
+#			await ctx.send(
+#				embed = discord.Embed(title="Приглашение на дуэль", description = f"Пользователь {ctx.author.mention} приглашает на дуэль {member.display_name}"),
+#				components=[
+#					Button(style=ButtonStyle.red, label="Принять", emoji="✔"),
+#					Button(style=ButtonStyle.red, label="Отклонить", emoji="✖")])
+#			response = await bot.wait_for("button_click")
+#			if response.channel == ctx.channel:
+#				if response.component.label == "Отклонить":
+#					await ctx.send(embed = discord.Embed(title=f"Пользователь {member} отклонил приглашение на дуэль."))
+#				else:
+#					await ctx.send(
+#						embed=discord.Embed(title="Дуэль началась!"),
+#						components=[
+#							Button(style=ButtonStyle.red, label="Выстрел", emoji="🔫"),
+#							Button(style=ButtonStyle.red, label="Холостой", emoji="✴️")])
+#			response = await bot.wait_for("button_click")
+#			if response.channel == ctx.channel:
+#				if response.component.label == "Выстрел":
+#					rnmd = [f"Пользователь {member} Застрелил пользователя {ctx.author.mention}."] * 50 + [f"Пользователь {member} промахнулся."] * 50
+#					await ctx.send(embed = discord.Embed(title=random.choice(rnmd)))
+#				else:
+#					await ctx.send(
+#						embed=discord.Embed(title=f"Пользователь {member} выстрелил в небо"),
+#						components=[
+#							Button(style=ButtonStyle.red, label="Выстрел", emoji="🔫"),
+#							Button(style=ButtonStyle.red, label="Холостой", emoji="✴️")])
 
 		@bot.command()
 		async def google(ctx, *, text):
@@ -364,31 +381,184 @@ if(init_successful):
 			msg = await ctx.send(embed=embed)
 			for x in range(4):
 				r1 = random.choice(slots)
-				await asyncio.sleep(0.2)
+				await asyncio.sleep(0.5)
 				new_emb = discord.Embed(title="ToxCasino777", description=r1 + ":grey_question:" + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
 				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 				await msg.edit(embed=new_emb)
 				r2 = random.choice(slots)
 			for x in range(4):
 				r2 = random.choice(slots)
-				await asyncio.sleep(0.2)
+				await asyncio.sleep(0.5)
 				new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2  + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
 				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 				await msg.edit(embed=new_emb)
 				r3 = random.choice(slots)
 			for x in range(4):
 				r3 = random.choice(slots)
-				await asyncio.sleep(0.2)
+				await asyncio.sleep(0.5)
 				new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2  + r3  + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
 				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 				await msg.edit(embed=new_emb)
 			await ctx.reply("Конец игры.")
 
-		FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+
+		# Помощь по командам
+		@bot.command()
+		async def helpОсновное(ctx):
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`help` —  Меню команд.\n`info` — Инфо о донатерах и разработчиках.\n`ver` - Версия бота на текущий момент.')
+			msg = await ctx.send(embed = embed)
+		@bot.command()
+		async def helpВоспроизведение(ctx):
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`p` `URL` — Воспроизведение аудио с ютуба.\n`p1|p2|p3...` — Воспроизведение радио.\n`rpl all|one|off` — Вкл/Выкл повтор.\n`skip` — Пропустить трек.\n`stop` - Остановить произведение.\n`rlist` - Лист всех радиостанций.')
+			msg = await ctx.send(embed = embed)
+		@bot.command()
+		async def helpИгры(ctx):
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`call *911* *текст* - позвонить в полицию (Вызвать администратора).`\n`kill` *текст* - Убить.\n`twisted` *текст* — Свернуть шею.\n`fuck` *текст* — Изнасиловать.\n`eat` *текст* — Съесть.\n`give` *текст* - Дать.\n`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.\n`coin` - Игра в монетку\n`slots` - Слоты казино.')
+			msg = await ctx.send(embed = embed)
+		@bot.command()
+		async def helpИнфо(ctx):
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`stats` — Список активностей людей на сервере.\n`membinfo @пользователь` — Информация о пользователе.\n`randomto(Число)` — Рандом до заданного числа большего одного.\n`cal` — Калькулятор.\n`time` — Время по МСК.\n`laugh` — Смех.\n`yesorno` — Да или нет.')
+			msg = await ctx.send(embed = embed)
+		@bot.command()
+		async def helpПоиск(ctx):
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`google|yandex|duckduck|yahoo текст` — Поиск по этому запросу.')
+			msg = await ctx.send(embed = embed)
+
+		#Всякие элементарные вещи
+		@bot.command()
+		async def time(ctx):
+			tz_Moscow = pytz.timezone('Europe/Moscow')
+			datetime_Moscow = datetime.now(tz_Moscow)
+			embed = discord.Embed(title="ToxBot", description=datetime_Moscow.strftime("%H:%M:%S"), colour = discord.Colour.from_rgb(230,0,0))
+			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+			msg = await ctx.send(embed=embed)
+
+		@bot.command()
+		async def nothing(ctx):
+			await ctx.send("** **")
+
+		@bot.command()
+		async def laugh(ctx):
+			def rnd_str(min_chars=6, max_chars=10, alphabet=("А", "Х", "П", "а", "х", "п")):
+				return ''.join(random.choices(alphabet, k=random.randint(min_chars, max_chars)))
+			await ctx.send(f"{(rnd_str(6, 10))}!!!")
+
+		@bot.command()
+		async def fuck_you(ctx):
+			author = ctx.message.author
+			await ctx.reply(f"No, {author.mention}, fuck you!")
+
+		@bot.command()
+		async def ping(ctx):
+			embed = discord.Embed(title="Понг!", description=f" {round(bot.latency * 1000)} мс.", colour = discord.Colour.from_rgb(230,0,0))
+			await ctx.send(embed=embed)
+
+		@bot.command()
+		async def c(ctx):
+			author = ctx.message.author
+			await ctx.reply(f"{author.mention} ты еблан?")
+
+		@bot.command()
+		async def dog(ctx):
+			response = requests.get("https://some-random-api.ml/img/dog")
+			json_data = json.loads(response.text)
+			embed = discord.Embed(color = 0x8b0000, title = "Fucking dog.")
+			embed.set_image(url = json_data["link"])
+			await ctx.send(embed = embed)
+
+		@bot.command()
+		async def fox(ctx):
+			response = requests.get("https://some-random-api.ml/img/fox")
+			json_data = json.loads(response.text)
+			embed = discord.Embed(color = 0x8b0000, title = "Fucking fox.")
+			embed.set_image(url = json_data["link"])
+			await ctx.send(embed = embed)
+
+		@bot.command()
+		async def cat(ctx):
+			response = requests.get("https://some-random-api.ml/img/cat")
+			json_data = json.loads(response.text)
+			embed = discord.Embed(color = 0x8b0000, title = "Fucking cat.")
+			embed.set_image(url = json_data["link"])
+			await ctx.send(embed = embed)
+
+		@bot.command()
+		async def bird(ctx):
+			response = requests.get("https://some-random-api.ml/img/bird")
+			json_data = json.loads(response.text)
+			embed = discord.Embed(color = 0x8b0000, title = "Fucking bird.")
+			embed.set_image(url = json_data["link"])
+			await ctx.send(embed = embed)
+
+
+		@bot.command()
+		async def cum(ctx):
+			response = ("http://www.hudeem-s-profi.ru/files/images/6zqbxxxljrnpsdldhcxz.jpg")
+			await ctx.send(response)
+
+		@bot.command()
+		async def xoxol(ctx):
+			response = ("https://avelita.ru/wa-data/public/shop/products/94/02/10294/images/25335/25335.650.jpg")
+			embed = discord.Embed(title="хохлы", description="В связи с ситуацией в украине, эта команда временно не работает.", colour = discord.Colour.from_rgb(230,0,0))
+			embed.set_image(url = response)
+			await ctx.send(embed = embed)
+
+		@bot.command()
+		async def gay(ctx):
+			strings = ["https://media.discordapp.net/attachments/674594514303975434/931593784259674142/b95400d0-b508-4244-9bc5-a8b098f8a80e.png", "https://media.discordapp.net/attachments/762655570221203466/931594108580008026/unknown.png", "https://media.discordapp.net/attachments/674594514303975434/931602635189002240/7f6a9091-9a0b-40be-902e-85ac93930b36.png", "https://media.discordapp.net/attachments/678564352164495387/932670407876702228/unknown.png?width=455&height=675", "https://media.discordapp.net/attachments/939136925095297055/965175091619045436/IMG_20220416_145225.jpg", "https://media.discordapp.net/attachments/704372667859599453/964104094723735582/IMG-20220413-WA0002.jpeg", "https://media.discordapp.net/attachments/704372667859599453/965288887754846218/IMG-20220414-WA0010.jpeg", "https://media.discordapp.net/attachments/704372667859599453/965289162997645312/IMG_20220417_183413.jpg"]
+			await ctx.send(random.choice(strings))
+
+		@bot.command()
+		async def niggers(ctx):
+			strings = ["http://3.bp.blogspot.com/-yf3xMdLObGk/T3fON3wZurI/AAAAAAAA4tQ/QT5PT9q_tAY/s1600/Daddy838.jpg", "https://famt.ru/wp-content/uploads/2019/07/k-chemu-snitsya-negr-muzhchina.jpg", "https://otvet.imgsmail.ru/download/u_08aceead9e79f1fa2d6d289905d78e8d_800.jpg", "https://themancrushblog.com/wp-content/uploads/2013/11/daniel-louisy+5.jpg", "https://www.timeout.ru/img/%D0%9C%D0%B0%D1%80%D0%B3%D0%B0%D1%80%D0%B8%D1%82%D0%B0/%D0%9A%D0%B8%D0%BD%D0%BE/%D1%81%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B%202020/C4D_SHwWQAA2FZR.jpg","https://s00.yaplakal.com/pics/pics_original/1/6/3/14400361.jpg","https://www.meme-arsenal.com/memes/f8fb9c33e73272021defca88c110cac8.jpg","https://i.imgur.com/Ogcuewp.jpg", "http://risovach.ru/upload/2018/12/generator/negr_194265628_orig_.jpg","http://prettymalemodels.com/wp-content/uploads/2017/03/DSC_7241-Edit.jpg","https://yt3.ggpht.com/-D6fqV6rRmRQ/AAAAAAAAAAI/AAAAAAAAAAA/UkT41uCEBZw/s900-c-k-no/photo.jpg","https://w7.pngwing.com/pngs/505/138/png-transparent-jay-rock-rapper-follow-me-home-musician-black-friday-jay-z-tshirt-arm-abdomen.png","https://mypersonalbroker.files.wordpress.com/2017/11/04.jpg"]
+			await ctx.send(random.choice(strings))
+
+		@bot.command()
+		async def balls(ctx):
+			strings = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ","https://i.ytimg.com/vi/qJPq0EaCRck/maxresdefault.jpg","https://ae01.alicdn.com/kf/HLB1y77JaOrxK1RkHFCcq6AQCVXaf.jpg", "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/60c2c9c4-c5db-443a-ba53-0acc0a5875e7/d2m8je7-0a3eb7d7-5b0c-44d7-a536-bc4db8844b4a.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi82MGMyYzljNC1jNWRiLTQ0M2EtYmE1My0wYWNjMGE1ODc1ZTcvZDJtOGplNy0wYTNlYjdkNy01YjBjLTQ0ZDctYTUzNi1iYzRkYjg4NDRiNGEuanBnIn1dXX0.K08BpRRTK3Oqw_r-PQWbDQ_Ur-H80hIk86LW1grED5Q"]
+			await ctx.send(random.choice(strings))
+
+
+		@bot.command()
+		async def pizza(ctx):
+			strings = ["https://media.discordapp.net/attachments/939136925095297055/966067143013716018/unknown.png", "https://media.discordapp.net/attachments/939136925095297055/966067143277944833/unknown.png", "https://media.discordapp.net/attachments/939136925095297055/966067143915475005/unknown.png", "https://media.discordapp.net/attachments/939136925095297055/966067144251031602/unknown.png"]
+			await ctx.send(random.choice(strings))
+		@bot.command()
+		async def coke(ctx):
+			strings = ["https://media.discordapp.net/attachments/939136925095297055/966067823459835954/unknown.png", "https://media.discordapp.net/attachments/939136925095297055/966067823707316304/unknown.png", "https://media.discordapp.net/attachments/939136925095297055/966067824009302066/unknown.png"]
+			await ctx.send(random.choice(strings))
+
+
+		@bot.command()
+		async def call(ctx, text):
+			text = text
+			if text == "911":
+				embed = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок.", colour=discord.Colour.from_rgb(230,0,0))
+				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				msg = await ctx.send(embed = embed)
+				await asyncio.sleep(1)
+				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок..", colour=discord.Colour.from_rgb(230,0,0))
+				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await msg.edit(embed=update_emb)
+				await asyncio.sleep(1)
+				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок...", colour=discord.Colour.from_rgb(230,0,0))
+				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await msg.edit(embed=update_emb)
+				await asyncio.sleep(1)
+				await ctx.send(f'''
+<@&966062221589348422>''')
+				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description=f'''
+Не волнуйтесь, полиция в пути.''', colour=discord.Colour.from_rgb(230,0,0))
+				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await msg.edit(embed=update_emb)
+			if text !="911":
+				embed = discord.Embed(title=f"Звонок на номер `{text}`", description="Номер не найден.", colour=discord.Colour.from_rgb(230,0,0))
+				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				await ctx.send(embed = embed)
 
 
 		@bot.command(aliases = ["balance", "баланс", "деньги"])
-		async def bal(ctx, member: discord.Member = None):
+		async def ballance(ctx, member: discord.Member = None):
 			if member is None:
 				UsTaCr.author(ctx)
 				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
@@ -401,7 +571,7 @@ if(init_successful):
 					await ctx.send(embed=embed)
 		
 		@bot.command(aliases = ["pay", "заплатить", "отдать"])
-		async def give(ctx, member: discord.Member = None, Value: int = None):
+		async def givecoins(ctx, member: discord.Member = None, Value: int = None):
 			if member is None:
 				await ctx.send("Укажите цель!")
 			else:
@@ -417,81 +587,59 @@ if(init_successful):
 						ebal = int(row[0])
 					if ebal >= Value:
 						for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
-						    orow1 = int(row[0])
-						    row1 = int(row[0]) - Value
+							orow1 = int(row[0])
+							row1 = int(row[0]) - Value
 						curosr.execute(f'UPDATE economy SET money = {row1} WHERE id={ctx.author.id}')
 						for row in cursor.execute(f'SELECT money FROM economy WHERE id={member.id}'):
-						    orow2 = int(row[0])
-						    row2 = int(row[0]) + Value
+							orow2 = int(row[0])
+							row2 = int(row[0]) + Value
 						curosr.execute(f'UPDATE economy SET money = {row2} WHERE id={member.id}')
 						embed = discord.Embed(title="ToxCoins", description=f"Пользователь {ctx.author.display_name} дал {Value} ТоксКоинов {member.display_name}.\nНовый баланс {member.display_name} - {row2} ТоксКоинов.")
 					else:
 						await ctx.send("Недостаточно денег!")
 
+		FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+
 		@bot.command()
 		async def rlist(ctx):
-			await ctx.send('''
-		- Список всех команд на переключение радиостанций: -
-		-----------------------------------
-		 ++p1 - Шансон
-		---------------------------------
-		 ++p2 - Радио Дача
-		------------------------------------
-		 ++p3 - Х*й забей радио
-		--------------------------------
-		 ++p4 - Новое Радио
-		------------------------------------
-		 ++p5 - FM радио
-		------------------------------------------------
-		 ++p6 - Дорожное Радио (Омск)
-		--------------------------------------------
-		 ++p7 - POP радио 70х
-		--------------------------------------
-		 ++p8 - Радио 80х
-		-------------------------------------------
-		 ++p9 - Радио 90х
-		----------------------------------------
-		 ++p10 - хиты кантри
-		-------------------------------------------
-		 ++p11 - хиты рока
-		------------------------------------
-		 ++p12 - рок фм
-		-----------------------------------------
-		 ++p13 - Христианское радио
-		-------------------------------------
-		 ++p14 - психоделик
-		----------------------------------------
-		 ++p15 - классический рок
-		------------------------------------------
-		 ++p16 - Ретро FM
-		---------------------------------
-		 ++p17 - Хевиметал
-		----------------------------------------------------
-		 ++p18 - Украинское Радио Релакс
-		-----------------------------------------------
-		 ++p19 - детское радио
-		-------------------------------------
-		 ++p20 - ссср радио
-		---------------------------------------
-		 ++p21 - радио аниме из Осаки.
-		----------------------------------------------
-		 ++p22 - Джаз.
-		-------------------------------------------- 
-		 ++p23 - lofi.
-		------------------------------------------- ''')
-			await ctx.send('''
-		** **++pRMS - Радио "RAMSHTEIN"
-		----------------------------------------------------
-		 ++pRHCP - "Red Hot Chili Peppers" радио
-		-------------------------------------------------------
-		 ++pKISH - Радио "Король и Шут""
-		------------------------------------------------
-		 ++pL - Радио "Гражданская оборона"
-		----------------------------------------------------
-		 ++p0 "*ссылка на поток*" - Своё радио
-		----------------------------------------------
-		- список будет дополняться -
-		''')
+			embed1 = discord.Embed(title = "Список радиостанций (1)", description = '''
+`p1` - Шансон
+`p2` - Радио Дача
+`p3` - Х*й забей радио
+`p4` - Новое Радио
+`p5` - FM радио
+`p6` - Дорожное Радио (Омск)
+`p7` - POP радио 70х
+`p8` - Радио 80х
+`p9` - Радио 90х
+`p10` - хиты кантри
+`p11` - хиты рока
+`p12` - рок фм
+`p13` - Христианское радио
+`p14` - психоделик''')
+			embed2 = discord.Embed(title = "Список радиостанций (2)", description = '''
+`p15` - классический рок
+`p16` - Ретро FM
+`p17` - Хевиметал
+`p18` - Украинское Радио Релакс
+`p19` - детское радио
+`p20` - ссср радио
+`p21` - радио аниме из Осаки
+`p22` - Джаз
+`p23` - lofi
+`pRMS` - Радио *RAMSHTEIN*
+`pRHCP` - радио *Red Hot Chili Peppers*
+`pKISH` - Радио *Король и Шут*
+`pL` - Радио *Гражданская оборона*
+`p0` *ссылка на поток* - Своё радио''')
+		
+			embeds = [embed1, embed2]
+			message = await ctx.send(embed = embed1)
+			reactions = ["◀️", "▶️"]
+			page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = True, reactions = reactions, timeout = 33)
+			await page.start()
+
+
 		async def rplay(ctx, link: None):
 			if link != None:
 				voice_channel = ctx.author.voice.channel
@@ -656,82 +804,14 @@ if(init_successful):
 				print_log('info', "Радио включено: Своя радиостанция (Вызвано {})".format(+ ctx.message.author.name))
 			else:
 				await ctx.send("Вставьте ссылку.")
-		
-
-		## Ивент на 21.03.22 (или позже) ##
-
-
-		@bot.command()
-		async def Error(ctx):
-			await ctx.send('''
-		Говорит ToxBot, если вы ввели эту команду, то вы любите загадки.
-		Если сможете отгАдать все спрятанные коMанды то в конце вас ждёт
-		спойлер к новому обнОвлению и послание от неизвестного разрабоTчика.
-		Все команды пишYтся на латинице.
-		Первая команда уже спрятана в этом сообщении, удачи.''')
-		@bot.command()
-		async def AMOTY(ctx):
-			await ctx.send('''
-		Вы смогли разгадать первую команду, поздравляю.
-		Для второй мы подготовили загадку:
-		Как зовут основателя ToxBot?''')
-		@bot.command()
-		async def Tonix(ctx):
-			await ctx.send('''
-			Как многие называют ToxBot?
-			*Писать на английском языке*''')
-		@bot.command()
-		async def Toxa(ctx):
-			await ctx.send('''
-		Всему свое время, и время всякой вещи под небом:
-		время рождаТься и время умирать… время разрушать, и время строIть…
-		время разбрасывать каМни, и время собирать камни; время обнимать,
-		и время уклоняться от объятий… врЕмя любить, и время ненавидеть;
-		время войне, и время миру. ''')
-		@bot.command()
-		async def TIME(ctx):
-			await ctx.send('''
-		Мы не стоLько любим людей за то добро, которое они нам сделали, сколько за то добро, которое мы Iм сдEлали.''')
-		@bot.command()
-		async def LIE(ctx):
-			await ctx.send('''
-		2+2/2=?''')
-		@bot.command()
-		async def three(ctx):
-			await ctx.send('''
-		Легко?
-		А теперь найдите следующую команду в списке команд.''')
-		@bot.command()
-		async def oecyp(ctx):
-			await ctx.send('''
-		https://www.youtube.com/watch?v=dQw4w9WgXcQ''')
-		@bot.command()
-		async def Q49WXQ(ctx):
-			await ctx.send('''
-		Ну а теперь финальная команда.
-		Как сначала назывался бот?
-		S####o#B##''')
-		@bot.command()
-		async def ShansonBot(ctx):
-			embed = discord.Embed(title=ToxBot, description='''
-		Поздравляю, вы отгадали все кOMанды.
-		В следующем обновлении будет очEнь много фиксов,
-		команды для донатеров и так же ноBая команда в
-		которой будет информация о ближайшем обновлении.
-		Надеюсь вам было хотя бы немHого интересно.''', colour = discord.Colour.from_rgb(230,0,0))
-		@bot.command()
-		async def OMEBH(ctx):
-			response = ("https://media.discordapp.net/attachments/944694959255191603/955195169274228736/unknown.png")
-			await ctx.send(response)
 
 		plgins(discord, bot, data)
 	else:
 		print_log('info', 'Сегодня я проснулся от взрывов...')
 		@bot.event
 		async def on_message(message):
-  			if '++' in message.content:
-  				await message.channel.send(f'В связи с ситуацией в украине, бот приостановил свою работу в России.')
-
+			if '++' in message.content:
+				await message.channel.send(f'В связи с ситуацией в украине, бот приостановил свою работу в России.')
 	bot.run(data["Token"])
 else:
 	print_log('err', "Инициализация прерванна.")

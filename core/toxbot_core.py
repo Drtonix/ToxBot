@@ -7,31 +7,27 @@ from 	discord.ext 			import 		commands
 import 	time
 import 	os
 
+#Вывод в консоль
 
-
-##############################################
-#              Вывод в консоль               #
-##############################################
 global print_log
 global notfy
 def print_log(type, text):
-    if(type == 'err' ):
-        print(colored("[ ", "white"), 	colored(" ERROR ", "red"), 			colored(" ] {}", "white").format(text))
-    elif(type == 'warn'):
-        print(colored("[ ", "white"), 	colored(" WARN  ", "yellow"), 		colored(" ] {}", "white").format(text))
-    elif(type == 'info'):
-        print(colored("[ ", "white"), 	colored(" INFO  ", "green"), 		colored(" ] {}", "white").format(text))
-    elif(type == 'wait'):
-    	print(colored("[ ", "white"), 	colored(" . . . ", "cyan"), 		colored(" ] {}", "white").format(text))
+	if(type == 'err' ):
+		print(colored("[ ", "white"), 	colored(" ERROR ", "red"), 			colored(" ] {}", "white").format(text))
+	elif(type == 'warn'):
+		print(colored("[ ", "white"), 	colored(" WARN  ", "yellow"), 		colored(" ] {}", "white").format(text))
+	elif(type == 'info'):
+		print(colored("[ ", "white"), 	colored(" INFO  ", "green"), 		colored(" ] {}", "white").format(text))
+	elif(type == 'wait'):
+		print(colored("[ ", "white"), 	colored(" . . . ", "cyan"), 		colored(" ] {}", "white").format(text))
 
 @asyncio.coroutine
 async def notfy(ctx ,text):
 	await ctx.send(f"Ошибка: " + str(text))
 	print_log("err", "Ошибка: " + str(text))
-	
-##############################################
-#            Работа с конфигом               #
-##############################################
+
+#Работа с конфигом
+
 def core_parse_data(data):
 	with open("./core/toxbot.json") as toxbot:
 		data = json.load(toxbot)
@@ -41,9 +37,8 @@ def core_save_data(data):
 	with open('./core/toxbot.json', 'w') as toxbot:
 		json.dump(data,toxbot, indent=4)
 
-##############################################
-#             Мастер настройки               #
-##############################################
+#Мастер настройки
+
 def first_boot_cofigure(data):
 	print(first_boot_header)
 	print(first_boot_enterToken)
@@ -92,9 +87,7 @@ def first_boot_cofigure(data):
 	except Exception as e:
 		print_log('err', 'Неудалось сохранить изменения! Проверьте права на запись файла.')
 
-##############################################
-#             Загрузка модулей               #
-##############################################
+#Загрузка модулей
 
 def plgins(discord, bot, data):
 	asyncio.run(yt_play		(discord, bot, data, print_log, notfy))
