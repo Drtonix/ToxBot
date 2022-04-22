@@ -15,15 +15,17 @@ global print_log
 global notfy
 def print_log(type, text):
 	if(type == 'err' ):
-		print(colored("[ ", "white"), 	colored(" ERROR ", "red"), 			colored(" ] {}", "white").format(text))
+		print(colored("[ ", "white"), 	colored(" ERROR ", "red"), 				colored(" ] {}", "white").format(text))
 	elif(type == 'warn'):
-		print(colored("[ ", "white"), 	colored(" WARN  ", "yellow"), 		colored(" ] {}", "white").format(text))
+		print(colored("[ ", "white"), 	colored(" WARN  ", "yellow"), 			colored(" ] {}", "white").format(text))
 	elif(type == 'info'):
-		print(colored("[ ", "white"), 	colored(" INFO  ", "green"), 		colored(" ] {}", "white").format(text))
+		print(colored("[ ", "white"), 	colored(" INFO  ", "green"), 			colored(" ] {}", "white").format(text))
 	elif(type == 'wait'):
-		print(colored("[ ", "white"), 	colored(" . . . ", "cyan"), 		colored(" ] {}", "white").format(text))
+		print(colored("[ ", "white"), 	colored(" . . . ", "cyan"), 			colored(" ] {}", "white").format(text))
 	elif(type == 'call'):
-		print(colored("[ ", "white"), 	colored(" CALL  ", "magenta"), 		colored(" ] {}", "white").format(text))
+		print(colored("[ ", "white"), 	colored(" CALL  ", "magenta"), 			colored(" ] {}", "white").format(text))
+	elif(type == 'image'):
+		print(colored("[ ", "white"), 	colored(" IMAGE ", "magenta"), 			colored(" ] {}", "white").format(text))
 
 @asyncio.coroutine
 async def notfy(ctx ,text):
