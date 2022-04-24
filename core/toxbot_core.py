@@ -1,9 +1,11 @@
-from 	core.toxbot_core_texts	import 		*
-from 	core.plugins.youtube	import 		*
-import 	simplejson 				as     		json
-from 	colorama 				import 		init
-from 	termcolor 				import 		colored
-from 	discord.ext 			import 		commands
+from 	core.toxbot_core_texts		import 		*
+from    core.plugins.images_tricks 	import		*
+from 	core.plugins.youtube		import 		*
+from 	core.plugins.calls			import		*
+import 	simplejson 					as     		json
+from 	colorama 					import 		init
+from 	termcolor 					import 		colored
+from 	discord.ext 				import 		commands
 import 	time
 import 	os
 
@@ -13,13 +15,17 @@ global print_log
 global notfy
 def print_log(type, text):
 	if(type == 'err' ):
-		print(colored("[ ", "white"), 	colored(" ERROR ", "red"), 			colored(" ] {}", "white").format(text))
+		print(colored("[ ", "white"), 	colored(" ERROR ", "red"), 				colored(" ] {}", "white").format(text))
 	elif(type == 'warn'):
-		print(colored("[ ", "white"), 	colored(" WARN  ", "yellow"), 		colored(" ] {}", "white").format(text))
+		print(colored("[ ", "white"), 	colored(" WARN  ", "yellow"), 			colored(" ] {}", "white").format(text))
 	elif(type == 'info'):
-		print(colored("[ ", "white"), 	colored(" INFO  ", "green"), 		colored(" ] {}", "white").format(text))
+		print(colored("[ ", "white"), 	colored(" INFO  ", "green"), 			colored(" ] {}", "white").format(text))
 	elif(type == 'wait'):
-		print(colored("[ ", "white"), 	colored(" . . . ", "cyan"), 		colored(" ] {}", "white").format(text))
+		print(colored("[ ", "white"), 	colored(" . . . ", "cyan"), 			colored(" ] {}", "white").format(text))
+	elif(type == 'call'):
+		print(colored("[ ", "white"), 	colored(" CALL  ", "magenta"), 			colored(" ] {}", "white").format(text))
+	elif(type == 'image'):
+		print(colored("[ ", "white"), 	colored(" IMAGE ", "magenta"), 			colored(" ] {}", "white").format(text))
 
 @asyncio.coroutine
 async def notfy(ctx ,text):
@@ -90,4 +96,6 @@ def first_boot_cofigure(data):
 #Загрузка модулей
 
 def plgins(discord, bot, data):
-	asyncio.run(yt_play		(discord, bot, data, print_log, notfy))
+	asyncio.run(yt_play			(discord, bot, data, print_log, notfy))
+	asyncio.run(calls			(discord, bot, data, print_log, notfy))
+	asyncio.run(img_tricks		(discord, bot, data, print_log, notfy))

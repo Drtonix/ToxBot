@@ -16,6 +16,7 @@ import json
 import requests
 import discord
 import os
+import sys
 import pytz
 import sqlite3
 from colorama import init
@@ -76,11 +77,14 @@ if(init_successful):
 	if(date!="0104"):
 		@bot.command()
 		async def ver(ctx):
-			embed = discord.Embed(title="ToxBot {}!".format(num_ver), description=text_ver.format(num_ver), colour = discord.Colour.from_rgb(230,0,0))
-			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-			msg = await ctx.send(embed=embed)
+			try:
+				embed = discord.Embed(title="ToxBot {}!".format(num_ver), description=text_ver, colour = discord.Colour.from_rgb(230,0,0))
+				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				msg = await ctx.send(embed=embed)
+			except Exception as e:
+				print_log('err', f'Ошибка: {e}')
 
-#Комманды
+		#Комманды
 		@bot.event
 		async def on_member_join(member):
 			await member.send('Добро пожаловать на сервер БДБ!\nСписок команд: ++help\nВы так же можете поддержать разработку бота: ++info')
@@ -135,6 +139,9 @@ if(init_successful):
 🎧**Воспроизведение**
 Медиа — `p`, `rpl`, `skip`, `stop`
 Список радиостанций — `rlist`
+🖼️**Работа с изображениями**
+Фильтры — `shakal`
+Создание фотокарточек — `dem`, `quote`
 🎲**Игры и действия**
 Действия — `kill`, `twisted`, `fuck`, `eat`, `give`, `call`
 Казино игры — `roulette`, `coin`, `slots`
@@ -161,6 +168,10 @@ Donationalerts:
 <https://bit.ly/3KSJ6OW>
 Patreon:
 <https://bit.ly/3xud881>
+
+Наш спонсор:
+Паблик с мемами в телеге
+https://t.me/uuuuuuu40
 ''', colour = discord.Colour.from_rgb(230,0,0))
 			embed1.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 			embed2 = discord.Embed(title="ToxBot Info (2)", description='''
@@ -182,7 +193,8 @@ https://discord.gg/XMYZKS3b3j
 Ampernic - 200 рублей ежегодно
 CentrumEx - 50 рублей
 Porg_Studio - dlc для Dead Sells
-Unikum131 - 50 рублей
+Unikum131 - 100 рублей
+Weiase - 50 рублей 
 
 
 Спасибо что пользуетесь ToxBot!''')
@@ -401,7 +413,6 @@ Unikum131 - 50 рублей
 				await msg.edit(embed=new_emb)
 			await ctx.reply("Конец игры.")
 
-
 		# Помощь по командам
 		@bot.command()
 		async def helpОсновное(ctx):
@@ -409,11 +420,15 @@ Unikum131 - 50 рублей
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpВоспроизведение(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`p` `URL` — Воспроизведение аудио с ютуба.\n`p1|p2|p3...` — Воспроизведение радио.\n`rpl all|one|off` — Вкл/Выкл повтор.\n`skip` — Пропустить трек.\n`stop` - Остановить произведение.\n`rlist` - Лист всех радиостанций.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`p` *URL* — Воспроизведение аудио с ютуба.\n`p1|p2|p3...` — Воспроизведение радио.\n`rpl all|one|off` — Вкл/Выкл повтор.\n`skip` — Пропустить трек.\n`stop` - Остановить произведение.\n`rlist` - Лист всех радиостанций.')
+			msg = await ctx.send(embed = embed)
+		@bot.command()
+		async def helpРабота(ctx):
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`dem` *ссылка на пикчу* *Текст 1* *Текст 2* — Демотиватор.\n`shakal` *ссылка на пикчу* *качество (0-100)* — Зашакаливание.\nquote *@Пинг пользователя* *текст цитаты* - Создание цитаты, так же работает если написать команду в ответ на сообщение.')
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpИгры(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`call *911* *текст* - позвонить в полицию (Вызвать администратора).`\n`kill` *текст* - Убить.\n`twisted` *текст* — Свернуть шею.\n`fuck` *текст* — Изнасиловать.\n`eat` *текст* — Съесть.\n`give` *текст* - Дать.\n`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.\n`coin` - Игра в монетку\n`slots` - Слоты казино.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`call *911|255|пинг* *текст* - позвонить в полицию, пиццерию или же любому пользователю, текст не обязателен.`\n`kill` *текст* - Убить.\n`twisted` *текст* — Свернуть шею.\n`fuck` *текст* — Изнасиловать.\n`eat` *текст* — Съесть.\n`give` *текст* - Дать.\n`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.\n`coin` - Игра в монетку\n`slots` - Слоты казино.')
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpИнфо(ctx):
@@ -527,34 +542,6 @@ Unikum131 - 50 рублей
 		async def coke(ctx):
 			strings = ["https://media.discordapp.net/attachments/939136925095297055/966067823459835954/unknown.png", "https://media.discordapp.net/attachments/939136925095297055/966067823707316304/unknown.png", "https://media.discordapp.net/attachments/939136925095297055/966067824009302066/unknown.png"]
 			await ctx.send(random.choice(strings))
-
-
-		@bot.command()
-		async def call(ctx, text):
-			text = text
-			if text == "911":
-				embed = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок.", colour=discord.Colour.from_rgb(230,0,0))
-				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				msg = await ctx.send(embed = embed)
-				await asyncio.sleep(1)
-				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок..", colour=discord.Colour.from_rgb(230,0,0))
-				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await msg.edit(embed=update_emb)
-				await asyncio.sleep(1)
-				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description="Звонок...", colour=discord.Colour.from_rgb(230,0,0))
-				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await msg.edit(embed=update_emb)
-				await asyncio.sleep(1)
-				await ctx.send(f'''
-<@&966062221589348422>''')
-				update_emb = discord.Embed(title=f"Звонок на номер `{text}`", description=f'''
-Не волнуйтесь, полиция в пути.''', colour=discord.Colour.from_rgb(230,0,0))
-				update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await msg.edit(embed=update_emb)
-			if text !="911":
-				embed = discord.Embed(title=f"Звонок на номер `{text}`", description="Номер не найден.", colour=discord.Colour.from_rgb(230,0,0))
-				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-				await ctx.send(embed = embed)
 
 
 		@bot.command(aliases = ["balance", "баланс", "деньги"])
@@ -812,6 +799,10 @@ Unikum131 - 50 рублей
 		async def on_message(message):
 			if '++' in message.content:
 				await message.channel.send(f'В связи с ситуацией в украине, бот приостановил свою работу в России.')
-	bot.run(data["Token"])
+	try:
+		print_log('wait', "Попытка подключится используя токен: {}".format(data["Token"]))
+		bot.run(data["Token"])
+	except Exception as e:
+		print_log('err', 'Не удалось подключиться с указанным токеном \n ({})'.format(e))
 else:
 	print_log('err', "Инициализация прерванна.")
