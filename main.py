@@ -77,11 +77,14 @@ if(init_successful):
 	if(date!="0104"):
 		@bot.command()
 		async def ver(ctx):
-			embed = discord.Embed(title="ToxBot {}!".format(num_ver), description=text_ver.format(num_ver), colour = discord.Colour.from_rgb(230,0,0))
-			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-			msg = await ctx.send(embed=embed)
+			try:
+				embed = discord.Embed(title="ToxBot {}!".format(num_ver), description=text_ver, colour = discord.Colour.from_rgb(230,0,0))
+				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+				msg = await ctx.send(embed=embed)
+			except Exception as e:
+				print_log('err', f'Ошибка: {e}')
 
-#Комманды
+		#Комманды
 		@bot.event
 		async def on_member_join(member):
 			await member.send('Добро пожаловать на сервер БДБ!\nСписок команд: ++help\nВы так же можете поддержать разработку бота: ++info')
@@ -183,8 +186,8 @@ https://discord.gg/XMYZKS3b3j
 Ampernic - 200 рублей ежегодно
 CentrumEx - 50 рублей
 Porg_Studio - dlc для Dead Sells
-Unikum131 - 50 рублей
-
+Unikum131 - 100 рублей
+Weiase - 50 рублей 
 
 Спасибо что пользуетесь ToxBot!''')
 			embed3.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
