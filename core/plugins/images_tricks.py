@@ -42,14 +42,14 @@ async def img_tricks(discord, bot, data, print_log, notfy):
 			#------------------------------------------------#
 			outfile = './saves/demotivators/{} - Демотиватор от {}.jpg'.format(datetime.strftime(datetime.now(), '%d.%m.%Y %H-%M-%S'), ctx.message.author.name)
 			demot = Demotivator(text1, text2)
-			demot.create(URL, watermark=water, arrange=True, use_url = True, result_filename=outfile, delete_file=True)
+			demot.create(URL, watermark=water, arrange=True, use_url = True, result_filename=outfile, delete_file=True, font_name="./core/Arial.ttf")
 			#------------------------------------------------#
-			update_emb = discord.Embed	(title=f"🖼️ Ваш демотеватор готов! 🖼️", description="Вот ваш результат:  \n  \n *{}*".format(random_demo()), colour=discord.Colour.from_rgb(230,0,0))
+			update_emb = discord.Embed	(title=f"🖼️ Ваш демотиватор готов! 🖼️", description="Вот ваш результат:  \n  \n *{}*".format(random_demo()), colour=discord.Colour.from_rgb(230,0,0))
 			update_emb.set_thumbnail	(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 			await msg.edit(embed=update_emb)
 			await ctx.send(file=discord.File(outfile))
 			#------------------------------------------------#
-			print_log('image', 'Пользователь {} создал демотеватор. \n               (Сохранен как: {})'.format(ctx.message.author.name, outfile))
+			print_log('image', 'Пользователь {} создал демотиватор. \n               (Сохранен как: {})'.format(ctx.message.author.name, outfile))
 			#------------------------------------------------#
 
 		except Exception as e:
@@ -84,7 +84,7 @@ async def img_tricks(discord, bot, data, print_log, notfy):
 				#------------------------------------------------#
 				outfile = './saves/quotes/{} - Цитата от {}.png'.format(datetime.strftime(datetime.now(), '%d.%m.%Y %H-%M-%S'), ctx.message.author.name)
 				quote1 = Quote(text, nick.display_name)
-				quote1.create(nick.avatar_url_as(format="png"), use_url = True, result_filename=outfile)
+				quote1.create(nick.avatar_url_as(format="png"), use_url = True, result_filename=outfile, headline_text_font="./core/Arial.ttf", author_name_font="./core/Arial.ttf", quote_text_font="./core/Arial.ttf")
 				#------------------------------------------------#
 				update_emb = discord.Embed	(title=f"🖼️ Ваш цитата внесена в Фонд! 🖼️", description="Вот что увидят ваши предки:  \n  \n *{}*".format(random_demo()), colour=discord.Colour.from_rgb(230,0,0))
 				update_emb.set_thumbnail	(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
