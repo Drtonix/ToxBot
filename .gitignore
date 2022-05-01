@@ -1,3 +1,7 @@
+##########################################
+#  САНЯ ЗАЕБАЛ СРАТЬ КЭШЕМ И ФОТО В РЕПУ #
+##########################################
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -128,7 +132,25 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+##########################
+# СПЭШЛ ФОР САНЯ БЛЯТЬ, ЗАЕБАЛ СРАТЬ
+
 ffmpeg/ffmpeg.exe
 ffmpeg/ffplay.exe
 ffmpeg/ffprobe.exe
 Poor_Warrior_of_Christ.db
+
+save/demotivators/*.png
+!.PLACEHOLDER
+save/quotes/*.png
+!.PLACEHOLDER
+save/shakalim/*.png
+!.PLACEHOLDER
+
+save/demotivators/*.jpg
+!.PLACEHOLDER
+save/quotes/*.jpg
+!.PLACEHOLDER
+save/shakalim/*.jpg
+!.PLACEHOLDER
+
