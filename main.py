@@ -187,7 +187,7 @@ Ampernic - 200 рублей ежегодно
 CentrumEx - 50 рублей
 Porg_Studio - dlc для Dead Sells
 Unikum131 - 100 рублей
-Weiase - 50 рублей 
+Weriase - 50 рублей 
 
 Спасибо что пользуетесь ToxBot!''')
 			embed3.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
