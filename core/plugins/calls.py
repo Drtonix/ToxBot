@@ -35,7 +35,7 @@ async def calls(discord, bot, data, print_log, notfy):
 		elif number == "255":
 			await ctx.send(f'''
 	<@&966065342390628374>''')
-			update_emb = discord.Embed(title=f"📞 Звонок на номер `{disp_number}` 📞", description=f'Вы позвонили в пиццерию. \n Ваш заказ готовится.', colour=discord.Colour.from_rgb(230,0,0))
+			update_emb = discord.Embed(title=f"📞 Звонок на номер `{disp_number}` 📞", description=f'Вы позвонили в пиццерию. \n Ваш звказ готовится.', colour=discord.Colour.from_rgb(230,0,0))
 			update_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 			await msg.edit(embed=update_emb)
 			if text != None:

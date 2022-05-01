@@ -194,8 +194,7 @@ Ampernic - 200 рублей ежегодно
 CentrumEx - 50 рублей
 Porg_Studio - dlc для Dead Sells
 Unikum131 - 100 рублей
-Weiase - 50 рублей 
-
+Weriase - 50 рублей 
 
 Спасибо что пользуетесь ToxBot!''')
 			embed3.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
@@ -412,7 +411,7 @@ Weiase - 50 рублей
 				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 				await msg.edit(embed=new_emb)
 			await ctx.reply("Конец игры.")
-
+      
 		# Помощь по командам
 		@bot.command()
 		async def helpОсновное(ctx):

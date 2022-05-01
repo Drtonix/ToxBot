@@ -3,7 +3,7 @@ from simpledemotivators 				import Demotivator, Quote
 from core.toxbot_core					import *
 from datetime							import datetime
 from discord 							import Activity, ActivityType
-from PIL 								import Image, ImageDraw, ImageFont, ImageOps
+from pil 								import Image, ImageDraw, ImageFont, ImageOps
 
 import requests
 import asyncio
@@ -25,15 +25,15 @@ async def img_tricks(discord, bot, data, print_log, notfy):
 	@bot.command()
 	async def dem(ctx, URL, text1 = '', text2 = ''):
 		#------------------------------------------------#
-		embed = discord.Embed		(title=f"🖼️ Создаем ваш демотиватор 🖼️", description="Работаем. \n \n _Думаем, получится круто..._", colour=discord.Colour.from_rgb(230,0,0))
+		embed = discord.Embed		(title=f"🖼️ Создаем ваш демотеватор 🖼️", description="Работаем. \n \n _Думаем, получится круто..._", colour=discord.Colour.from_rgb(230,0,0))
 		embed.set_thumbnail			(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		msg = await ctx.send(embed = embed)
 		await asyncio.sleep(1)
-		update_emb = discord.Embed	(title=f"🖼️ Создаем ваш демотиватор 🖼️", description="Работаем.. \n \n _Думаем, получится круто..._", colour=discord.Colour.from_rgb(230,0,0))
+		update_emb = discord.Embed	(title=f"🖼️ Создаем ваш демотеватор 🖼️", description="Работаем.. \n \n _Думаем, получится круто..._", colour=discord.Colour.from_rgb(230,0,0))
 		update_emb.set_thumbnail	(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		await msg.edit(embed=update_emb)
 		await asyncio.sleep(1)
-		update_emb = discord.Embed	(title=f"🖼️ Создаем ваш демотиватор 🖼️", description="Работаем... \n \n _Думаем, получится круто..._", colour=discord.Colour.from_rgb(230,0,0))
+		update_emb = discord.Embed	(title=f"🖼️ Создаем ваш демотеватор 🖼️", description="Работаем... \n \n _Думаем, получится круто..._", colour=discord.Colour.from_rgb(230,0,0))
 		update_emb.set_thumbnail	(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		await msg.edit(embed=update_emb)
 		#------------------------------------------------#
@@ -54,11 +54,11 @@ async def img_tricks(discord, bot, data, print_log, notfy):
 
 		except Exception as e:
 			#------------------------------------------------#
-			update_emb = discord.Embed	(title=f"❌ Что то пошло не так! ❌", description=f"Нам не удалось создать демотиватор: \n {str(e)} \n \n *Мы правда сожалеем об этом w_w*", colour=discord.Colour.from_rgb(230,0,0))
+			update_emb = discord.Embed	(title=f"❌ Что то пошло не так! ❌", description=f"Нам не удалось создать демотеватор: \n {str(e)} \n \n *Мы правда сожалеем об этом w_w*", colour=discord.Colour.from_rgb(230,0,0))
 			update_emb.set_thumbnail	(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 			await msg.edit(embed=update_emb)
 			#------------------------------------------------#
-			print_log('err', 'Ошибка создания демотиватора: ' + str(e))
+			print_log('err', 'Ошибка создания демотеватора: ' + str(e))
 			#------------------------------------------------#
 
 	#######################################
