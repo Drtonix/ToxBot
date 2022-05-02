@@ -3,7 +3,7 @@ from simpledemotivators 				import Demotivator, Quote
 from core.toxbot_core					import *
 from datetime							import datetime
 from discord 							import Activity, ActivityType
-from pil 								import Image, ImageDraw, ImageFont, ImageOps
+from PIL 								import Image, ImageDraw, ImageFont, ImageOps
 
 import requests
 import asyncio

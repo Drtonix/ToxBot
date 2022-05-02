@@ -9,6 +9,7 @@ __pycache__/
 
 # C extensions
 *.so
+.idea
 
 # Distribution / packaging
 .Python
@@ -154,3 +155,4 @@ save/quotes/*.jpg
 save/shakalim/*.jpg
 !.PLACEHOLDER
 
+toxbot.json
