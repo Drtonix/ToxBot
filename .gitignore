@@ -155,4 +155,4 @@ save/quotes/*.jpg
 save/shakalim/*.jpg
 !.PLACEHOLDER
 
-toxbot.json
+.toxbot.json

@@ -1,239 +1,208 @@
-##############################################
-#            YouTube for ToxBot              #
-#				v.0.4.1 rev B 	             #
-#		(Powered by Ampernic and Wiskey)     #
-#	   Copyright BetaNet Team © 2018-2022    #
-#				   FreeWare					 #
-##############################################
-#	   Fucked by AxisShevc (Ampernicsa)      #
-#  	 Передам привет нытикам говнокодерам     #	Ampernic, Wiskey, Ampernicsa
-##############################################			  / __\ ___| |_ __ _  /\ \ \___| |_  /__   \___  __ _ _ __ ___  
-#	       Дмитрий Гудков это ложь :3        #			 /__\/// _ \ __/ _` |/  \/ / _ \ __|   / /\/ _ \/ _` | '_ ` _ \ 
-#			Вселенная голограмма.            #			/ \/  \  __/ || (_| / /\  /  __/ |_   / / |  __/ (_| | | | | | |
-#		   Скупайте золото в Sunlight.		 #			\_____/\___|\__\__,_\_\ \/ \___|\__|  \/   \___|\__,_|_| |_| |_|
-##############################################																		2018-2022
-# Мені пiхуй отсосите, я живу в іншому місті #
-#			 Що ви мені зробите?             #
-##############################################
-#           Last update: 03/21/2022          #
-##############################################
-
-from discord import FFmpegPCMAudio, Activity, ActivityType
-from core.toxbot_core import *
-from core.toxbot_core_texts	import *
-import yt_dlp
 import asyncio
+import discord
+import yt_dlp
 
-global YDL_OPTIONS
-global FFMPEG_OPTIONS
-
-YDL_OPTIONS = {'format': 'worstaudio/best',
-					'noplaylist': 'True', 'simulate': 'True', 'preferredquality': '192', 'preferredcodec': 'mp3', 'key': 'FFmpegExtractAudio', 'quiet': 'True', "external_downloader_args": ['-loglevel', 'panic']}
-FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
-
-##############################################            Не спиздили у вексеры, а адаптировали
-#              	    Рамки                    #											(С) Дмитрий Гудков 2018
-##############################################
-
-def emd_play(discord, track, time, logo, nick, type):
-    embed = discord.Embed(title=type, colour = discord.Colour.from_rgb(230,0,0))
-    embed.set_thumbnail(url=logo)
-    embed.add_field(name="Трек: ", value=track, inline=False)
-    embed.add_field(name="Длительность: ", value=time, inline=False)
-    embed.set_footer(text="Запрошено пользователем: " + nick + " | ToxBot", icon_url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-    return embed
-
-##############################################
-#              	    Поиск                    #
-##############################################
-
-@asyncio.coroutine
-async def yt_searching(ctx, discord, track_name, q, notfy):
-	with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
-				try:
-					info = ydl.extract_info(track_name, download=False)
-				except:
-					try:
-						info = ydl.extract_info(f"ytsearch:{track_name}", download=False)['entries'][0]
-					except Exception as e:
-						await notfy(ctx, "Трек не найден (" + e + ").")
-				URL = info['formats'][4]['url']
-				tname = info['title']
-				tdure = info['duration_string']
-				taut = ctx.message.author.name
-				ttubn = info['thumbnail']
-				q.append([URL, tname, tdure, taut, ttubn])
-				if(len(q) > 1):
-					try:
-						await ctx.send(embed=emd_play(discord, tname, tdure, ttubn, taut, "Добавленно в очередь: "))
-					except Exception as e:
-						await notfy(ctx, e)
-
-##############################################
-#             Включение треков               #
-##############################################
-@asyncio.coroutine
-async def yt_play(discord, bot, data, print_log, notfy):
-
-	#             -Общие переменные-             #
-
-	voice_client = None
-	loop_now = None
-	q_now = 0
-	q = []
-
-	#     -Включить/Добавить в очередь трек-     #
-
-	@bot.command(pass_context=True)
-	async def p(ctx, *,messaget=None):
-		try:
-			if(messaget != None):
-				try:
-					nonlocal voice_client
-					voice_channel = ctx.message.author.voice.channel
-					voice_client = discord.utils.get(bot.voice_clients, guild=ctx.guild)
-					await yt_searching(ctx, discord, messaget, q, notfy)
-					if(len(q) == 1):
-						if voice_client:
-							try:
-								voice_client.pause()
-								if(data["OS"]==1):
-									await ctx.send(embed=emd_play(discord, q[q_now][1], q[q_now][2], q[q_now][4], q[q_now][3], "Включено: "))
-									print_log("info", "Включен трек: {} | (Запросил: {})".format(q[q_now][1], q[q_now][3]))
-								elif(data["OS"]==0):
-									voice_client.play(discord.FFmpegPCMAudio(executable="ffmpeg", source = q[q_now][0], **FFMPEG_OPTIONS))
-									await ctx.send(embed=emd_play(discord, q[q_now][1], q[q_now][2], q[q_now][4], q[q_now][3], "Включено: "))
-									print_log("info", "Включен трек: {} | (Запросил: {})".format(q[q_now][1], q[q_now][3]))
-								
-								if(voice_client == None):														# It just works, It just works, Fucking bugs..... Everything sucks.... (Ampernicsa)
-									voice_client=discord.utils.get(bot.voice_clients, guild=ctx.guild)          # Эта хуйня просто работает и не позволяет коду высыпать ошибками... Хз почему он ее не видит, хотя выше обращается к ней спокойно....
-
-								while voice_client.is_playing():
-									await asyncio.sleep(1)
-								await skip(ctx)
-							except Exception as e:
-								await notfy(ctx, e)
-						else:
-							try:
-								player = await voice_channel.connect()
-								if(data["OS"]==1):
-									player.play(discord.FFmpegPCMAudio(executable=r"./ffmpeg/ffmpeg.exe", source = q[q_now][0], **FFMPEG_OPTIONS))
-									await ctx.send(embed=emd_play(discord, q[q_now][1], q[q_now][2], q[q_now][4], q[q_now][3], "Включено: "))
-									print_log("info", "Включен трек: {} | (Запросил: {})".format(q[q_now][1], q[q_now][3]))
-								elif(data["OS"]==0):
-									player.play(discord.FFmpegPCMAudio(executable="ffmpeg", source = q[q_now][0], **FFMPEG_OPTIONS))
-									await ctx.send(embed=emd_play(discord, q[q_now][1], q[q_now][2], q[q_now][4], q[q_now][3], "Включено: "))
-									print_log("info", "Включен трек: {} | (Запросил: {})".format(q[q_now][1], q[q_now][3]))
-
-								if(voice_client == None):													# Опять эта же хуйня...
-									voice_client=discord.utils.get(bot.voice_clients, guild=ctx.guild)		# Все те же грабли)
-
-								while voice_client.is_playing():
-									await asyncio.sleep(1)
-								await skip(ctx)
-							except Exception as e:
-								await notfy(ctx, e)
-				except:
-					await ctx.send(f"Невозможно подключить бота: Вы не в голосовом чате.")
-					print_log("warn", "Ошибка воспроизведения: " + ctx.message.author.name + " не в голосовом чате")
-			else:
-				await ctx.send(f"Введите название трека!")
-				print_log("warn", "Ошибка воспроизведения: " + ctx.message.author.name + " не указал трек.")
-		except Exception as e:
-			await notfy(ctx, e)
-
-	#     -Переключение треков-     #
-
-	@bot.command(pass_context=True)
-	async def skip(ctx):
-		nonlocal loop_now
-		nonlocal q_now
-		nonlocal q
-		nonlocal voice_client
-		if(voice_client != None):
-			if(loop_now == None or loop_now == 'all'):
-				if(q_now <= len(q)-1):
-					q_now+=1
-			elif(loop_now == 'one'):
-				pass
-
-			if(loop_now == "all" and q_now > len(q)-1):
-				q_now = 0
-
-			if(q_now <= len(q)-1):
-				voice_client.pause()
-				if(data["OS"]==1):
-					voice_client.play(discord.FFmpegPCMAudio(executable=r"./ffmpeg/ffmpeg.exe", source = q[q_now][0], **FFMPEG_OPTIONS))
-					await ctx.send(embed=emd_play(discord, q[q_now][1], q[q_now][2], q[q_now][4], q[q_now][3], "Сейчас играет: "))
-					print_log("info", "Сейчас играет: {} | (Запросил: {})".format(q[q_now][1], q[q_now][3]))
-				elif(data["OS"]==0):
-					voice_client.play(discord.FFmpegPCMAudio(executable="ffmpeg", source = q[q_now][0], **FFMPEG_OPTIONS))
-					await ctx.send(embed=emd_play(discord, q[q_now][1], q[q_now][2], q[q_now][4], q[q_now][3], "Сейчас играет: "))
-					print_log("info", "Сейчас играет: {} | (Запросил: {})".format(q[q_now][1], q[q_now][3]))
-
-				if(voice_client == None):													# Не буду это комментировать
-					voice_client=discord.utils.get(bot.voice_clients, guild=ctx.guild)		# Просто работает
-					
-				while voice_client.is_playing():
-					await asyncio.sleep(1)
-				await skip(ctx)
-			else:
-				if voice_client:
-					await stop(ctx)
-		else:
-			await ctx.send("Невозможно переключить трек. Бот ничего не играет.")
-			print_log('warn', "Ошибка воспроизведения: Шизойд (" + ctx.message.author.name + ") переключил трек на выключенном воспроизведении")
-
-	#     -Остановка треков-     #
-
-	@bot.command()
-	async def stop(ctx):
-		try:
-			nonlocal voice_client
-			nonlocal q_now
-			nonlocal q
-			if(voice_client != None):
-				await voice_client.disconnect()
-				q = []
-				q_now = 0
-				await ctx.send("Воспроизведение остановленно.")
-				print_log('wait', "Воспроизведение остановленно: прерванно по команде от " + ctx.message.author.name)
-				voice_client = None
-			else:
-				await ctx.send("Невозможно остановить воспроизведение: Бот ничего не играет.")
-				print_log('warn', "Ошибка воспроизведения: Шизойд (" + ctx.message.author.name + ") использовал стоп на выключенном воспроизведении")
-		except Exception as e:
-			await notfy(ctx, e)
-
-	#    -Управление очередью-   #
-
-	@bot.command()
-	async def rpl(ctx, args=None):
-		nonlocal loop_now
-		if(args == None):
-			await ctx.send('Укажите режим повтора!')
-			print_log('warn', "Ошибка воспроизведения: Шизойд (" + ctx.message.author.name + ") опять забыл указать режим")
-		else:
-			if(args == 'all'):
-				await ctx.send('Повтор включен: Все треки')
-				loop_now = args
-				print_log('wait', ctx.message.author.name + " включил повтор всей очереди.")
-			elif(args == 'one'):
-				await ctx.send('Повтор включен: Один трек')
-				loop_now = args
-				print_log('wait', ctx.message.author.name + " включил повтор одного трека.")
-			elif(args == 'off'):
-				await ctx.send('Повтор выключен.')
-				loop_now = None
-				print_log('wait', ctx.message.author.name + " выключил повтор.")
+from core.toxbot_core import print_log, send_embed
+from core.toxbot_core_texts import num_ver
 
 
+def yt(bot, data):
+    # noinspection PyBroadException
+    class yt_main:
 
+        # Инициализируем модуль
+        def __init__(self, bot):
 
-##############################################################     Ampernicsa (3/19/2022)
-#  Всю эту хуйню надо будет переписать, но сука, пусть этим  #			-Okay (Ampernic 3/20/2022)
-#             Занимается Ампер сука. Я заебалась:3           #				-Ага, выебывайся дальше) (Ampernicsa 3/20/2022)
-##############################################################
+            # Параметры поиска и воспроизведения
+            self.YDL_OPTIONS = {'format': 'worstaudio/best',
+                                'noplaylist': 'True', 'simulate': 'True', 'preferredquality': '192',
+                                'preferredcodec': 'mp3', 'key': 'FFmpegExtractAudio', 'quiet': 'True',
+                                "external_downloader_args": ['-loglevel', 'panic']}
+            self.FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
+                                   'options': '-vn'}
 
-#----------------------------------------------------------------------------------------------------------------------------------#
-										#- BetaNet Clowns 2022. Everything sucks. -#
+            # Внутренние переменные модуля
+            self.voice_channel = None       # Хранилище канала воспроизведения
+            self.voice_client = None        # Хранилище клиента воспроизведения
+            self.is_playing = False         # Состояние клиента воспроизведения
+
+            self.q = []                     # Массив очереди
+            self.q_now = 0                  # Счетчик очереди
+
+            # Общий метод бота
+            self.bot = bot
+
+            # Выводим сообщение об успешной инициализации модуля
+            print_log('warn', 'Модуль YT инициализирован')
+
+        async def yt_searching(self, ctx, track_name):
+            with yt_dlp.YoutubeDL(self.YDL_OPTIONS) as ydl:
+                # Читаем информацию о треке
+                try:
+                    # Смотрим - является ли ввод пользователя ссылкой, может не надо искать...
+                    info = ydl.extract_info(track_name, download=False)
+                    track_found = True
+                except:
+                    try:
+                        # Не является - пробуем найти в поиске
+                        info = ydl.extract_info(f"ytsearch:{track_name}", download=False)['entries'][0]
+                        track_found = True
+                    except Exception as e:
+                        # Не нашли трек
+                        await send_embed(ctx, '❔ Трек не найден ❔', '''
+                                Убедитесь, что вы ввели название правильно
+                                И что ваш трек есть в библиотеке YouTube
+                                _*(Если это какая то ошибка - попробуйте указать ссылку)*_''',
+                                f'ToxBot v{num_ver} - всегда рад помочь',
+                                'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
+                        track_found = False
+
+                # Если трек найден
+                if track_found:
+
+                    # Сохраняем информацию о треке который нашли
+                    url = info['formats'][4]['url']                                                     # Ссылка на поток
+                    track_name = info['title']                                                          # Название трека
+                    track_time = info['duration_string']                                                # Длительность трека
+                    track_author = ctx.message.author.name                                              # Кто запросил трек
+                    track_thumbnail = info['thumbnail']                                                 # Превью трека
+                    self.q.append([url, track_name, track_time, track_author, track_thumbnail])         # Запись данных в массив
+
+                    # Пытаемся запустить воспроизведение
+                    try:
+                        # Если трек первый - запускаем
+                        if len(self.q) - 1 == self.q_now:
+
+                            # Запускаем первый трек
+                            await self.playing(url, ctx)
+
+                            # Выводим информацию о треке
+                            await send_embed(ctx, '🎵 Сейчас играет 🎵', f'''
+                                Трек: _*{self.q[0][1]}*_
+                                Продолжительность: _*{self.q[0][2]}*_
+                                ''',
+                                f'Запросил: {self.q[0][3]}',
+                                self.q[0][4])  # Тут превью видео
+
+                        # В противном случае - просто выводим информацию о добавлении трека в очередь
+                        else:
+                            await send_embed(ctx, '🎵 Трек добавлен в очередь 🎵', f'''
+                                Трек: _*{track_name}*_
+                                Продолжительность: _*{track_time}*_
+                                ''',
+                                f'Запросил: {track_author}',
+                                track_thumbnail)  # Тут превью видео
+                    except Exception as e:
+                        await ctx.send(str(e))
+
+        async def next_track(self, ctx):
+            try:
+                # Проверяем, остались ли еще треки в очереди
+                if self.q_now < len(self.q) - 1:
+                    self.q_now += 1                                                                     # Увеличиваем счетчик очереди
+
+                    # Выводим информацию о следующем треке
+                    await send_embed(ctx, '🎵 Сейчас играет 🎵', f'''
+                                    Трек: _*{self.q[self.q_now][1]}*_
+                                    Время: _*{self.q[self.q_now][2]}*_''',
+                                    f'Запросил: {self.q[self.q_now][3]}',
+                                    self.q[self.q_now][4])
+
+                    # Запускаем воспроизведение
+                    await self.playing(self.q[self.q_now][0], ctx)
+
+                # Если треки кончились и бот еще в войсе - отключаем бота от войса
+                else:
+                    if self.voice_client:
+                        await self.stop_playing(ctx)
+            except:
+                pass  # Да, это необходимо чтобы бот не подсирал в чат хуй знает откуда взятые попытки воспроизведения
+
+        async def stop_playing(self, ctx):
+            try:
+                # Проверяем играет ли вообще бот, если да - отключаем
+                if self.voice_client.is_connected and self.is_playing:
+                    await self.voice_client.disconnect()                                            # Отключаем бота
+                    self.is_playing = False                                                         # Снимаем флаг
+                    self.q_now = 0                                                                  # Обнуляем счетчик очереди
+                    self.q = []                                                                     # Отчищаем массив очереди
+                    await send_embed(ctx, '🔇 Воспроизведение остановлено 🔇',
+                                     f'Кто-то выдернул кабель питания из розетки :<',
+                                     f'Прервал: {ctx.message.author.name}',
+                                     'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
+            except Exception as e:
+                print_log('err', f'Ошибка: Не удалось прервать воспроизведение. ({str(e)})')
+
+        async def playing(self, url, ctx):
+            # Проверяем не подключен ли уже бот к войсу
+            if self.voice_client:
+                try:
+                    self.voice_client.pause()                                                       # Ставим на паузу и лишь потом включаем
+                    if data["OS"] == 1:
+                        self.voice_client.play(discord.FFmpegPCMAudio(executable=r"./ffmpeg/ffmpeg.exe", source=url,
+                                                **self.FFMPEG_OPTIONS))
+                    elif data["OS"] == 0:
+                        self.voice_client.play(
+                            discord.FFmpegPCMAudio(executable="ffmpeg", source=url,
+                                                **self.FFMPEG_OPTIONS))
+
+                    self.is_playing = True
+
+                    while self.voice_client.is_playing():
+                        await asyncio.sleep(1)
+
+                    await self.next_track(ctx)
+                except Exception as e:
+                    print_log('err', f'Ошибка: Не удалось запустить воспроизведение. ({str(e)})')
+            else:
+                try:
+                    self.voice_client = await self.voice_channel.connect()
+                    if data["OS"] == 1:
+                        self.voice_client.play(discord.FFmpegPCMAudio(executable=r"./ffmpeg/ffmpeg.exe", source=url,
+                                                **self.FFMPEG_OPTIONS))
+                    elif data["OS"] == 0:
+                        self.voice_client.play(
+                            discord.FFmpegPCMAudio(executable="ffmpeg", source=url,
+                                                **self.FFMPEG_OPTIONS))
+                    self.is_playing = True
+
+                    while self.voice_client.is_playing():
+                        await asyncio.sleep(1)
+
+                    await self.next_track(ctx)
+                except Exception as e:
+                    print_log('err', f'Ошибка: Не удалось запустить воспроизведение. ({str(e)})')
+
+    ytx = yt_main(bot)
+
+    @bot.command(pass_context=True)
+    async def p(ctx, *, track):
+        try:
+            ytx.voice_channel = ctx.message.author.voice.channel
+            ytx.voice_client = discord.utils.get(bot.voice_clients, guild=ctx.guild)
+            await ytx.yt_searching(ctx, track)
+        except:
+            print_log('err', f'Пользователь {ctx.message.author.name} не находится в войсе')
+            await send_embed(ctx, '❌ Не удалось запустить воспроизведение ❌', '''
+                            Вы не находитесь в войсе
+                            Вы можете добавить трек в очередь только находясь в войс-чате''',
+                            'Зайди наконец в войс, бака w_w',
+                            'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
+
+    @bot.command(pass_context=True)
+    async def next(ctx):
+        await ytx.next_track(ctx)
+
+    @bot.command(pass_context=True)
+    async def stop(ctx):
+        if ytx.voice_client and ytx.voice_client.is_playing():
+            await ytx.stop_playing(ctx)
+        else:
+            await send_embed(ctx, '❌ Невозможно прервать воспроизведение. ❌',
+                             'Бот (Б)анально ничего не играет :D',
+                             'Но кстати ты всегда можешь что-то включить...',
+                             'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
+
+    # @bot.command()     команда для дебага
+    # async def qnow(ctx):
+    #    await ctx.send(f'qnow: {ytx.q_now} \n len(q): {len(ytx.q)}')
