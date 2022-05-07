@@ -73,9 +73,6 @@ def yt(bot, data):
                         # Если трек первый - запускаем
                         if len(self.q) - 1 == self.q_now:
 
-                            # Запускаем первый трек
-                            await self.playing(url, ctx)
-
                             # Выводим информацию о треке
                             await send_embed(ctx, '🎵 Сейчас играет 🎵', f'''
                                 Трек: _*{self.q[0][1]}*_
@@ -83,6 +80,9 @@ def yt(bot, data):
                                 ''',
                                 f'Запросил: {self.q[0][3]}',
                                 self.q[0][4])  # Тут превью видео
+
+                            # Запускаем первый трек
+                            await self.playing(url, ctx)
 
                         # В противном случае - просто выводим информацию о добавлении трека в очередь
                         else:
@@ -176,17 +176,24 @@ def yt(bot, data):
     ytx = yt_main(bot)
 
     @bot.command(pass_context=True)
-    async def p(ctx, *, track):
-        try:
-            ytx.voice_channel = ctx.message.author.voice.channel
-            ytx.voice_client = discord.utils.get(bot.voice_clients, guild=ctx.guild)
-            await ytx.yt_searching(ctx, track)
-        except:
-            print_log('err', f'Пользователь {ctx.message.author.name} не находится в войсе')
-            await send_embed(ctx, '❌ Не удалось запустить воспроизведение ❌', '''
-                            Вы не находитесь в войсе
-                            Вы можете добавить трек в очередь только находясь в войс-чате''',
-                            'Зайди наконец в войс, бака w_w',
+    async def p(ctx, *, track=None):
+        if track is not None:
+            try:
+                ytx.voice_channel = ctx.message.author.voice.channel
+                ytx.voice_client = discord.utils.get(bot.voice_clients, guild=ctx.guild)
+                await ytx.yt_searching(ctx, track)
+            except:
+                print_log('err', f'Пользователь {ctx.message.author.name} не находится в войсе')
+                await send_embed(ctx, '❌ Не удалось запустить воспроизведение ❌', '''
+                                Вы не находитесь в войсе
+                                Вы можете добавить трек в очередь только находясь в войс-чате''',
+                                'Зайди наконец в войс, бака w_w',
+                                'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
+        else:
+            await send_embed(ctx, '❌ Не удалось добавить трек ❌', '''
+                            Вы не ввели название трека или ссылку
+                            _* Партия не довольна вами *_''',
+                            f'ToxBot v{num_ver} - на страже порядка',
                             'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
 
     @bot.command(pass_context=True)
