@@ -1,5 +1,3 @@
-from core.toxbot_core_texts import *
-from core.plugins.images_tricks.images_tricks import *
 from core.plugins.calls import *
 import simplejson as json
 from colorama import init
@@ -115,6 +113,8 @@ def plugins(discord, bot, data):
     core.plugins.youtube.yt(bot, data)
 
     asyncio.run(calls(discord, bot, data, print_log, notify))
-    asyncio.run(img_tricks(discord, bot, data, print_log, notify))
+
+    import core.plugins.images_tricks.images_core
+    core.plugins.images_tricks.images_core.img_tricks(bot)
 
     print_log('info', 'Успех: Модули инициализированы.')

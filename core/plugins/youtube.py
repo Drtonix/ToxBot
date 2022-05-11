@@ -219,9 +219,9 @@ def yt(bot, data):
         await ytx.next_track(ctx)
 
     @bot.command(pass_context=True)
-    async def loop(ctx, type=None):
-        if ytx.loop == 'all' and type is None:
-            ytx.loop = type
+    async def loop(ctx, type='off'):
+        if type == 'off':
+            ytx.loop = None
             await send_embed(ctx, '🎵 Повтор отключен 🎵', '''
                             Текущий режим повтора: _*Выключен*_
                             После окончания очереди бот отключится''',

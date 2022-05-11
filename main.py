@@ -2,6 +2,9 @@ import json
 import sqlite3
 
 import pytz
+import random
+from datetime import datetime
+import requests
 from Cybernator import Paginator as Pag
 from discord.ext import commands
 from discord.ext.commands import Bot

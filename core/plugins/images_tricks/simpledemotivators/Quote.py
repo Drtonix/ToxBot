@@ -27,7 +27,7 @@ class Quote:
             for i in lines:
                 text = text + i + '\n'
 
-        user_img = Image.new('RGBA', (1000, 550), color='#000000')
+        user_img = Image.new('RGB', (1000, 550), color='#000000')
 
         drawer = ImageDraw.Draw(user_img)
         font_1 = ImageFont.truetype(font=quote_text_font, size=quote_text_size, encoding='UTF-8')
