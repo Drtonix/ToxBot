@@ -215,7 +215,7 @@ def yt(bot, data):
                              'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
 
     @bot.command(pass_context=True)
-    async def next(ctx):
+    async def skip(ctx):
         await ytx.next_track(ctx)
 
     @bot.command(pass_context=True)
