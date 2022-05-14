@@ -776,7 +776,7 @@ Weriase - 50 рублей
 				await ctx.send("Вставьте ссылку.")
 
 
-		plugins(discord, bot, data)
+		plugins(bot, data)
 	else:
 		print_log('info', 'Сегодня я проснулся от взрывов...')
 		@bot.event

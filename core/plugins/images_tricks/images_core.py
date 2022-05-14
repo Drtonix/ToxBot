@@ -2,6 +2,8 @@ import random
 import discord
 
 from datetime import datetime
+import requests
+from PIL import Image
 
 from core.toxbot_core import print_log, send_embed
 from core.toxbot_core_texts import default_thumbnail, num_ver, water
@@ -32,13 +34,14 @@ def img_tricks(bot):
 
         @staticmethod
         async def dem_create(ctx, url, text1, text2):
-            outfile = './saves/demotivators/{} - Демотиватор от {}.jpg'.format(datetime.strftime(datetime.now(), '%d.%m.%Y %H-%M-%S'), ctx.message.author.name)
+            outfile = './saves/demotivators/{} - Демотиватор от {}.jpg'.format(
+                datetime.strftime(datetime.now(), '%d.%m.%Y %H-%M-%S'), ctx.message.author.name)
 
             ImgDem = Demotivator(text1, text2)
             try:
                 ImgDem.create(url,
                               use_url=True,
-                              arrange=True,
+                              arrange=False,
                               font_name='./core/fonts/Times.ttf',
                               watermark=water,
                               result_filename=outfile,
@@ -60,7 +63,8 @@ def img_tricks(bot):
 
         @staticmethod
         async def quote_create(ctx, nick, text):
-            outfile = './saves/quotes/{} - Цитата от {}.jpg'.format(datetime.strftime(datetime.now(), '%d.%m.%Y %H-%M-%S'), ctx.message.author.name)
+            outfile = './saves/quotes/{} - Цитата от {}.jpg'.format(
+                datetime.strftime(datetime.now(), '%d.%m.%Y %H-%M-%S'), ctx.message.author.name)
             ImgQuote = Quote(text, nick.display_name)
             try:
                 ImgQuote.create(nick.avatar_url_as(format="jpg"),
@@ -74,6 +78,29 @@ def img_tricks(bot):
                 await send_embed(ctx,
                                  '❌ Не удалось добавить цитату в фонд ❌', f'''
                                  Произошла ошибка заполнении бланка
+                                 ({str(e)})''',
+                                 f'ToxBot v{num_ver}',
+                                 default_thumbnail)
+
+        @staticmethod
+        async def shakal_create(ctx, url, quality):
+            try:
+                outfile = './saves/shakalim/{} - Шакальная хуйня от {}.jpg'.format(
+                    datetime.strftime(datetime.now(), '%d.%m.%Y %H-%M-%S'), ctx.message.author.name)
+                raw = requests.get(url, stream=True).raw
+                image = Image.open(raw).convert('RGB')
+                image.save(outfile, 'JPEG', quality=quality)
+                await send_embed(ctx,
+                                 '🖼️ Шакалы догрызли вашу пикчу 🖼️', f'''
+                                 Вот ваш результат: 
+                                 (Текущее качество: `{quality}`)''',
+                                 f'ToxBot v{num_ver}',
+                                 default_thumbnail)
+                await ctx.send(file=discord.File(outfile))
+            except Exception as e:
+                await send_embed(ctx,
+                                 '❌ Не удалось зашакалить пикчу ❌', f'''
+                                 Произошла при получении вашей пикчи
                                  ({str(e)})''',
                                  f'ToxBot v{num_ver}',
                                  default_thumbnail)
@@ -112,3 +139,17 @@ def img_tricks(bot):
                              (Или можете прислать команду в ответ на сообщение)''',
                              f'ToxBot v{num_ver}',
                              default_thumbnail)
+
+    @bot.command(pass_context=True)
+    async def shakal(ctx, url=None, quality=7):
+        if url is None:
+            await send_embed(ctx,
+                             '❌ Не удалось зашакалить пикчу ❌', '''
+                             Не введена ссылка на фото
+                             Напомню: `++shakal ссылка качество`
+                             Качество по умолчанию: `7`
+                             (Качество можно указать от 0 до 100)''',
+                             f'ToxBot v{num_ver}',
+                             default_thumbnail)
+        else:
+            await img_edit.shakal_create(ctx, url, quality)

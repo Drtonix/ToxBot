@@ -1,7 +1,7 @@
-from core.plugins.calls import *
 import simplejson as json
 from colorama import init
 from termcolor import colored
+from core.toxbot_core_texts import *
 import discord
 import time
 import os
@@ -74,20 +74,20 @@ def first_boot_cofigure(data):
             print('''Выбранная ОС: Linux. Пробуем установить ffmpeg для работы ++play
             ''')
             try:
-                os.system("apt install ffmpeg")
-                print("-------------------------------------------------------------------")
+                os.system("sudo apt install ffmpeg")
+                print("------------------------------------------------------------------------")
             except Exception as e:
-                print("-------------------------------------------------------------------")
+                print("------------------------------------------------------------------------")
                 print_log('err', "Ошибка: " + str(e))
         if input_OS == "1":
             data["OS"] = 1
             print('''Выбранная ОС: Windows. Используем ffmpeg из коробки.
--------------------------------------------------------------------
+------------------------------------------------------------------------
 ''')
     else:
         data["OS"] = 1
         print('''Выбранная ОС: Windows (По умолчанию). Используем ffmpeg из коробки.
--------------------------------------------------------------------
+------------------------------------------------------------------------
 ''')
     print_log('wait', 'Сохраняем изменения...')
     try:
@@ -101,18 +101,19 @@ def first_boot_cofigure(data):
         elif data["OS"] == 0:
             os.system("clear")
     except Exception as e:
-        print_log('err', f'Неудалось сохранить изменения! Проверьте права на запись файла. ({str(e)})')
+        print_log('err', f'Не удалось сохранить изменения! Проверьте права на запись файла. ({str(e)})')
 
 
 # Загрузка модулей
 
-def plugins(discord, bot, data):
+def plugins(bot, data):
     print_log('wait', 'Запуск модулей...')
 
     import core.plugins.youtube
     core.plugins.youtube.yt(bot, data)
 
-    asyncio.run(calls(discord, bot, data, print_log, notify))
+    import core.plugins.calls
+    core.plugins.calls.calls(bot)
 
     import core.plugins.images_tricks.images_core
     core.plugins.images_tricks.images_core.img_tricks(bot)

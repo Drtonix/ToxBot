@@ -142,17 +142,11 @@ ffmpeg/ffprobe.exe
 Poor_Warrior_of_Christ.db
 
 save/demotivators/*.png
-!.PLACEHOLDER
 save/quotes/*.png
-!.PLACEHOLDER
 save/shakalim/*.png
-!.PLACEHOLDER
 
 save/demotivators/*.jpg
-!.PLACEHOLDER
 save/quotes/*.jpg
-!.PLACEHOLDER
 save/shakalim/*.jpg
-!.PLACEHOLDER
 
-.toxbot.json
+core/toxbot.json
