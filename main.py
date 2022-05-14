@@ -1,39 +1,25 @@
-from discord import FFmpegPCMAudio, Activity, ActivityType
-from discord.ext.commands import Bot
-from discord.ext import commands
-from datetime import datetime
-from random import randrange, choice
-import simplejson as json
-from asyncio import sleep
-import subprocess
-import contextlib
-import io
-import string
-import time
-import random
-import asyncio
 import json
-import requests
-import discord
-import os
-import sys
-import pytz
 import sqlite3
-from colorama import init
-from termcolor import colored
-from core.toxbot_core import *
-from classes import UsTaCr
+
+import pytz
+import random
+from datetime import datetime
+import requests
 from Cybernator import Paginator as Pag
-from discord_components import DiscordComponents, Button, ButtonStyle
+from discord.ext import commands
+from discord.ext.commands import Bot
+from discord_components import DiscordComponents
 
-#Переменные
+from classes import UsTaCr
+from core.toxbot_core import *
 
-global data
+# Переменные
+
 data = None
 init_successful = False
 intents = discord.Intents.all()
 
-#Инициализация
+# Инициализация
 
 init()
 print(header_logo)
@@ -41,14 +27,14 @@ print_log('wait', "Ожидание:  Инициализация")
 try:
 	data = core_parse_data(data)
 	print_log('wait', "Импорт значений из конфига.")
-	if(data["FirstBoot"] == "True"):
+	if data["FirstBoot"] == "True":
 		print_log('warn', "Обнаружен первый запуск программы:  Переходим в режим настройки")
 		first_boot_cofigure(data)
 	else:
 		bot = Bot(command_prefix="++", help_command=None, intents=intents)
-		client = discord.ext.commands.Bot(command_prefix = "++", intents = discord.Intents.all())
+		client = discord.ext.commands.Bot(command_prefix="++", intents=discord.Intents.all())
 		init_successful = True
-		if(init_successful):
+		if init_successful:
 			print_log('info', "Инициализация прошла успешно")
 			try:
 				print_log("wait", "Ожидание:  Запуск базы данных")
@@ -57,9 +43,9 @@ try:
 				cursor.execute('''CREATE TABLE IF NOT EXISTS economy (
 					"id"	INT,
 					"money"	INT)''')
-				print_log("info", "База данных загруженна.")
+				print_log("info", "База данных загружена.")
 			except Exception as e:
-				print_log('err', "Ошибка базы данных: " + e)
+				print_log('err', "Ошибка базы данных: " + str(e))
 
 		@bot.event
 		async def on_ready():
@@ -69,27 +55,25 @@ try:
 except Exception as e:
 	print_log('err', "Не удалось спарсить значения из конфига: " + str(e))
 
-
-
-if(init_successful):
+if init_successful:
 	tz = pytz.timezone('Europe/Moscow')
 	date = datetime.now(tz).strftime("%d%m")
-	if(date!="0104"):
+	if date != "0104":
 		@bot.command()
 		async def ver(ctx):
 			try:
-				embed = discord.Embed(title="ToxBot {}!".format(num_ver), description=text_ver, colour = discord.Colour.from_rgb(230,0,0))
+				embed = discord.Embed(title="ToxBot {}!".format(num_ver), description=text_ver, colour=discord.Colour.from_rgb(230, 0, 0))
 				embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 				msg = await ctx.send(embed=embed)
 			except Exception as e:
 				print_log('err', f'Ошибка: {e}')
 
-		#Комманды
+		# Команды
 		@bot.event
 		async def on_member_join(member):
 			await member.send('Добро пожаловать на сервер БДБ!\nСписок команд: ++help\nВы так же можете поддержать разработку бота: ++info')
 			for ch in bot.get_guild(member.guild.id).channels:
-				if ch.name == "💬┃био-отходняк-чат": 
+				if ch.name == "💬┃био-отходняк-чат":
 					await bot.get_channel(ch.id).send(f'Поздоровайтесь с новым участником Сервера, {member.display_name}!')
 		@bot.event
 		async def on_member_remove(member):
@@ -106,8 +90,8 @@ if(init_successful):
 						channel2 = await guild.create_voice_channel(
 							f'🔉┃{member.display_name}',
 							position=3,
-							category=maincategory, 
-							bitrate=96000, 
+							category=maincategory,
+							bitrate=96000,
 							reason=f"Создался войс для {member}"
 						)
 						await channel2.set_permissions(member, connect=True, mute_members=True, move_members=True, manage_channels=True)
@@ -120,17 +104,17 @@ if(init_successful):
 
 		@bot.command()
 		async def stats(ctx):
-			mbrs = ctx.guild.members
-			online = len(list(filter(lambda x: x.status == discord.Status.online, mbrs)))
-			idle = len(list(filter(lambda x: x.status == discord.Status.idle, mbrs)))
-			offline = len(list(filter(lambda x: x.status == discord.Status.offline, mbrs)))
-			dnd = len(list(filter(lambda x: x.status == discord.Status.dnd, mbrs)))
-			allmemb = online+idle+offline+dnd
-			embed = discord.Embed(title="ToxBot", description=f'''\nОнлайн: {online}.\nОффлайн: {offline}.\nНеактивны: {idle}.\nНе беспокоить: {dnd}.\nВсего участников: {allmemb}.''', colour = discord.Colour.from_rgb(230,0,0))
+			members = ctx.guild.members
+			online = len(list(filter(lambda x: x.status == discord.Status.online, members)))
+			idle = len(list(filter(lambda x: x.status == discord.Status.idle, members)))
+			offline = len(list(filter(lambda x: x.status == discord.Status.offline, members)))
+			dnd = len(list(filter(lambda x: x.status == discord.Status.dnd, members)))
+			all_members = online+idle+offline+dnd
+			embed = discord.Embed(title="ToxBot", description=f'''\nОнлайн: {online}.\nОффлайн: {offline}.\nНеактивны: {idle}.\nНе беспокоить: {dnd}.\nВсего участников: {all_members}.''', colour = discord.Colour.from_rgb(230,0,0))
 			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 			msg = await ctx.send(embed=embed)
 
-#help, info
+		# help, info
 		@bot.command()
 		async def help(ctx):
 			embed = discord.Embed(title="Используйте `++` перед \nначалом команды", description='''		
@@ -411,7 +395,7 @@ Weriase - 50 рублей
 				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 				await msg.edit(embed=new_emb)
 			await ctx.reply("Конец игры.")
-      
+
 		# Помощь по командам
 		@bot.command()
 		async def helpОсновное(ctx):
@@ -555,7 +539,7 @@ Weriase - 50 рублей
 				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id = {member.id}'):
 					embed = discord.Embed(title = "ToxCoins", description = f"Баланс {member.display_name} - {row[0]} ТоксКоинов.", colour = discord.Colour.from_rgb(230,0,0))
 					await ctx.send(embed=embed)
-		
+
 		@bot.command(aliases = ["pay", "заплатить", "отдать"])
 		async def givecoins(ctx, member: discord.Member = None, Value: int = None):
 			if member is None:
@@ -618,7 +602,7 @@ Weriase - 50 рублей
 `pKISH` - Радио *Король и Шут*
 `pL` - Радио *Гражданская оборона*
 `p0` *ссылка на поток* - Своё радио''')
-		
+
 			embeds = [embed1, embed2]
 			message = await ctx.send(embed = embed1)
 			reactions = ["◀️", "▶️"]
@@ -633,7 +617,7 @@ Weriase - 50 рублей
 				if voice_client:
 					voice_client.pause()
 					if(data["OS"]==1):
-						player.play(discord.FFmpegPCMAudio(executable=r"./ffmpeg/ffmpeg.exe", source = link, **FFMPEG_OPTIONS))
+						voice_client.play(discord.FFmpegPCMAudio(executable=r"./ffmpeg/ffmpeg.exe", source = link, **FFMPEG_OPTIONS))
 					elif(data["OS"]==0):
 						voice_client.play(discord.FFmpegPCMAudio(executable="ffmpeg", source = link, **FFMPEG_OPTIONS))
 				else:
@@ -646,7 +630,7 @@ Weriase - 50 рублей
 
 		@bot.command()
 		async def p1(ctx):
-			await rplay(ctx, "http://chanson.hostingradio.ru:8041/chanson256.mp3", )
+			await rplay(ctx, "http://chanson.hostingradio.ru:8041/chanson256.mp3")
 			await ctx.send("Радио включено.\nИграет: Шансон")
 			print_log('info', "Радио включено: Шансон")
 		@bot.command()
@@ -734,7 +718,7 @@ Weriase - 50 рублей
 			await rplay(ctx, "https://str.pcradio.ru/rpr1_de_metal-hi")
 			await ctx.send("Радио включено.\nИграет: Хевиметал")
 			print_log('info', "Радио включено: Хевиметал")
-		@bot.command()  
+		@bot.command()
 		async def pRMS(ctx):
 			await rplay(ctx, "https://str.pcradio.ru/Rammstein-hi")
 			await ctx.send("Радио включено.\nИграет: Раммштайн")
@@ -784,14 +768,15 @@ Weriase - 50 рублей
 		@bot.command()
 		async def p0(ctx, *, link: str):
 			txt = discord.utils.escape_mentions(link)
-			if link != None:
+			if link is not None:
 				await rplay(ctx, str(txt))
 				await ctx.send(f"Радио включено. \nИграет: {str(txt)}")
 				print_log('info', "Радио включено: Своя радиостанция (Вызвано {})".format(+ ctx.message.author.name))
 			else:
 				await ctx.send("Вставьте ссылку.")
 
-		plgins(discord, bot, data)
+
+		plugins(bot, data)
 	else:
 		print_log('info', 'Сегодня я проснулся от взрывов...')
 		@bot.event
@@ -804,4 +789,4 @@ Weriase - 50 рублей
 	except Exception as e:
 		print_log('err', 'Не удалось подключиться с указанным токеном \n ({})'.format(e))
 else:
-	print_log('err', "Инициализация прерванна.")
+	print_log('err', "Инициализация прервана.")
