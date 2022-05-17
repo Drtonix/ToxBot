@@ -145,7 +145,6 @@ def yt(bot, data):
                     self.q_now = 0  # Обнуляем счетчик очереди
                     self.q = []  # Отчищаем массив очереди
                     await send_embed(ctx, '🔇 Воспроизведение остановлено 🔇',
-                                     f'Кто-то выдернул кабель питания из розетки :<',
                                      f'Прервал: {ctx.message.author.name}',
                                      'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
             except Exception as e:
@@ -203,15 +202,12 @@ def yt(bot, data):
             except:
                 print_log('err', f'Пользователь {ctx.message.author.name} не находится в войсе')
                 await send_embed(ctx, '❌ Не удалось запустить воспроизведение ❌', '''
-                                Вы не находитесь в войсе
-                                Вы можете добавить трек в очередь только находясь в войс-чате''',
-                                 'Зайди наконец в войс, бака w_w',
+                                Вы не находитесь в войсе.
+                                Вы можете добавить трек в очередь только находясь в войсе.''',
                                  'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
         else:
             await send_embed(ctx, '❌ Не удалось добавить трек ❌', '''
-                            Вы не ввели название трека или ссылку
-                            _* Партия не довольна вами *_''',
-                             f'ToxBot v{num_ver} - на страже порядка',
+                            Вы не ввели название трека или ссылку''',
                              'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
 
     @bot.command(pass_context=True)
@@ -224,22 +220,22 @@ def yt(bot, data):
             ytx.loop = None
             await send_embed(ctx, '🎵 Повтор отключен 🎵', '''
                             Текущий режим повтора: _*Выключен*_
-                            После окончания очереди бот отключится''',
-                            'Но ты всегда можешь добавить еще треков...',
+                            После окончания очереди бот отключится.''',
+                            'Но ты всегда можешь добавить еще треков.',
                             'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
         elif (ytx.loop is None or ytx.loop == 'one') and type == 'all':
             ytx.loop = type
             await send_embed(ctx, '🎵 Повтор включен 🎵', '''
                             Текущий режим повтора: _*Включен (Все треки)*_
                             Повторяется вся очередь.''',
-                            'Вы можете добавлять еще треки в очередь...',
+                            'Вы можете добавлять еще треки в очередь.',
                             'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
         elif (ytx.loop is None or ytx.loop == 'all') and type == 'one':
             ytx.loop = type
             await send_embed(ctx, '🎵 Повтор отключен 🎵', '''
                             Текущий режим повтора: _*Включен (Один трек)*_
                             Повторяется лишь текущий трек.''',
-                            'Когда он тебе надоест - можешь отключить или сменить режим...',
+                            'Когда он тебе надоест - можешь отключить или сменить режим.',
                             'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
 
     @bot.command(pass_context=True)
@@ -248,8 +244,8 @@ def yt(bot, data):
             await ytx.stop_playing(ctx)
         else:
             await send_embed(ctx, '❌ Невозможно прервать воспроизведение. ❌',
-                             'Бот (Б)анально ничего не играет :D',
-                             'Но кстати ты всегда можешь что-то включить...',
+                             'Бот ничего не играет.',
+                             'Но ты всегда можешь что-то включить.',
                              'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
 
     @bot.command()
