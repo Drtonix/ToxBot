@@ -129,7 +129,7 @@ def img_tricks(bot):
     async def quote(ctx, nick: discord.Member = None, *, text=None):
         if nick is not None and text is not None:
             await img_edit.quote_create(ctx, nick, text)
-        elif ctx.message.reference and (msg := ctx.message.reference.resolved) and isinstance(msg, discord.Message):
+        elif ctx.message.reference and (msg == ctx.message.reference.resolved) and isinstance(msg, discord.Message):
             await img_edit.quote_create(ctx, msg.author, msg.content)
         else:
             await send_embed(ctx,
