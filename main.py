@@ -245,8 +245,8 @@ Weriase - 50 рублей
 
 		@bot.command()
 		async def yesorno(ctx, *, text):
-			danet = ['да.'] * 25 + ['нет.'] * 25 + ['скорее всего.'] * 25 + ['наверное.'] * 25
-			await ctx.send(f"Я думаю что {random.choice(danet)}")
+			danet = ['Да.'] * 25 + ['Нет.'] * 25 + ['Скорее всего да.'] * 25 + ['Скорее всего нет.'] * 25 + ['Наверное да.'] * 25 + ['Наверное нет.'] * 25 + ['Не уверен.'] * 25 + ['Не могу ответить.']
+			await ctx.send(f"{random.choice(danet)}")
 
 
 		@bot.command()
