@@ -1,6 +1,5 @@
 import json
 import sqlite3
-
 import pytz
 import random
 from datetime import datetime
@@ -9,7 +8,6 @@ from Cybernator import Paginator as Pag
 from discord.ext import commands
 from discord.ext.commands import Bot
 from discord_components import DiscordComponents
-
 from classes import UsTaCr
 from core.toxbot_core import *
 
@@ -121,7 +119,7 @@ if init_successful:
 📌**Основное**
 Инфо — `help`, `info`, `ver`
 🎧**Воспроизведение**
-Медиа — `p`, `loop`, `skip`, `stop`
+Медиа — `p`, `loop`, `skip`, `stop`, `rstop`
 Список радиостанций — `rlist`
 🖼️**Работа с изображениями**
 Фильтры — `shakal`
@@ -402,7 +400,7 @@ Weriase - 50 рублей
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpВоспроизведение(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`p` *URL* — Воспроизведение аудио с ютуба.\n`p1|p2|p3...` — Воспроизведение радио.\n`loop all|one|off` — Вкл/Выкл повтор.\n`skip` — Пропустить трек.\n`stop` - Остановить произведение.\n`rlist` - Лист всех радиостанций.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`p` *URL* — Воспроизведение аудио с ютуба.\n`p1|p2|p3...` — Воспроизведение радио.\n`loop all|one|off` — Вкл/Выкл повтор.\n`skip` — Пропустить трек.\n`stop` — Остановить воспроизведение.\n`rstop` — Остановить радио\n`rlist` — Лист всех радиостанций.')
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpРабота(ctx):
@@ -773,6 +771,11 @@ Weriase - 50 рублей
 				print_log('info', "Радио включено: Своя радиостанция (Вызвано {})".format(+ ctx.message.author.name))
 			else:
 				await ctx.send("Вставьте ссылку.")
+
+		@bot.command()
+		async def rstop(ctx):
+			await ctx.voice_client.disconnect()
+			await ctx.send("Радио остановлено.")
 
 
 		plugins(bot, data)
