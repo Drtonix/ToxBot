@@ -250,30 +250,50 @@ Weriase - 50 рублей
 
 
 		@bot.command()
-		async def fuck(ctx, *, text):
+		async def fuck(ctx, *, target):
 			author = ctx.message.author
-			txt = discord.utils.escape_mentions(text)
-			await ctx.send(f"{author.mention} выебал(а) {txt}.")
+			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
+			try:
+				target = await bot.fetch_user(int(target))
+				await ctx.send(f"{author.display_name} выебал {target.display_name}.")
+			except:
+				await ctx.send(f"{author.display_name} выебал {target}.")
 		@bot.command()
-		async def kill(ctx, *, text):
+		async def kill(ctx, *, target):
 			author = ctx.message.author
-			txt = discord.utils.escape_mentions(text)
-			await ctx.send(f"{author.mention} убил(а) {txt}.")
+			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
+			try:
+				target = await bot.fetch_user(int(target))
+				await ctx.send(f"{author.display_name} убил {target.display_name}.")
+			except:
+				await ctx.send(f"{author.display_name} убил {target}.")
 		@bot.command()
-		async def eat(ctx, *, text):
+		async def eat(ctx, *, target):
 			author = ctx.message.author
-			txt = discord.utils.escape_mentions(text)
-			await ctx.send(f"{author.mention} съел(а) {txt}.")
+			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
+			try:
+				target = await bot.fetch_user(int(target))
+				await ctx.send(f"{author.display_name} съел {target.display_name}.")
+			except:
+				await ctx.send(f"{author.display_name} съел {target}.")
 		@bot.command()
-		async def twisted(ctx, *, text):
+		async def twisted(ctx, *, target):
 			author = ctx.message.author
-			txt = discord.utils.escape_mentions(text)
-			await ctx.send(f"{author.mention} свернул(а) шею {txt}.")
+			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
+			try:
+				target = await bot.fetch_user(int(target))
+				await ctx.send(f"{author.display_name} свернул шею {target.display_name}.")
+			except:
+				await ctx.send(f"{author.display_name} свернул шею {target}.")
 		@bot.command()
-		async def give(ctx, *, text):
+		async def give(ctx, *, target):
 			author = ctx.message.author
-			txt = discord.utils.escape_mentions(text)
-			await ctx.send(f"{author.mention} дал(а) {txt}.")
+			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
+			try:
+				target = await bot.fetch_user(int(target))
+				await ctx.send(f"{author.display_name} дал {target.display_name}.")
+			except:
+				await ctx.send(f"{author.display_name} дал {target}.")
 
 		@commands.has_permissions(administrator=True)
 		@bot.command()
