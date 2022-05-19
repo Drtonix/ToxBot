@@ -58,7 +58,7 @@ def calls(bot):
                              custom_ping=None,
                              reject=False):
 
-            embed = discord.Embed(title=f"📞 Звонок на номер `{number.replace('<', '').replace('>', '').replace('@', '')}` 📞",
+            embed = discord.Embed(title=f"📞 Звонок на номер \n`{number.replace('<', '').replace('>', '').replace('@', '')}` 📞",
                                   description="Звонок.",
                                   colour=discord.Colour.from_rgb(230, 0, 0))
             embed.set_thumbnail(url=default_thumbnail)
@@ -66,7 +66,7 @@ def calls(bot):
 
             await asyncio.sleep(1)
 
-            update_emb = discord.Embed(title=f"📞 Звонок на номер `{number.replace('<', '').replace('>', '').replace('@', '')}` 📞",
+            update_emb = discord.Embed(title=f"📞 Звонок на номер \n`{number.replace('<', '').replace('>', '').replace('@', '')}` 📞",
                                        description="Звонок..",
                                        colour=discord.Colour.from_rgb(230, 0, 0))
             update_emb.set_thumbnail(url=default_thumbnail)
@@ -74,7 +74,7 @@ def calls(bot):
 
             await asyncio.sleep(1)
 
-            update_emb = discord.Embed(title=f"📞 Звонок на номер `{number.replace('<', '').replace('>', '').replace('@', '')}` 📞",
+            update_emb = discord.Embed(title=f"📞 Звонок на номер \n`{number.replace('<', '').replace('>', '').replace('@', '')}` 📞",
                                        description="Звонок...",
                                        colour=discord.Colour.from_rgb(230, 0, 0))
             update_emb.set_thumbnail(url=default_thumbnail)
@@ -85,7 +85,7 @@ def calls(bot):
             if not reject:
                 if not custom:
                     await ctx.send(f'{number}')
-                    update_emb = discord.Embed(title=f"📞 Звонок на номер `{number.replace('<', '').replace('>', '').replace('@', '')}` 📞",
+                    update_emb = discord.Embed(title=f"📞 Звонок на номер \n`{number.replace('<', '').replace('>', '').replace('@', '')}` 📞",
                                                description=f'Ожидаем ответа пользователя. \n \n _Предупреждаем:_  \n *Ваш оператор может брать плату за вызовы.*',
                                                colour=discord.Colour.from_rgb(230, 0, 0))
                     update_emb.set_thumbnail(url=default_thumbnail)

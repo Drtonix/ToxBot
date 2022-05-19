@@ -13,7 +13,6 @@ text_ver = '''
 ++twisted
 ++give```
 Пинги заменяются на текст
-
 '''
 
 default_thumbnail = 'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png'

@@ -79,7 +79,7 @@ if init_successful:
 		async def on_member_remove(member):
 			for ch in bot.get_guild(member.guild.id).channels:
 				if ch.name == "💬┃био-отходняк-чат":
-					await bot.get_channel(ch.id).send(f'К сожалению, {member.display_name} покинул нас.')
+					await bot.get_channel(ch.id).send(f'К сожалению, участник {member.display_name} покинул нас.')
 
 		@bot.event
 		async def on_voice_state_update(member, before, after):
@@ -121,7 +121,7 @@ if init_successful:
 📌**Основное**
 Инфо — `help`, `info`, `ver`
 🎧**Воспроизведение**
-Медиа — `p`, `rpl`, `skip`, `stop`
+Медиа — `p`, `loop`, `skip`, `stop`
 Список радиостанций — `rlist`
 🖼️**Работа с изображениями**
 Фильтры — `shakal`
@@ -131,7 +131,7 @@ if init_successful:
 Казино игры — `roulette`, `coin`, `slots`
 📚**Инфо и полезные штуки**
 Инфо о пользователях — `stats`, `membinfo`
-Полезные команды бота — `randomto`, `cal`, `time`, `laugh`, `yesorno`
+Полезные команды бота — `randomto`, `cal`, `time`, `laugh`, `yesorno`, `clear`
 🔎**Поиск**
 Поисковики — `google`, `yandex`, `duckduck`, `yahoo`''', colour = discord.Colour.from_rgb(230,0,0))
 			strings = ["Я слышал что если перед категорией команд слитно писать help, то что то поменяется."]* 88 + ["Шуруп, забитый молотком, держится крепче, чем гвоздь, закрученный отвёрткой."]*1 +["Обувь будет носиться значительно дольше, если не покупать новую."]*1 + ["Если сосиски отварить с кубиком говяжьего бульона - то они будут пахнуть мясом."]*1 +["Большинство электрических приборов потребляют меньше электричества в выключенном состоянии."]*1 + ["Вегетарианский суп будет питательней, если в него положить немного говядины."]*1 +["Если ваш компьютер заразил вирус - как можно скорее переформатируйте ваш жесткий диск; не давайте вирусу удовольствие самому это сделать."]*1 + ["Если вы хотите приготовить дрожжевое тесто, но у вас нет дрожжей, то ни фига у вас не получится."]*1 +["Если ваш сосед внезапно купил ружье, вам лучше завязать с музыкой."]*1 + ["Нельзя смотреться в зеркало когда ешь - счастье своё проешь. И когда пьёшь - пропьёшь. А в туалете зеркало вообще лучше не вешать.."]*1 +["Если крыть нечем - кройте матом."]*1 + ["Не стой, где попало - попадёт ещё раз"]*1 + ["Если ваша машина издает странные звуки, увеличивайте громкость радио до тех пор, пока не перестанете их слышать."]*1
@@ -245,8 +245,8 @@ Weriase - 50 рублей
 
 		@bot.command()
 		async def yesorno(ctx, *, text):
-			danet = ['да.'] * 25 + ['нет.'] * 25 + ['скорее всего.'] * 25 + ['наверное.'] * 25
-			await ctx.send(f"Я думаю что {random.choice(danet)}")
+			danet = ['Да.'] * 25 + ['Нет.'] * 25 + ['Скорее всего да.'] * 25 + ['Скорее всего нет.'] * 25 + ['Наверное да.'] * 25 + ['Наверное нет.'] * 25 + ['Не уверен.'] * 25 + ['Не могу ответить.']
+			await ctx.send(f"{random.choice(danet)}")
 
 
 		@bot.command()
@@ -295,6 +295,15 @@ Weriase - 50 рублей
 			except:
 				await ctx.send(f"{author.display_name} дал {target}.")
 
+		@commands.has_permissions(administrator=True)
+		@bot.command()
+		async def clear(ctx, number: int):
+			if number < 1:
+				await ctx.send("Нельзя удалить меньше одного сообщения.")
+			if number > 111:
+				await ctx.send("Слишком много.")
+			if ((number >= 1) and (number <= 111)):
+				await ctx.channel.purge(limit=number)
 
 		@bot.command()
 		async def roulette(ctx):
@@ -325,36 +334,6 @@ Weriase - 50 рублей
 		async def roulette6bul(ctx):
 			author = ctx.message.author
 			await ctx.send(f'{author.mention} застрелился от своей тупости.')
-
-
-#		@bot.command()
-#		async def duele(ctx,member:discord.Member = None, guild: discord.Guild = None):
-#			await ctx.send(
-#				embed = discord.Embed(title="Приглашение на дуэль", description = f"Пользователь {ctx.author.mention} приглашает на дуэль {member.display_name}"),
-#				components=[
-#					Button(style=ButtonStyle.red, label="Принять", emoji="✔"),
-#					Button(style=ButtonStyle.red, label="Отклонить", emoji="✖")])
-#			response = await bot.wait_for("button_click")
-#			if response.channel == ctx.channel:
-#				if response.component.label == "Отклонить":
-#					await ctx.send(embed = discord.Embed(title=f"Пользователь {member} отклонил приглашение на дуэль."))
-#				else:
-#					await ctx.send(
-#						embed=discord.Embed(title="Дуэль началась!"),
-#						components=[
-#							Button(style=ButtonStyle.red, label="Выстрел", emoji="🔫"),
-#							Button(style=ButtonStyle.red, label="Холостой", emoji="✴️")])
-#			response = await bot.wait_for("button_click")
-#			if response.channel == ctx.channel:
-#				if response.component.label == "Выстрел":
-#					rnmd = [f"Пользователь {member} Застрелил пользователя {ctx.author.mention}."] * 50 + [f"Пользователь {member} промахнулся."] * 50
-#					await ctx.send(embed = discord.Embed(title=random.choice(rnmd)))
-#				else:
-#					await ctx.send(
-#						embed=discord.Embed(title=f"Пользователь {member} выстрелил в небо"),
-#						components=[
-#							Button(style=ButtonStyle.red, label="Выстрел", emoji="🔫"),
-#							Button(style=ButtonStyle.red, label="Холостой", emoji="✴️")])
 
 		@bot.command()
 		async def google(ctx, *, text):
@@ -423,7 +402,7 @@ Weriase - 50 рублей
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpВоспроизведение(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`p` *URL* — Воспроизведение аудио с ютуба.\n`p1|p2|p3...` — Воспроизведение радио.\n`rpl all|one|off` — Вкл/Выкл повтор.\n`skip` — Пропустить трек.\n`stop` - Остановить произведение.\n`rlist` - Лист всех радиостанций.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`p` *URL* — Воспроизведение аудио с ютуба.\n`p1|p2|p3...` — Воспроизведение радио.\n`loop all|one|off` — Вкл/Выкл повтор.\n`skip` — Пропустить трек.\n`stop` - Остановить произведение.\n`rlist` - Лист всех радиостанций.')
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpРабота(ctx):
@@ -435,7 +414,7 @@ Weriase - 50 рублей
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpИнфо(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`stats` — Список активностей людей на сервере.\n`membinfo @пользователь` — Информация о пользователе.\n`randomto(Число)` — Рандом до заданного числа большего одного.\n`cal` — Калькулятор.\n`time` — Время по МСК.\n`laugh` — Смех.\n`yesorno` — Да или нет.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`stats` — Список активностей людей на сервере.\n`membinfo @пользователь` — Информация о пользователе.\n`randomto(Число)` — Рандом до заданного числа большего одного.\n`cal` — Калькулятор.\n`time` — Время по МСК.\n`laugh` — Смех.\n`yesorno` — Да или нет.\n`clear число` —  Удаление сообщений. Только для админов.')
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpПоиск(ctx):
