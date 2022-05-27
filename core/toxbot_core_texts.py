@@ -1,4 +1,4 @@
-num_ver = '''0.4.9.7с'''
+num_ver = '''0.4.9.7e'''
 water = "- ToxBot#1253 -"
 text_ver = '''
 Что нового:
