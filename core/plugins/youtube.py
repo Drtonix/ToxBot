@@ -51,7 +51,7 @@ def yt(bot, data):
                         track_found = True
                     except Exception as e:
                         # Не нашли трек
-                        await send_embed(ctx, '❔ Трек не найден ❔', '''
+                        await send_embed(ctx, 'Трек не найден', '''
                                 Убедитесь, что вы ввели название правильно
                                 И что ваш трек есть в библиотеке YouTube
                                 _*(Если это какая то ошибка - попробуйте указать ссылку)*_''',
@@ -77,7 +77,7 @@ def yt(bot, data):
                         if len(self.q) - 1 == self.q_now:
 
                             # Выводим информацию о треке
-                            await send_embed(ctx, '🎵 Сейчас играет 🎵', f'''
+                            await send_embed(ctx, 'Сейчас играет:', f'''
                                 Трек: _*{self.q[0][1]}*_
                                 Продолжительность: _*{self.q[0][2]}*_
                                 ''',
@@ -89,7 +89,7 @@ def yt(bot, data):
 
                         # В противном случае - просто выводим информацию о добавлении трека в очередь
                         else:
-                            await send_embed(ctx, '🎵 Трек добавлен в очередь 🎵', f'''
+                            await send_embed(ctx, 'Трек добавлен в очередь', f'''
                                 Трек: _*{track_name}*_
                                 Продолжительность: _*{track_time}*_
                                 ''',
@@ -106,7 +106,7 @@ def yt(bot, data):
                         self.q_now += 1  # Увеличиваем счетчик очереди если нет лупа на 1 трек
 
                     # Выводим информацию о следующем треке
-                    await send_embed(ctx, '🎵 Сейчас играет 🎵', f'''
+                    await send_embed(ctx, 'Сейчас играет:', f'''
                                     Трек: _*{self.q[self.q_now][1]}*_
                                     Время: _*{self.q[self.q_now][2]}*_''',
                                      f'Запросил: {self.q[self.q_now][3]}',
@@ -122,7 +122,7 @@ def yt(bot, data):
                         self.q_now = 0
 
                         # Выводим информацию о следующем треке
-                        await send_embed(ctx, '🎵 Сейчас играет 🎵', f'''
+                        await send_embed(ctx, 'Сейчас играет:', f'''
                                         Трек: _*{self.q[self.q_now][1]}*_
                                         Время: _*{self.q[self.q_now][2]}*_''',
                                          f'Запросил: {self.q[self.q_now][3]}',
@@ -144,7 +144,7 @@ def yt(bot, data):
                     self.is_playing = False  # Снимаем флаг
                     self.q_now = 0  # Обнуляем счетчик очереди
                     self.q = []  # Отчищаем массив очереди
-                    await send_embed(ctx, '🔇 Воспроизведение остановлено 🔇',
+                    await send_embed(ctx, 'Воспроизведение остановлено',
                                      f'Прервал: {ctx.message.author.name}',
                                      'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
             except Exception as e:
@@ -201,12 +201,12 @@ def yt(bot, data):
                 await ytx.yt_searching(ctx, track)
             except:
                 print_log('err', f'Пользователь {ctx.message.author.name} не находится в войсе')
-                await send_embed(ctx, '❌ Не удалось запустить воспроизведение ❌', '''
+                await send_embed(ctx, 'Не удалось запустить воспроизведение', '''
                                 Вы не находитесь в войсе.
                                 Вы можете добавить трек в очередь только находясь в войсе.''',
                                  'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
         else:
-            await send_embed(ctx, '❌ Не удалось добавить трек ❌', '''
+            await send_embed(ctx, 'Не удалось добавить трек', '''
                             Вы не ввели название трека или ссылку''',
                              'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
 
@@ -218,21 +218,21 @@ def yt(bot, data):
     async def loop(ctx, type='off'):
         if type == 'off':
             ytx.loop = None
-            await send_embed(ctx, '🎵 Повтор отключен 🎵', '''
+            await send_embed(ctx, 'Повтор отключен', '''
                             Текущий режим повтора: _*Выключен*_
                             После окончания очереди бот отключится.''',
                             'Но ты всегда можешь добавить еще треков.',
                             'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
         elif (ytx.loop is None or ytx.loop == 'one') and type == 'all':
             ytx.loop = type
-            await send_embed(ctx, '🎵 Повтор включен 🎵', '''
+            await send_embed(ctx, 'Повтор включен', '''
                             Текущий режим повтора: _*Включен (Все треки)*_
                             Повторяется вся очередь.''',
                             'Вы можете добавлять еще треки в очередь.',
                             'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
         elif (ytx.loop is None or ytx.loop == 'all') and type == 'one':
             ytx.loop = type
-            await send_embed(ctx, '🎵 Повтор отключен 🎵', '''
+            await send_embed(ctx, 'Повтор включен', '''
                             Текущий режим повтора: _*Включен (Один трек)*_
                             Повторяется лишь текущий трек.''',
                             'Когда он тебе надоест - можешь отключить или сменить режим.',
@@ -243,7 +243,7 @@ def yt(bot, data):
         if ytx.voice_client and ytx.voice_client.is_playing():
             await ytx.stop_playing(ctx)
         else:
-            await send_embed(ctx, '❌ Невозможно прервать воспроизведение. ❌',
+            await send_embed(ctx, 'Невозможно прервать воспроизведение.',
                              'Бот ничего не играет.',
                              'Но ты всегда можешь что-то включить.',
                              'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
