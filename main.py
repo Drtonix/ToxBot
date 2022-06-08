@@ -373,25 +373,25 @@ Weriase - 50 рублей
 			msg = await ctx.send(embed=embed)
 			for x in range(4):
 				r1 = random.choice(slots)
-				await asyncio.sleep(0.5)
+				await asyncio.sleep(0.2)
 				new_emb = discord.Embed(title="ToxCasino777", description=r1 + ":grey_question:" + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
 				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 				await msg.edit(embed=new_emb)
 				r2 = random.choice(slots)
 			for x in range(4):
 				r2 = random.choice(slots)
-				await asyncio.sleep(0.5)
+				await asyncio.sleep(0.2)
 				new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2  + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
 				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 				await msg.edit(embed=new_emb)
 				r3 = random.choice(slots)
 			for x in range(4):
 				r3 = random.choice(slots)
-				await asyncio.sleep(0.5)
+				await asyncio.sleep(0.2)
 				new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2  + r3  + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
 				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
 				await msg.edit(embed=new_emb)
-			await ctx.reply("Конец игры.")
+			await ctx.send("конец игры")
 
 		# Помощь по командам
 		@bot.command()
@@ -404,19 +404,19 @@ Weriase - 50 рублей
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpРабота(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`dem` *ссылка на пикчу* *Текст 1* *Текст 2* — Демотиватор.\n`shakal` *ссылка на пикчу* *качество (0-100)* — Зашакаливание.\nquote *@Пинг пользователя* *текст цитаты* - Создание цитаты, так же работает если написать команду в ответ на сообщение.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`dem` *ссылка на пикчу* *Текст 1* *Текст 2* — Демотиватор.\n`shakal` *ссылка на пикчу* *качество (0-100)* — Зашакаливание.\n`quote` *@Пинг пользователя* *текст цитаты* - Создание цитаты, так же работает если написать команду в ответ на сообщение.')
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpИгры(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`call *911|255|пинг* *текст* - позвонить в полицию, пиццерию или же любому пользователю, текст не обязателен.`\n`kill` *текст* - Убить.\n`twisted` *текст* — Свернуть шею.\n`fuck` *текст* — Изнасиловать.\n`eat` *текст* — Съесть.\n`give` *текст* - Дать.\n`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.\n`coin` - Игра в монетку\n`slots` - Слоты казино.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`call` *911|255|пинг* *текст* - позвонить в полицию, пиццерию или же любому пользователю, текст не обязателен.\n`kill` *текст* - Убить.\n`twisted` *текст* — Свернуть шею.\n`fuck` *текст* — Изнасиловать.\n`eat` *текст* — Съесть.\n`give` *текст* - Дать.\n`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.\n`coin` - Игра в монетку\n`slots` - Слоты казино.')
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpИнфо(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`stats` — Список активностей людей на сервере.\n`membinfo @пользователь` — Информация о пользователе.\n`randomto(Число)` — Рандом до заданного числа большего одного.\n`cal` — Калькулятор.\n`time` — Время по МСК.\n`laugh` — Смех.\n`yesorno` — Да или нет.\n`clear число` —  Удаление сообщений. Только для админов.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`stats` — Список активностей людей на сервере.\n`membinfo` *@пользователь* — Информация о пользователе.\n`randomto(Число)` — Рандом до заданного числа больше одного.\n`cal` — Калькулятор.\n`time` — Время по МСК.\n`laugh` — Смех.\n`yesorno` — Да или нет.\n`clear число` —  Удаление сообщений. Только для админов.')
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpПоиск(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`google|yandex|duckduck|yahoo текст` — Поиск по этому запросу.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`google|yandex|duckduck|yahoo` *текст* — Поиск по этому запросу.')
 			msg = await ctx.send(embed = embed)
 
 		#Всякие элементарные вещи
