@@ -3,7 +3,7 @@ water = "- ToxBot#1253 -"
 text_ver = '''
 Что нового:
 Пак микрофиксов №8
-Переработана рулетка
+Переработаны слоты
 '''
 
 default_thumbnail = 'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png'
