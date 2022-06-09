@@ -367,32 +367,37 @@ Weriase - 50 рублей
 
 		@bot.command()
 		async def slots(ctx):
-			slots = ["🍓", "🍉","🍋", "🍒"]
+			slots = ["🍓", "🍋", "🍒", "💣"]
 			r1 = random.choice(slots)
-			embed = discord.Embed(title="ToxCasino777", description=r1 + ":grey_question:" + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
-			embed.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
+			embed = discord.Embed(title="ToxCasino777", description="⚫" + "⚫" + "⚫", colour = discord.Colour.from_rgb(230,0,0))
+			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/984411549236101150/unknown.png")
 			msg = await ctx.send(embed=embed)
 			for x in range(4):
 				r1 = random.choice(slots)
 				await asyncio.sleep(0.2)
-				new_emb = discord.Embed(title="ToxCasino777", description=r1 + ":grey_question:" + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
-				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
+				new_emb = discord.Embed(title="ToxCasino777", description=r1 + "⚫" + "⚫", colour = discord.Colour.from_rgb(230,0,0))
+				new_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/984411549236101150/unknown.png")
 				await msg.edit(embed=new_emb)
 				r2 = random.choice(slots)
 			for x in range(4):
 				r2 = random.choice(slots)
 				await asyncio.sleep(0.2)
-				new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2  + ":grey_question:" + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
-				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
+				new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2 + "⚫", colour = discord.Colour.from_rgb(230,0,0))
+				new_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/984411549236101150/unknown.png")
 				await msg.edit(embed=new_emb)
 				r3 = random.choice(slots)
 			for x in range(4):
 				r3 = random.choice(slots)
 				await asyncio.sleep(0.2)
-				new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2  + r3  + ":exclamation:", colour = discord.Colour.from_rgb(230,0,0))
-				new_emb.set_thumbnail(url="https://0225.ru/uploads/posts/2019-12/1576091203_fruktovye-sloty.jpg")
+				new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2 + r3, colour = discord.Colour.from_rgb(230,0,0))
+				new_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/984411549236101150/unknown.png")
 				await msg.edit(embed=new_emb)
-			await ctx.send("конец игры")
+			if r1 == r2 == r3 and r1 != "💣":
+				await msg.add_reaction('✅')
+			if r1 == r2 == r3 and r1 == "💣":
+				await msg.add_reaction('💥')
+			if r1 != r2 or r2 != r3 or r1 != r3:
+				await msg.add_reaction('❌')
 
 		# Помощь по командам
 		@bot.command()
