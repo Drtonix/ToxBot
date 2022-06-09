@@ -27,7 +27,7 @@ def img_tricks(bot):
 
         @staticmethod
         async def check(ctx):
-            await send_embed(ctx, '🖼️ Все работает! 🖼️',
+            await send_embed(ctx, 'Все работает!',
                              'На данный момент модуль изображений импортирован',
                              f'ToxBot v{num_ver}',
                              default_thumbnail)
@@ -47,7 +47,7 @@ def img_tricks(bot):
                               result_filename=outfile,
                               delete_file=True)
                 await send_embed(ctx,
-                                 '🖼️ Ваш демотиватор создан 🖼️', f'''
+                                 'Ваш демотиватор создан', f'''
                                  _*{random_demo()}*_
                                  ''',
                                  f'ToxBot v{num_ver}',
@@ -55,7 +55,7 @@ def img_tricks(bot):
                 await ctx.send(file=discord.File(outfile))
             except Exception as e:
                 await send_embed(ctx,
-                                 '❌ Не удалось создать демотиватор ❌', f'''
+                                 'Не удалось создать демотиватор', f'''
                                  Произошла ошибка при создании демотиватора
                                  ({str(e)})''',
                                  f'ToxBot v{num_ver}',
@@ -76,7 +76,7 @@ def img_tricks(bot):
                 await ctx.send(file=discord.File(outfile))
             except Exception as e:
                 await send_embed(ctx,
-                                 '❌ Не удалось добавить цитату в фонд ❌', f'''
+                                 'Не удалось добавить цитату в фонд', f'''
                                  Произошла ошибка заполнении бланка
                                  ({str(e)})''',
                                  f'ToxBot v{num_ver}',
@@ -91,7 +91,7 @@ def img_tricks(bot):
                 image = Image.open(raw).convert('RGB')
                 image.save(outfile, 'JPEG', quality=quality)
                 await send_embed(ctx,
-                                 '🖼️ Шакалы догрызли вашу пикчу 🖼️', f'''
+                                 'Шакалы догрызли вашу пикчу', f'''
                                  Вот ваш результат: 
                                  (Текущее качество: `{quality}`)''',
                                  f'ToxBot v{num_ver}',
@@ -99,7 +99,7 @@ def img_tricks(bot):
                 await ctx.send(file=discord.File(outfile))
             except Exception as e:
                 await send_embed(ctx,
-                                 '❌ Не удалось зашакалить пикчу ❌', f'''
+                                 'Не удалось зашакалить пикчу', f'''
                                  Произошла при получении вашей пикчи
                                  ({str(e)})''',
                                  f'ToxBot v{num_ver}',
@@ -115,7 +115,7 @@ def img_tricks(bot):
     async def dem(ctx, url=None, text1=None, text2=None):
         if url is None or text1 is None or text2 is None:
             await send_embed(ctx,
-                             '❌ Не удалось создать демотиватор ❌', '''
+                             'Не удалось создать демотиватор', '''
                              Неправильно введены параметры для создания
                              Напомню: `++dem ссылка "Текст 1" "Текст 2"`
                              (Кавычки у текстов обязательно!)''',
@@ -134,7 +134,7 @@ def img_tricks(bot):
             await img_edit.quote_create(ctx, msg.author, msg.content)
         else:
             await send_embed(ctx,
-                             '❌ Не добавить цитату ❌', '''
+                             'Не добавить цитату', '''
                              Неправильно введены параметры для создания
                              Напомню: `++quote пинг Текст цитаты`
                              (Или можете прислать команду в ответ на сообщение)''',
@@ -145,7 +145,7 @@ def img_tricks(bot):
     async def shakal(ctx, url=None, quality=7):
         if url is None:
             await send_embed(ctx,
-                             '❌ Не удалось зашакалить пикчу ❌', '''
+                             'Не удалось зашакалить пикчу', '''
                              Не введена ссылка на фото
                              Напомню: `++shakal ссылка качество`
                              Качество по умолчанию: `7`
