@@ -252,47 +252,57 @@ Weriase - 50 рублей
 		async def fuck(ctx, *, target):
 			author = ctx.message.author
 			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
+			target = target.split(' ')
 			try:
-				target = await bot.fetch_user(int(target))
-				await ctx.send(f"{author.display_name} выебал {target.display_name}.")
+				target1 = await bot.fetch_user(int(target[0]))
+				target.remove(target[0])
+				await ctx.send(f"{author.display_name} выебал(а) {target1.display_name} " + ' '.join(target) + ".") 
 			except:
-				await ctx.send(f"{author.display_name} выебал {target}.")
+				await ctx.send(f"{author.display_name} выебал(а) {target1}.")
 		@bot.command()
 		async def kill(ctx, *, target):
 			author = ctx.message.author
 			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
+			target = target.split(' ')
 			try:
-				target = await bot.fetch_user(int(target))
-				await ctx.send(f"{author.display_name} убил {target.display_name}.")
+				target1 = await bot.fetch_user(int(target[0]))
+				target.remove(target[0])
+				await ctx.send(f"{author.display_name} убил(а) {target1.display_name} " + ' '.join(target) + ".")
 			except:
-				await ctx.send(f"{author.display_name} убил {target}.")
+				await ctx.send(f"{author.display_name} убил(а) {target1}.")
 		@bot.command()
 		async def eat(ctx, *, target):
 			author = ctx.message.author
 			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
+			target = target.split(' ')
 			try:
-				target = await bot.fetch_user(int(target))
-				await ctx.send(f"{author.display_name} съел {target.display_name}.")
+				target1 = await bot.fetch_user(int(target[0]))
+				target.remove(target[0])
+				await ctx.send(f"{author.display_name} съел(а) {target1.display_name} " + ' '.join(target) + ".")
 			except:
-				await ctx.send(f"{author.display_name} съел {target}.")
+				await ctx.send(f"{author.display_name} съел(а) {target1}.")
 		@bot.command()
 		async def twisted(ctx, *, target):
 			author = ctx.message.author
 			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
+			target = target.split(' ')
 			try:
-				target = await bot.fetch_user(int(target))
-				await ctx.send(f"{author.display_name} свернул шею {target.display_name}.")
+				target1 = await bot.fetch_user(int(target[0]))
+				target.remove(target[0])
+				await ctx.send(f"{author.display_name} свернул(а) шею {target1.display_name} " + ' '.join(target) + ".")
 			except:
-				await ctx.send(f"{author.display_name} свернул шею {target}.")
+				await ctx.send(f"{author.display_name} свернул(а) шею {target1}.")
 		@bot.command()
 		async def give(ctx, *, target):
 			author = ctx.message.author
 			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
+			target = target.split(' ')
 			try:
-				target = await bot.fetch_user(int(target))
-				await ctx.send(f"{author.display_name} дал {target.display_name}.")
+				target1 = await bot.fetch_user(int(target[0]))
+				target.remove(target[0])
+				await ctx.send(f"{author.display_name} дал(а) {target1.display_name} " + ' '.join(target) + ".")
 			except:
-				await ctx.send(f"{author.display_name} дал {target}.")
+				await ctx.send(f"{author.display_name} дал(а) {target1}.")
 
 		@commands.has_permissions(administrator=True)
 		@bot.command()
