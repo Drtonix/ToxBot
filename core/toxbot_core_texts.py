@@ -1,9 +1,8 @@
-num_ver = '''0.4.9.7k'''
+num_ver = '''0.4.9.7l'''
 water = "- ToxBot#1253 -"
 text_ver = '''
 Что нового:
-Пак микрофиксов №8
-Переработаны слоты
+Пофиксили и доработали команды действий
 '''
 
 default_thumbnail = 'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png'
