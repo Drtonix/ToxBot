@@ -151,10 +151,6 @@ Donationalerts:
 <https://bit.ly/3KSJ6OW>
 Patreon:
 <https://bit.ly/3xud881>
-
-Наш спонсор:
-Паблик с мемами в телеге
-https://t.me/uuuuuuu40
 ''', colour = discord.Colour.from_rgb(230,0,0))
 			embed1.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 			embed2 = discord.Embed(title="ToxBot Info (2)", description='''
@@ -172,12 +168,12 @@ https://discord.gg/XMYZKS3b3j
 			embed3 = discord.Embed(title="ToxBot Info (2)", description='''
 ❤️**Донатеры**
 
-
-Ampernic - 200 рублей ежегодно
-CentrumEx - 50 рублей
 Porg_Studio - dlc для Dead Sells, 300р
-Unikum131 - 100 рублей
+Ampernic - 200 рублей ежегодно
+Unikum131 - 150 рублей
+CentrumEx - 50 рублей
 Weriase - 50 рублей 
+
 
 Спасибо что пользуетесь ToxBot!''')
 			embed3.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
