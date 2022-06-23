@@ -120,7 +120,7 @@ if init_successful:
 📌**Основное**
 Инфо — `help`, `info`, `ver`
 🎧**Воспроизведение**
-Медиа — `p`, `loop`, `skip`, `stop`, `rstop`
+Медиа — `p`, `loop`, `skip`, `stop`, `off`
 Список радиостанций — `rlist`
 🖼️**Работа с изображениями**
 Фильтры — `shakal`
@@ -412,7 +412,7 @@ Weriase - 50 рублей
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpВоспроизведение(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`p` *URL* — Воспроизведение аудио с ютуба.\n`p1|p2|p3...` — Воспроизведение радио.\n`loop all|one|off` — Вкл/Выкл повтор.\n`skip` — Пропустить трек.\n`stop` — Остановить воспроизведение.\n`rstop` — Остановить радио\n`rlist` — Лист всех радиостанций.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`p` *URL* — Воспроизведение аудио с ютуба.\n`p1|p2|p3...` — Воспроизведение радио.\n`loop all|one|off` — Вкл/Выкл повтор.\n`skip` — Пропустить трек.\n`stop` — Остановить воспроизведение.\n`off` — Остановить радио\n`rlist` — Лист всех радиостанций.')
 			msg = await ctx.send(embed = embed)
 		@bot.command()
 		async def helpРабота(ctx):
@@ -785,7 +785,7 @@ Weriase - 50 рублей
 				await ctx.send("Вставьте ссылку.")
 
 		@bot.command()
-		async def rstop(ctx):
+		async def off(ctx):
 			await ctx.voice_client.disconnect()
 			await ctx.send("Радио остановлено.")
 
