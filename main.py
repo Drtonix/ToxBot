@@ -118,7 +118,7 @@ if init_successful:
 		async def help(ctx):
 			embed = discord.Embed(title="Используйте `++` перед \nначалом команды", description='''		
 📌**Основное**
-Инфо — `help`, `info`, `ver`
+Инфо — `help`, `info`, `ver`, `premium`
 🎧**Воспроизведение**
 Медиа — `p`, `loop`, `skip`, `stop`, `off`
 Список радиостанций — `rlist`
@@ -132,7 +132,9 @@ if init_successful:
 Инфо о пользователях — `stats`, `membinfo`
 Полезные команды бота — `randomto`, `cal`, `time`, `laugh`, `yesorno`, `clear`
 🔎**Поиск**
-Поисковики — `google`, `yandex`, `duckduck`, `yahoo`''', colour = discord.Colour.from_rgb(230,0,0))
+Поисковики — `google`, `yandex`, `duckduck`, `yahoo`
+🪙**ToxBot Premium**
+Подробнее — `premium`''', colour = discord.Colour.from_rgb(230,0,0))
 			strings = ["Попробуйте написать ++helpОсновное, ++helpВоспроизведение или тому подобное."]* 88 + ["Шуруп, забитый молотком, держится крепче, чем гвоздь, закрученный отвёрткой."]*1 +["Обувь будет носиться значительно дольше, если не покупать новую."]*1 + ["Если сосиски отварить с кубиком говяжьего бульона - то они будут пахнуть мясом."]*1 +["Большинство электрических приборов потребляют меньше электричества в выключенном состоянии."]*1 + ["Вегетарианский суп будет питательней, если в него положить немного говядины."]*1 +["Если ваш компьютер заразил вирус - как можно скорее переформатируйте ваш жесткий диск; не давайте вирусу удовольствие самому это сделать."]*1 + ["Если вы хотите приготовить дрожжевое тесто, но у вас нет дрожжей, то ни фига у вас не получится."]*1 +["Если ваш сосед внезапно купил ружье, вам лучше завязать с музыкой."]*1 + ["Нельзя смотреться в зеркало когда ешь - счастье своё проешь. И когда пьёшь - пропьёшь. А в туалете зеркало вообще лучше не вешать.."]*1 +["Если крыть нечем - кройте матом."]*1 + ["Не стой, где попало - попадёт ещё раз"]*1 + ["Если ваша машина издает странные звуки, увеличивайте громкость радио до тех пор, пока не перестанете их слышать."]*1
 			embed.set_footer(text=random.choice(strings))
 			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
@@ -182,6 +184,25 @@ Weriase - 50 рублей
 			reactions = ["◀️", "▶️"]
 			page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = True, reactions = reactions, timeout = 33)
 			await page.start()
+
+		@bot.command()
+		async def premium(ctx):
+			embed = discord.Embed(title="ToxBot Premium", description='''
+
+Вы можете оформить ToxBot Premium
+за 500 рублей в год. Укажите `id дискорда`
+в сообщениях к донатам или же напишите
+сюда -> `Tonix#5322`.
+
+Команды премиума будут бесплатно дополняться
+и со временем вы сможете пользоваться большим
+количеством команд.
+
+Купив премиум, вы очень поможете
+разработке ToxBot.
+Команды премиума — `++premhelp`.''', colour = discord.Colour.from_rgb(230,0,0))
+			await ctx.send(embed = embed)
+
 
 
 		@bot.event
@@ -430,6 +451,10 @@ Weriase - 50 рублей
 		async def helpПоиск(ctx):
 			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`google|yandex|duckduck|yahoo` *текст* — Поиск по этому запросу.')
 			msg = await ctx.send(embed = embed)
+		@bot.command()
+		async def helpToxBot(ctx):
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`premium` — ToxBot Premium.')
+			msg = await ctx.send(embed = embed)
 
 		#Всякие элементарные вещи
 		@bot.command()
@@ -584,40 +609,31 @@ Weriase - 50 рублей
 			embed1 = discord.Embed(title = "Список радиостанций (1)", description = '''
 `p1` - Шансон
 `p2` - Радио Дача
-`p3` - Х*й забей радио
-`p4` - Новое Радио
-`p5` - FM радио
-`p6` - Дорожное Радио (Омск)
-`p7` - POP радио 70х
+`p3` - Новое Радио
+`p4` - FM радио
+`p5` - Дорожное Радио (Омск)
+`p6` - Джаз
+`p7` - Радио 70х
 `p8` - Радио 80х
 `p9` - Радио 90х
-`p10` - хиты кантри
-`p11` - хиты рока
-`p12` - рок фм
-`p13` - Христианское радио
-`p14` - психоделик''')
+`p10` - хиты кантри''')
 			embed2 = discord.Embed(title = "Список радиостанций (2)", description = '''
+`p14` - ссср радио
 `p15` - классический рок
 `p16` - Ретро FM
 `p17` - Хевиметал
 `p18` - Украинское Радио Релакс
 `p19` - детское радио
-`p20` - ссср радио
-`p21` - радио аниме из Осаки
-`p22` - Джаз
-`p23` - lofi
-`pRMS` - Радио *RAMSHTEIN*
-`pRHCP` - радио *Red Hot Chili Peppers*
-`pKISH` - Радио *Король и Шут*
-`pL` - Радио *Гражданская оборона*
-`p0` *ссылка на поток* - Своё радио''')
-
+`p11` - хиты рока
+`p12` - рок фм
+`p13` - психоделик
+Некоторые радиостанции могут временно неработать.
+''')
 			embeds = [embed1, embed2]
 			message = await ctx.send(embed = embed1)
 			reactions = ["◀️", "▶️"]
 			page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = True, reactions = reactions, timeout = 33)
 			await page.start()
-
 
 		async def rplay(ctx, link: None):
 			if link != None:
@@ -641,156 +657,220 @@ Weriase - 50 рублей
 		async def p1(ctx):
 			await rplay(ctx, "http://chanson.hostingradio.ru:8041/chanson256.mp3")
 			await ctx.send("Радио включено.\nИграет: Шансон")
-			print_log('info', "Радио включено: Шансон")
-		@bot.command()
-		async def p4(ctx):
-			await rplay(ctx, "http://live.novoeradio.by:8000/novoeradio-128k")
-			await ctx.send("Радио включено.\nИграет: Новое радио")
-			print_log('info', "Радио включено: Новое радио")
-		@bot.command()
-		async def p5(ctx):
-			await rplay(ctx, "http://listen.teploe.net:8100/npkfm")
-			await ctx.send("Радио включено.\nИграет: FM радио")
-			print_log('info', "Радио включено: FM радио")
-		@bot.command()
-		async def p9(ctx):
-			await rplay(ctx, "http://prmstrm.1.fm:8000/90s")
-			await ctx.send("Радио включено.\nИграет: Радио 90х")
-			print_log('info', "Радио включено: Радио 90х")
-		@bot.command()
-		async def p7(ctx):
-			await rplay(ctx, "http://prmstrm.1.fm:8000/70s")
-			await ctx.send("Радио включено.\nИграет: Поп радио 70х")
-			print_log('info', "Радио включено: Поп радио 70х")
-		@bot.command()
-		async def p10(ctx):
-			await rplay(ctx, "http://prmstrm.1.fm:8000/acountry")
-			await ctx.send("Радио включено.\nИграет: Хиты кантри")
-			print_log('info', "Радио включено: Хиты кантри")
-		@bot.command()
-		async def p11(ctx):
-			await rplay(ctx, "http://prmstrm.1.fm:8000/x")
-			await ctx.send("Радио включено.\nИграет: Хиты рока")
-			print_log('info', "Радио включено: Хиты рока")
-		@bot.command()
-		async def p12(ctx):
-			await rplay(ctx, "http://jfm1.hostingradio.ru:14536/rock00.mp3")
-			await ctx.send("Радио включено.\nИграет: Рок FM")
-			print_log('info', "Радио включено: Рок FM")
-		@bot.command()
-		async def p13(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/radio123_by-hi")
-			await ctx.send("Радио включено.\nИграет: Христианское радио")
-			print_log('info', "Радио включено: Христианское радио")
-		@bot.command()
-		async def p14(ctx):
-			await rplay(ctx, "http://psyprog.rupsy.ru:8000/psyprog")
-			await ctx.send("Радио включено.\nИграет: Психоделик")
-			print_log('info', "Радио включено: Психоделик")
-		@bot.command()
-		async def p19(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/rusradio_deti-hi")
-			await ctx.send("Радио включено.\nИграет: Детское радио")
-			print_log('info', "Радио включено: Детское радио")
-		@bot.command()
-		async def p16(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/retrofm_ru-hi")
-			await ctx.send("Радио включено.\nИграет: Ретро FM")
-			print_log('info', "Радио включено: Ретро FM")
-		@bot.command()
-		async def p20(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/SSSR-hi")
-			await ctx.send("Радио включено.\nИграет: СССР радио")
-			print_log('info', "Радио включено: СССР радио")
-		@bot.command()
-		async def p18(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/radiorelax_ua-hi")
-			await ctx.send("Радио включено.\nИграет: Украинское радио релакс")
-			print_log('info', "Радио включено: Украинское радио релакс")
-		@bot.command()
-		async def pKISH(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/Korol_i_Shut-hi")
-			await ctx.send("Радио включено.\nИграет: Радио Король и Шут")
-			print_log('info', "Радио включено: Радио Король и Шут")
-		@bot.command()
-		async def pL(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/Grazhdanskaja_oborona-hi")
-			await ctx.send("Радио включено.\nИграет: Радио Гражданская оборона")
-			print_log('info', "Радио включено: Радио Гражданская оборона")
-		@bot.command()
-		async def p15(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/rpr1_de_clasro-hi")
-			await ctx.send("Радио включено.\nИграет: Классический рок")
-			print_log('info', "Радио включено: Классический рок")
-		@bot.command()
-		async def p17(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/rpr1_de_metal-hi")
-			await ctx.send("Радио включено.\nИграет: Хевиметал")
-			print_log('info', "Радио включено: Хевиметал")
-		@bot.command()
-		async def pRMS(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/Rammstein-hi")
-			await ctx.send("Радио включено.\nИграет: Раммштайн")
-			print_log('info', "Радио включено: Раммштайн")
-		@bot.command()
-		async def pRHCP(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/red_hot_chili_peppers-hi")
-			await ctx.send("Радио включено.\nИграет: Red Hot Chili Peppers радио")
-			print_log('info', "Радио включено: Red Hot Chili Peppers радио")
-		@bot.command()
-		async def p8(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/pulsradio_80s-hi")
-			await ctx.send("Радио включено.\nИграет: Радио 80х")
-			print_log('info', "Радио включено: Радио 80х")
-		@bot.command()
-		async def p6(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/dorozhnoe_omsk-hi")
-			await ctx.send("Радио включено.\nИграет: Дорожное радио (Омск)")
-			print_log('info', "Радио включено: Дорожное радио (Омск)")
-		@bot.command()
-		async def p3(ctx):
-			await rplay(ctx, "https://str.pcradio.ru/Hui_Zabey-hi")
-			await ctx.send("Радио включено. \nИграет: Х*й Забей радио")
-			print_log('info', "Радио включено: Х*й Забей радио")
 		@bot.command()
 		async def p2(ctx):
 			await rplay(ctx, "http://178.217.40.125:8000/rdsat")
 			await ctx.send("Радио включено. \nИграет: Радио дача")
-			print_log('info', "Радио включено: Играет: Радио дача")
 		@bot.command()
-		async def p21(ctx):
-			await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
-			await ctx.send("Радио включено. \nИграет: Аниме радио из Осаки.")
-			print_log('info', "Радио включено: Аниме радио из Осаки.")
+		async def p3(ctx):
+			await rplay(ctx, "http://live.novoeradio.by:8000/novoeradio-128k")
+			await ctx.send("Радио включено.\nИграет: Новое радио")
 		@bot.command()
-		async def p22(ctx):
+		async def p4(ctx):
+			await rplay(ctx, "http://listen.teploe.net:8100/npkfm")
+			await ctx.send("Радио включено.\nИграет: FM радио")
+		@bot.command()
+		async def p5(ctx):
+			await rplay(ctx, "https://str.pcradio.ru/dorozhnoe_omsk-hi")
+			await ctx.send("Радио включено.\nИграет: Дорожное радио (Омск)")
+		@bot.command()
+		async def p6(ctx):
 			await rplay(ctx, "http://jfm1.hostingradio.ru:14536/jlstream.mp3")
 			await ctx.send("Радио включено. \nИграет: Джаз.")
-			print_log('info', "Радио включено: Джаз.")
 		@bot.command()
-		async def p23(ctx):
-			await rplay(ctx, "https://usa9.fastcast4u.com/proxy/jamz?mp=/1")
-			await ctx.send("Радио включено. \nИграет: Lofi.")
-			print_log('info', "Радио включено: Lofi.")
-
-
+		async def p7(ctx):
+			await rplay(ctx, "http://prmstrm.1.fm:8000/70s")
+			await ctx.send("Радио включено.\nИграет: Поп радио 70х")
 		@bot.command()
-		async def p0(ctx, *, link: str):
-			txt = discord.utils.escape_mentions(link)
-			if link is not None:
-				await rplay(ctx, str(txt))
-				await ctx.send(f"Радио включено. \nИграет: {str(txt)}")
-				print_log('info', "Радио включено: Своя радиостанция (Вызвано {})".format(+ ctx.message.author.name))
-			else:
-				await ctx.send("Вставьте ссылку.")
+		async def p8(ctx):
+			await rplay(ctx, "https://str.pcradio.ru/pulsradio_80s-hi")
+			await ctx.send("Радио включено.\nИграет: Радио 80х")
+		@bot.command()
+		async def p9(ctx):
+			await rplay(ctx, "http://prmstrm.1.fm:8000/90s")
+			await ctx.send("Радио включено.\nИграет: Радио 90х")
+		@bot.command()
+		async def p10(ctx):
+			await rplay(ctx, "http://prmstrm.1.fm:8000/acountry")
+			await ctx.send("Радио включено.\nИграет: Хиты кантри")
+		@bot.command()
+		async def p11(ctx):
+			await rplay(ctx, "http://prmstrm.1.fm:8000/x")
+			await ctx.send("Радио включено.\nИграет: Хиты рока")
+		@bot.command()
+		async def p12(ctx):
+			await rplay(ctx, "http://jfm1.hostingradio.ru:14536/rock00.mp3")
+			await ctx.send("Радио включено.\nИграет: Рок FM")
+		@bot.command()
+		async def p13(ctx):
+			await rplay(ctx, "http://psyprog.rupsy.ru:8000/psyprog")
+			await ctx.send("Радио включено.\nИграет: Психоделик")
+		@bot.command()
+		async def p14(ctx):
+			await rplay(ctx, "https://str.pcradio.ru/SSSR-hi")
+			await ctx.send("Радио включено.\nИграет: СССР радио")
+		@bot.command()
+		async def p15(ctx):
+			await rplay(ctx, "https://str.pcradio.ru/rpr1_de_clasro-hi")
+			await ctx.send("Радио включено.\nИграет: Классический рок")
+		@bot.command()
+		async def p16(ctx):
+			await rplay(ctx, "https://str.pcradio.ru/retrofm_ru-hi")
+			await ctx.send("Радио включено.\nИграет: Ретро FM")
+		@bot.command()
+		async def p17(ctx):
+			await rplay(ctx, "https://str.pcradio.ru/rpr1_de_metal-hi")
+			await ctx.send("Радио включено.\nИграет: Хевиметал")
+		@bot.command()
+		async def p18(ctx):
+			await rplay(ctx, "https://str.pcradio.ru/radiorelax_ua-hi")
+			await ctx.send("Радио включено.\nИграет: Украинское радио релакс")
+		@bot.command()
+		async def p19(ctx):
+			await rplay(ctx, "https://str.pcradio.ru/rusradio_deti-hi")
+			await ctx.send("Радио включено.\nИграет: Детское радио")
+		
 
 		@bot.command()
 		async def off(ctx):
 			await ctx.voice_client.disconnect()
 			await ctx.send("Радио остановлено.")
-
-
 		plugins(bot, data)
+
+		
+		@bot.command()
+		async def premhelp(ctx):
+			embed1 = discord.Embed(title = "Премиум команды", description = '''
+++say *текст* — Сообщение в консоль ToxBot.
+			''')
+
+			embed2 = discord.Embed(title = "Премиум радиостанции", description = '''
+`phz` - Х*й забей радио
+`pchrst` - Христианское радио
+`panime` - радио аниме из Осаки
+`plofi` - lofi
+`prmsh` - Радио *RAMSHTEIN*
+`prhcp` - радио *Red Hot Chili Peppers*
+`pkish` - Радио *Король и Шут*
+`pl` - Радио *Гражданская оборона*
+`p0` *ссылка на поток* - Своё радио 
+Некоторые радиостанции могут временно неработать. ''')
+
+			embeds = [embed1, embed2]
+			message = await ctx.send(embed = embed1)
+			reactions = ["◀️", "▶️"]
+			page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = True, reactions = reactions, timeout = 33)
+			await page.start()
+
+
+		@bot.command()
+		async def say(ctx, *, text):
+			embed = discord.Embed(title = "ToxBot Premium", description = '''Ваше сообщение доставлено.''', colour = discord.Colour.from_rgb(230,0,0))
+			embed1 = discord.Embed(title = "ToxBot premium", description = prmmtext)
+			text = text
+			with open('premium.txt', 'r') as file:
+				premium = file.read().split('+')
+			if str(ctx.author.id) in premium:
+				print(text)
+				await ctx.send(embed = embed)
+			else:
+				await ctx.send(embed = embed1)			
+
+		@bot.command()
+		async def pchrst(ctx):
+			embed = discord.Embed(title = "ToxBot premium", description = prmmtext)
+			with open('premium.txt', 'r') as file:
+				premium = file.read().split('+')
+			if str(ctx.author.id) in premium:
+				await rplay(ctx, "https://str.pcradio.ru/radio123_by-hi")
+				await ctx.send("Радио включено.\nИграет: Христианское радио")
+			else:
+				await ctx.send(embed = embed)				
+		@bot.command()
+		async def pkish(ctx):
+			embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
+			with open('premium.txt', 'r') as file:
+				premium = file.read().split('+')
+			if str(ctx.author.id) in premium:
+				await rplay(ctx, "https://str.pcradio.ru/Korol_i_Shut-hi")
+				await ctx.send("Радио включено.\nИграет: Радио Король и Шут")
+			else:
+				await ctx.send(embed = embed)				
+		@bot.command()
+		async def pl(ctx):
+			embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
+			with open('premium.txt', 'r') as file:
+				premium = file.read().split('+')
+			if str(ctx.author.id) in premium:
+				await rplay(ctx, "https://str.pcradio.ru/Grazhdanskaja_oborona-hi")
+				await ctx.send("Радио включено.\nИграет: Радио Гражданская оборона")
+			else:
+				await ctx.send(embed = embed)				
+		@bot.command()
+		async def prmsh(ctx):
+			embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
+			with open('premium.txt', 'r') as file:
+				premium = file.read().split('+')
+			if str(ctx.author.id) in premium:
+				await rplay(ctx, "https://str.pcradio.ru/Rammstein-hi")
+				await ctx.send("Радио включено.\nИграет: Раммштайн")
+			else:
+				await ctx.send(embed = embed)				
+		@bot.command()
+		async def prhcp(ctx):
+			embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
+			with open('premium.txt', 'r') as file:
+				premium = file.read().split('+')
+			if str(ctx.author.id) in premium:
+				await rplay(ctx, "https://str.pcradio.ru/red_hot_chili_peppers-hi")
+				await ctx.send("Радио включено.\nИграет: Red Hot Chili Peppers радио")
+			else:
+				await ctx.send(embed = embed)				
+		@bot.command()
+		async def phz(ctx):
+			embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
+			with open('premium.txt', 'r') as file:
+				premium = file.read().split('+')
+			if str(ctx.author.id) in premium:
+				await rplay(ctx, "https://str.pcradio.ru/Hui_Zabey-hi")
+				await ctx.send("Радио включено. \nИграет: Х*й Забей радио")
+			else:
+				await ctx.send(embed = embed)				
+		@bot.command()
+		async def panime(ctx):
+			embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
+			with open('premium.txt', 'r') as file:
+				premium = file.read().split('+')
+			if str(ctx.author.id) in premium:
+				await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
+				await ctx.send("Радио включено. \nИграет: Аниме радио из Осаки.")
+			else:
+				await ctx.send(embed = embed)				
+		@bot.command()
+		async def plofi(ctx):
+			embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
+			with open('premium.txt', 'r') as file:
+				premium = file.read().split('+')
+			if str(ctx.author.id) in premium:
+				await rplay(ctx, "https://usa9.fastcast4u.com/proxy/jamz?mp=/1")
+				await ctx.send("Радио включено. \nИграет: Lofi.")
+			else:
+				await ctx.send(embed = embed)				
+		@bot.command()
+		async def p0(ctx, *, link: str):
+			embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
+			with open('premium.txt', 'r') as file:
+				premium = file.read().split('+')
+				txt = discord.utils.escape_mentions(link)
+			if str(ctx.author.id) in premium:
+				if link is not None:
+					await rplay(ctx, str(txt))
+					await ctx.send(f"Радио включено. \nИграет: {str(txt)}")
+				else:
+					await ctx.send("Вставьте ссылку.")
+			else:
+				await ctx.send(embed = embed)	
+		
 	else:
 		print_log('info', 'Сегодня я проснулся от взрывов...')
 		@bot.event
