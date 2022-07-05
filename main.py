@@ -273,9 +273,9 @@ Weriase - 50 рублей
 			try:
 				target1 = await bot.fetch_user(int(target[0]))
 				target.remove(target[0])
-				await ctx.send(f"{author.display_name} выебал(а) {target1.display_name} " + ' '.join(target) + ".") 
+				await ctx.send(f"{author.display_name} выебал(а) {target1.display_name}" + ' '.join(target) + ".") 
 			except:
-				await ctx.send(f"{author.display_name} выебал(а) {target1}.")
+				await ctx.send(f"{author.display_name} выебал(а) " + ' '.join(target) + '.')
 		@bot.command()
 		async def kill(ctx, *, target):
 			author = ctx.message.author
