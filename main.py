@@ -273,7 +273,10 @@ Weriase - 50 рублей
 			try:
 				target1 = await bot.fetch_user(int(target[0]))
 				target.remove(target[0])
-				await ctx.send(f"{author.display_name} выебал(а) {target1.display_name}" + ' '.join(target) + ".") 
+				if len(target) > 0:
+					await ctx.send(f"{author.display_name} выебал(а) {target1.display_name} " + ' '.join(target) + ".")
+				else:
+					 await ctx.send(f"{author.display_name} выебал(а) {target1.display_name}.")
 			except:
 				await ctx.send(f"{author.display_name} выебал(а) " + ' '.join(target) + '.')
 		@bot.command()
@@ -284,7 +287,10 @@ Weriase - 50 рублей
 			try:
 				target1 = await bot.fetch_user(int(target[0]))
 				target.remove(target[0])
-				await ctx.send(f"{author.display_name} убил(а) {target1.display_name} " + ' '.join(target) + ".")
+				if len(target) > 0:
+					await ctx.send(f"{author.display_name} убил(а) {target1.display_name} " + ' '.join(target) + ".")
+				else:
+					await ctx.send(f"{author.display_name} убил(а) {target1.display_name}.")
 			except:
 				await ctx.send(f"{author.display_name} убил(а) {target1}.")
 		@bot.command()
@@ -295,7 +301,10 @@ Weriase - 50 рублей
 			try:
 				target1 = await bot.fetch_user(int(target[0]))
 				target.remove(target[0])
-				await ctx.send(f"{author.display_name} съел(а) {target1.display_name} " + ' '.join(target) + ".")
+				if len(target) > 0:
+					await ctx.send(f"{author.display_name} съел(а) {target1.display_name} " + ' '.join(target) + ".")
+				else:
+					await ctx.send(f"{author.display_name} съел(а) {target1.display_name}.")
 			except:
 				await ctx.send(f"{author.display_name} съел(а) {target1}.")
 		@bot.command()
@@ -306,7 +315,10 @@ Weriase - 50 рублей
 			try:
 				target1 = await bot.fetch_user(int(target[0]))
 				target.remove(target[0])
-				await ctx.send(f"{author.display_name} свернул(а) шею {target1.display_name} " + ' '.join(target) + ".")
+				if len(target) > 0:
+					await ctx.send(f"{author.display_name} свернул(а) шею {target1.display_name} " + ' '.join(target) + ".")
+				else:
+					await ctx.send(f"{author.display_name} свернул(а) шею {target1.display_name}.")
 			except:
 				await ctx.send(f"{author.display_name} свернул(а) шею {target1}.")
 		@bot.command()
@@ -317,7 +329,10 @@ Weriase - 50 рублей
 			try:
 				target1 = await bot.fetch_user(int(target[0]))
 				target.remove(target[0])
-				await ctx.send(f"{author.display_name} дал(а) {target1.display_name} " + ' '.join(target) + ".")
+				if len(targer) > 0:
+					await ctx.send(f"{author.display_name} дал(а) {target1.display_name} " + ' '.join(target) + ".")
+				else:
+					await ctx.send(f"{author.display_name} дал(а) {target1.display_name}.")
 			except:
 				await ctx.send(f"{author.display_name} дал(а) {target1}.")
 
