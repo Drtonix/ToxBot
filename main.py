@@ -43,9 +43,8 @@ try:
 					"id"	INT,
 					"money"	INT)''')
 				cursor.execute('''CREATE TABLE IF NOT EXISTS admininfo (
-					"id"	INT
-					"welcomeid"		INT
-					)''')
+					"id"	INT,
+					"welcomeid"	INT)''')
 				print_log("info", "База данных загружена.")
 			except Exception as e:
 				print_log('err', "Ошибка базы данных: " + str(e))
