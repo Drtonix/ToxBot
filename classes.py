@@ -20,4 +20,20 @@ class UserTableCreate:
 		else:
 			pass
 		conn.commit()
+class ServerTableCreate:
+	def create(self, ctx):
+		cursor.execute("SELECT id FROM admininfo WHERE id=?", (ctx.guild.id,))
+		if cursor.fetchone() == None:
+			cursor.execute('INSERT INTO admininfo VALUES (?, ?)', (ctx.guild.id, 0))
+		else:
+			pass
+		conn.commit()
+	def creeate(self, member):
+		cursor.execute("SELECT id FROM admininfo WHERE id=?", (member.guild.id,))
+		if cursor.fetchone() == None:
+			cursor.execute('INSERT INTO admininfo VALUES (?, ?)', (member.guild.id, 0))
+		else:
+			pass
+		conn.commit()
+SeTaCr = ServerTableCreate()
 UsTaCr = UserTableCreate()

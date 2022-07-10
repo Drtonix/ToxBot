@@ -9,7 +9,7 @@ from Cybernator import Paginator as Pag
 from discord.ext import commands
 from discord.ext.commands import Bot
 from discord_components import DiscordComponents
-from classes import UsTaCr
+from classes import UsTaCr, SeTaCr
 from core.toxbot_core import *
 
 # Переменные
@@ -42,6 +42,10 @@ try:
 				cursor.execute('''CREATE TABLE IF NOT EXISTS economy (
 					"id"	INT,
 					"money"	INT)''')
+				cursor.execute('''CREATE TABLE IF NOT EXISTS admininfo (
+					"id"	INT
+					"welcomeid"		INT
+					)''')
 				print_log("info", "База данных загружена.")
 			except Exception as e:
 				print_log('err', "Ошибка базы данных: " + str(e))
@@ -70,10 +74,29 @@ if init_successful:
 		# Команды
 		@bot.event
 		async def on_member_join(member):
-			await member.send('Добро пожаловать на сервер БДБ!\nСписок команд: ++help\nВы так же можете поддержать разработку бота: ++info')
-			for ch in bot.get_guild(member.guild.id).channels:
-				if ch.name == "💬┃био-отходняк-чат":
-					await bot.get_channel(ch.id).send(f'Поздоровайтесь с новым участником Сервера, {member.display_name}!')
+			SeTaCr.creeate(member)
+			await member.send(f'Добро пожаловать на сервер {member.guild.name}\nСписок команд: ++help\nВы так же можете поддержать разработку бота: ++info')
+			try:
+				for row in cursor.execute(f"SELECT welcomeid FROM admininfo WHERE id ={member.guild.id}"):
+					if row[0] != 0:
+						for ch in bot.get_guild(member.guild.id).channels:
+							if ch.id == row[0]:
+								await bot.get_channel(ch.id).send(f'Поздоровайтесь с новым участником Сервера, {member.display_name}!')
+			except:
+				print("произошла ошибка при попытке найти канал.")
+		
+		@commands.has_permissions(administrator=True)
+		@bot.command()
+		async def welcomechannel(ctx, id: int = None):
+			SeTaCr.create(ctx)
+			if id != None:
+				for row in cursor.execute(f"SELECT * FROM admininfo WHERE id = {ctx.guild.id}"):
+					rowd = id
+					await ctx.send("успешно установлено. Убедитесь что вы все указали правильно иначе приветствие не будет работать")
+					cursor.execute(f"UPDATE admininfo SET welcomeid = {rowd} WHERE id = {ctx.guild.id}")
+					conn.commit()
+			else:
+				await ctx.send("пожалуйста, укажите ИД канала через функцию для разработчиков.")
 		@bot.event
 		async def on_member_remove(member):
 			for ch in bot.get_guild(member.guild.id).channels:
@@ -576,8 +599,8 @@ Weriase - 50 рублей
 			await ctx.send(random.choice(strings))
 
 
-		@bot.command(aliases = ["balance", "баланс", "деньги"])
-		async def ballance(ctx, member: discord.Member = None):
+		@bot.command(aliases = ["Balance", "баланс", "деньги"])
+		async def balance(ctx, member: discord.Member = None):
 			if member is None:
 				UsTaCr.author(ctx)
 				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
