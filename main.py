@@ -41,10 +41,16 @@ try:
 				cursor = conn.cursor()
 				cursor.execute('''CREATE TABLE IF NOT EXISTS economy (
 					"id"	INT,
-					"money"	INT)''')
+					"money"	INT,
+					"guild_id"	INT)''')
 				cursor.execute('''CREATE TABLE IF NOT EXISTS admininfo (
 					"id"	INT,
 					"welcomeid"	INT)''')
+				cursor.execute('''CREATE TABLE IF NOT EXISTS levels (
+					"id"	INT,
+					"level"	INT,
+					"exp"	INT,
+					"guild_id"	INT)''')
 				print_log("info", "База данных загружена.")
 			except Exception as e:
 				print_log('err', "Ошибка базы данных: " + str(e))
@@ -617,12 +623,12 @@ Weriase - 50 рублей
 		async def balance(ctx, member: discord.Member = None):
 			if member is None:
 				UsTaCr.author(ctx)
-				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
+				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}'):
 					embed = discord.Embed(title = "ToxCoins", description = f"Баланс {ctx.author.display_name} - {row[0]} ТоксКоинов.", colour = discord.Colour.from_rgb(230,0,0))
 					await ctx.send(embed=embed)
 			else:
 				UsTaCr.member(ctx, member)
-				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id = {member.id}'):
+				for row in cursor.execute(f'SELECT "money" FROM economy WHERE id = {member.id} AND guild_id = {ctx.guild.id}'):
 					embed = discord.Embed(title = "ToxCoins", description = f"Баланс {member.display_name} - {row[0]} ТоксКоинов.", colour = discord.Colour.from_rgb(230,0,0))
 					await ctx.send(embed=embed)
 
@@ -639,23 +645,74 @@ Weriase - 50 рублей
 					await ctx.send("Нельзя передать 0 ТоксКоинов или меньше!")
 				else:
 					ebal = 0
-					for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
+					for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}'):
 						ebal = int(row[0])
 					if ebal >= Value:
-						for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id}'):
+						for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}'):
 							orow1 = int(row[0])
 							row1 = int(row[0]) - Value
-						curosr.execute(f'UPDATE economy SET money = {row1} WHERE id={ctx.author.id}')
-						for row in cursor.execute(f'SELECT money FROM economy WHERE id={member.id}'):
+						curosr.execute(f'UPDATE economy SET money = {row1} WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}')
+						for row in cursor.execute(f'SELECT money FROM economy WHERE id={member.id} AND guild_id={ctx.guild.id}'):
 							orow2 = int(row[0])
 							row2 = int(row[0]) + Value
-						curosr.execute(f'UPDATE economy SET money = {row2} WHERE id={member.id}')
+						cursor.execute(f'UPDATE economy SET money = {row2} WHERE id={member.id} AND guild_id={ctx.guild.id}')
 						embed = discord.Embed(title="ToxCoins", description=f"Пользователь {ctx.author.display_name} дал {Value} ТоксКоинов {member.display_name}.\nНовый баланс {member.display_name} - {row2} ТоксКоинов.")
 					else:
 						await ctx.send("Недостаточно денег!")
 
 		FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
 
+		@commands.has_permissions(administrator=True)
+		@bot.command(aliases = ["bcontrol", "выдать", "балансконтроль"])
+		async def add(ctx, member: discord.Member = None, Value: int = None):
+			if member is None:
+				await ctx.send("Укажите цель!")
+			else:
+				UsTaCr.author(ctx)
+				UsTaCr.member(ctx, member)
+				if Value is None:
+					await ctx.send("Укажите количество ТоксКоинов!")
+				elif Value <= 0:
+					await ctx.send("Нельзя передать 0 ТоксКоинов или меньше!")
+				else:
+					ebal = 0
+					for row in cursor.execute(f'SELECT money FROM economy WHERE id={member.id} AND guild_id={ctx.guild.id}'):
+							orow2 = int(row[0])
+							row2 = int(row[0]) + Value
+					cursor.execute(f'UPDATE economy SET money = {row2} WHERE id={member.id} AND guild_id={ctx.guild.id}')
+					embed = discord.Embed(title="ToxCoins", description=f"админ {ctx.author.display_name} выдал {Value} ТоксКоинов {member.display_name}.\nНовый баланс {member.display_name} - {row2} ТоксКоинов.")
+
+		@bot.event
+		async def on_message(message):
+			if message.author.bot:
+				return
+			if message.content.startswith("$") or message.content.startswith("!") or message.content.startswith(".") or message.content.startswith("++"):
+				return
+			else:
+				UsTaCr.expa(message)
+				mlength = len(message.content)
+				if mlength > 4:
+					for row in cursor.execute(f'SELECT "exp" FROM levels WHERE id={message.author.id} AND guild_id={message.guild.id}'):
+						if mlength > 64:
+							orow1 = int(row[0])
+							row1 = int(row[0]) + random.randint(1, 64)
+						else:
+							orow1 = int(row[0])
+							row1 = int(row[0]) + random.randint(1, mlength)
+					cursor.execute(f'UPDATE levels SET exp = {row1} WHERE id={message.author.id} AND guild_id={message.guild.id}')
+				limit = 8
+				for row in cursor.execute(f'SELECT "level" FROM levels WHERE id={message.author.id} AND guild_id={message.guild.id}'):
+					for level in range(row[0]):
+						limit = limit * 3
+				for row in cursor.execute(f'SELECT "exp" FROM levels WHERE id={message.author.id} AND guild_id={message.guild.id}'):
+					if row[0] >= limit:
+						for row in cursor.execute(f'SELECT "level" FROM levels WHERE id={message.author.id} AND guild_id={message.guild.id}'):
+							orow2 = int(row[0])
+							row2 = int(row[0]) + 1
+						cursor.execute(f'UPDATE levels SET level = {row2} WHERE id={message.author.id} AND guild_id={message.guild.id}')
+						await message.author.send(f"Вы получили новый уровень! Ваш уровень {row2}!")
+						return
+			await bot.process_commands(message)
 		@bot.command()
 		async def rlist(ctx):
 			embed1 = discord.Embed(title = "Список радиостанций (1)", description = '''
