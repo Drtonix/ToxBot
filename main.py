@@ -687,6 +687,7 @@ Weriase - 50 рублей
 			if message.author.bot:
 				return
 			if message.content.startswith("$") or message.content.startswith("!") or message.content.startswith(".") or message.content.startswith("++"):
+				await bot.process_commands(message)
 				return
 			else:
 				UsTaCr.expa(message)
@@ -711,8 +712,9 @@ Weriase - 50 рублей
 							row2 = int(row[0]) + 1
 						cursor.execute(f'UPDATE levels SET level = {row2} WHERE id={message.author.id} AND guild_id={message.guild.id}')
 						await message.author.send(f"Вы получили новый уровень! Ваш уровень {row2}!")
-						return
 			await bot.process_commands(message)
+
+		
 		@bot.command()
 		async def rlist(ctx):
 			embed1 = discord.Embed(title = "Список радиостанций (1)", description = '''
