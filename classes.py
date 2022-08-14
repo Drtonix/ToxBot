@@ -9,7 +9,8 @@ class UserTableCreate:
 	def member(self, ctx, member):
 		cursor.execute("SELECT id FROM economy WHERE id=? AND guild_id=?", (member.id, ctx.guild.id))
 		if cursor.fetchone() == None:
-		 	cursor.execute('INSERT INTO economy VALUES (?, ?, ?)', (member.id, 100, ctx.guild.id))
+			cursor.execute('INSERT INTO economy VALUES (?, ?, ?)', (member.id, 100, ctx.guild.id))
+			return
 		else:
 			pass
 		conn.commit()
@@ -17,13 +18,22 @@ class UserTableCreate:
 		cursor.execute("SELECT id FROM economy WHERE id=? AND guild_id=?", (ctx.author.id, ctx.guild.id))
 		if cursor.fetchone() == None:
 			cursor.execute('INSERT INTO economy VALUES (?, ?, ?)', (ctx.author.id, 100, ctx.guild.id))
+			return
 		else:
 			pass
 		conn.commit()
+	def message(self, message):
+		cursor.execute("SELECT id FROM economy WHERE id=? AND guild_id=?", (message.author.id, message.guild.id))
+		if cursor.fetchone() == None:
+			cursor.execute('INSERT INTO economy VALUES (?, ?, ?)', (message.author.id, 100, message.guild.id))
+			return
+		else:
+			pass
 	def expm(self, ctx, member):
 		cursor.execute("SELECT exp FROM levels WHERE id=? AND guild_id=?", (member.id, ctx.guild.id))
 		if cursor.fetchone() == None:
 			cursor.execute('INSERT INTO levels VALUES (?, ?, ?, ?)', (member.id, 0, 0, ctx.guild.id))
+			return
 		else:
 			pass
 		conn.commit()
@@ -31,6 +41,7 @@ class UserTableCreate:
 		cursor.execute("SELECT exp FROM levels WHERE id=? AND guild_id=?", (message.author.id, message.guild.id))
 		if cursor.fetchone() == None:
 			cursor.execute('INSERT INTO levels VALUES (?, ?, ?, ?)', (message.author.id, 0, 0, message.guild.id))
+			return
 		else:
 			pass
 		conn.commit()

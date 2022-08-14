@@ -11,6 +11,7 @@ from discord.ext.commands import Bot
 from discord_components import DiscordComponents
 from classes import UsTaCr, SeTaCr
 from core.toxbot_core import *
+from PIL import Image, ImageDraw, ImageFont
 
 # Переменные
 
@@ -139,7 +140,18 @@ if init_successful:
 			all_members = online+idle+offline+dnd
 			embed = discord.Embed(title="ToxBot", description=f'''\nОнлайн: {online}.\nОффлайн: {offline}.\nНеактивны: {idle}.\nНе беспокоить: {dnd}.\nВсего участников: {all_members}.''', colour = discord.Colour.from_rgb(230,0,0))
 			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-			msg = await ctx.send(embed=embed)
+			#use PIL to create leaderboard image and add it to the embed
+			i = 0
+			img = Image.new('RGB', (400, 400), color = (0, 0, 0))
+			draw = ImageDraw.Draw(img)
+			font = ImageFont.truetype("./core/Arial.ttf", 20)
+			draw.text((10, 10), f"Лидеры по опыту:", fill=(255, 255, 255), font=font)
+			for row in cursor.execute(f"SELECT id, level FROM levels WHERE guild_id = {ctx.guild.id} ORDER BY exp DESC LIMIT 3"):
+				user = await bot.fetch_user(row[0])
+				draw.text((10, i*40), f"{user.display_name} - {row[1]}", (255, 255, 255), font=font)
+				i += 1
+			img.save("./core/leaderboard.png")
+			msg = await ctx.send(embed=embed, file=discord.File("./core/leaderboard.png"))
 
 		# help, info
 		@bot.command()
@@ -657,6 +669,7 @@ Weriase - 50 рублей
 							row2 = int(row[0]) + Value
 						cursor.execute(f'UPDATE economy SET money = {row2} WHERE id={member.id} AND guild_id={ctx.guild.id}')
 						embed = discord.Embed(title="ToxCoins", description=f"Пользователь {ctx.author.display_name} дал {Value} ТоксКоинов {member.display_name}.\nНовый баланс {member.display_name} - {row2} ТоксКоинов.")
+						conn.commit()
 					else:
 						await ctx.send("Недостаточно денег!")
 
@@ -681,6 +694,7 @@ Weriase - 50 рублей
 							row2 = int(row[0]) + Value
 					cursor.execute(f'UPDATE economy SET money = {row2} WHERE id={member.id} AND guild_id={ctx.guild.id}')
 					embed = discord.Embed(title="ToxCoins", description=f"админ {ctx.author.display_name} выдал {Value} ТоксКоинов {member.display_name}.\nНовый баланс {member.display_name} - {row2} ТоксКоинов.")
+					conn.commit()
 
 		@bot.event
 		async def on_message(message):
@@ -693,6 +707,7 @@ Weriase - 50 рублей
 				UsTaCr.expa(message)
 				mlength = len(message.content)
 				if mlength > 4:
+					row1 = 0
 					for row in cursor.execute(f'SELECT "exp" FROM levels WHERE id={message.author.id} AND guild_id={message.guild.id}'):
 						if mlength > 64:
 							orow1 = int(row[0])
@@ -702,17 +717,40 @@ Weriase - 50 рублей
 							row1 = int(row[0]) + random.randint(1, mlength)
 					cursor.execute(f'UPDATE levels SET exp = {row1} WHERE id={message.author.id} AND guild_id={message.guild.id}')
 				limit = 8
+				multiply = 3
 				for row in cursor.execute(f'SELECT "level" FROM levels WHERE id={message.author.id} AND guild_id={message.guild.id}'):
 					for level in range(row[0]):
-						limit = limit * 3
+						multiply += 3
+					for level in range(row[0]):
+						limit = limit * multiply
 				for row in cursor.execute(f'SELECT "exp" FROM levels WHERE id={message.author.id} AND guild_id={message.guild.id}'):
 					if row[0] >= limit:
+						row2 = 0
 						for row in cursor.execute(f'SELECT "level" FROM levels WHERE id={message.author.id} AND guild_id={message.guild.id}'):
 							orow2 = int(row[0])
 							row2 = int(row[0]) + 1
 						cursor.execute(f'UPDATE levels SET level = {row2} WHERE id={message.author.id} AND guild_id={message.guild.id}')
-						await message.author.send(f"Вы получили новый уровень! Ваш уровень {row2}!")
+						await message.author.send(embed = discord.Embed(title="Вы повысили уровень!", description=f"Вы получили новый уровень! Ваш уровень  теперь {row2}!"))
+						conn.commit()
+						UsTaCr.message(message)
+						row3 = 0
+						for row in cursor.execute(f'SELECT "money" FROM economy WHERE id={message.author.id} AND guild_id={message.guild.id}'):
+							orow3 = int(row[0])
+							row3 = int(row[0]) + 20
+						cursor.execute(f'UPDATE economy SET money = {row3} WHERE id={message.author.id} AND guild_id={message.guild.id}')
+						conn.commit()
 			await bot.process_commands(message)
+	
+		@bot.command(aliases = ["уровень", "level"])
+		async def lvl(ctx, member: discord.Member = None):
+			if member is None:
+				for row in cursor.execute(f'SELECT "level" FROM levels WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}'):
+					await ctx.send(embed = discord.Embed(title=f"Уровень {ctx.author.display_name}", description=f"Ваш Уровень - {row[0]}"))
+					return
+			else:
+				for row in cursor.execute(f'SELECT "level" FROM levels WHERE id={member.id} AND guild_id={ctx.guild.id}'):
+					await ctx.send(embed = discord.Embed(title=f"Уровень {member.display_name}", description=f"Уровень {member.display_name} составляет {row[0]} уровня/уровней"))
+					return
 
 		
 		@bot.command()

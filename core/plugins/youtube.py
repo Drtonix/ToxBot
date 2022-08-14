@@ -139,6 +139,7 @@ def yt(bot, data):
         async def stop_playing(self, ctx):
             try:
                 # Проверяем играет ли вообще бот, если да - отключаем
+                voice_channel = ctx.author.voice.channel
                 if self.voice_client.is_connected and self.is_playing:
                     await self.voice_client.disconnect()  # Отключаем бота
                     self.is_playing = False  # Снимаем флаг
@@ -146,6 +147,9 @@ def yt(bot, data):
                     self.q = []  # Отчищаем массив очереди
                     await send_embed(ctx, 'Воспроизведение остановлено',
                                      f'Прервал: {ctx.message.author.name}',
+                                     'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
+                if ctx.author.voice_channel == None:
+                    await send_embed(ctx, 'Вы не находитесь в голосовом канале',
                                      'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
             except Exception as e:
                 print_log('err', f'Ошибка: Не удалось прервать воспроизведение. ({str(e)})')
