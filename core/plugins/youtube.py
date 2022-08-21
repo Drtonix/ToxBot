@@ -196,7 +196,7 @@ def yt(bot, data):
 
     ytx = yt_main(bot)
 
-    @bot.command(pass_context=True)
+    @bot.command(pass_context=True, aliases = ["play", "youtube", "включить", "п", "плей"])
     async def p(ctx, *, track=None):
         if track is not None:
             try:
@@ -214,11 +214,11 @@ def yt(bot, data):
                             Вы не ввели название трека или ссылку''',
                              'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
 
-    @bot.command(pass_context=True)
+    @bot.command(pass_context=True, aliases = ["скип", "след", "next", "следующий"])
     async def skip(ctx):
         await ytx.next_track(ctx)
 
-    @bot.command(pass_context=True)
+    @bot.command(pass_context=True, aliases = ["повтор"])
     async def loop(ctx, type='off'):
         if type == 'off':
             ytx.loop = None
@@ -242,7 +242,7 @@ def yt(bot, data):
                             'Когда он тебе надоест - можешь отключить или сменить режим.',
                             'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
 
-    @bot.command(pass_context=True)
+    @bot.command(pass_context=True, aliases = ["стоп", "ютубстоп"])
     async def stop(ctx):
         if ytx.voice_client and ytx.voice_client.is_playing():
             await ytx.stop_playing(ctx)
