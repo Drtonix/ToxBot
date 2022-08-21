@@ -812,16 +812,16 @@ Weriase - 50 рублей
 					print_log('warn', str(e))
 			await bot.process_commands(message)
 	
-#		@bot.command(aliases = ["уровень", "level"])
-#		async def lvl(ctx, member: discord.Member = None):
-#			if member is None:
-#				for row in cursor.execute(f'SELECT "level" FROM levels WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}'):
-#					await ctx.send(embed = discord.Embed(title=f"Уровень {ctx.author.display_name}", description=f"Ваш Уровень - {row[0]}"))
-#					return
-#			else:
-#				for row in cursor.execute(f'SELECT "level" FROM levels WHERE id={member.id} AND guild_id={ctx.guild.id}'):
-#					await ctx.send(embed = discord.Embed(title=f"Уровень {member.display_name}", description=f"Уровень {member.display_name} составляет {row[0]} уровня/уровней"))
-#					return
+		@bot.command(aliases = ["уровень", "level"])
+		async def lvl(ctx, member: discord.Member = None):
+			if member is None:
+				for row in cursor.execute(f'SELECT "level" FROM levels WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}'):
+					await ctx.send(embed = discord.Embed(title=f"Уровень {ctx.author.display_name}", description=f"Ваш Уровень - {row[0]}"))
+					return
+			else:
+				for row in cursor.execute(f'SELECT "level" FROM levels WHERE id={member.id} AND guild_id={ctx.guild.id}'):
+					await ctx.send(embed = discord.Embed(title=f"Уровень {member.display_name}", description=f"Уровень {member.display_name} составляет {row[0]} уровня/уровней"))
+					return
 
 		
 		@bot.command(aliases = ["радиолист", "рлист", "radiolist"])
