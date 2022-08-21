@@ -55,7 +55,7 @@ class UserTableCreate:
 			pass
 		conn.commit()
 
-	def switch(self, message):
+	def switchc(self, ctx):
 		cursor.execute("SELECT id FROM switches WHERE id=? AND guild_id=?", (ctx.author.id, ctx.guild.id))
 		if cursor.fetchone() == None:
 			cursor.execute('INSERT INTO switches VALUES (?, ?, ?)', (ctx.author.id, 0, ctx.guild.id))
