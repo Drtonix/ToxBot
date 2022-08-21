@@ -111,7 +111,7 @@ def img_tricks(bot):
     async def img_check(ctx):
         await img_edit.check(ctx)
 
-    @bot.command()
+    @bot.command(aliases = ["demotivator", "демотиватор", "дем"])
     async def dem(ctx, url=None, text1=None, text2=None):
         if url is None or text1 is None or text2 is None:
             await send_embed(ctx,
@@ -125,7 +125,7 @@ def img_tricks(bot):
             await img_edit.dem_create(ctx, url, text1, text2)
 
     # noinspection PyUnboundLocalVariable
-    @bot.command(pass_context=True)
+    @bot.command(pass_context=True, aliases = ["цитата", "запомните"])
     async def quote(ctx, nick: discord.Member = None, *, text=None):
         if nick is not None and text is not None:
             await img_edit.quote_create(ctx, nick, text)
@@ -141,7 +141,7 @@ def img_tricks(bot):
                              f'ToxBot v{num_ver}',
                              default_thumbnail)
 
-    @bot.command(pass_context=True)
+    @bot.command(pass_context=True, aliases = ["шакал", "шакализатор"])
     async def shakal(ctx, url=None, quality=7):
         if url is None:
             await send_embed(ctx,
