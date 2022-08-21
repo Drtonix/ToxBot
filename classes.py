@@ -45,6 +45,37 @@ class UserTableCreate:
 		else:
 			pass
 		conn.commit()
+	
+	def switch(self, message):
+		cursor.execute("SELECT id FROM switches WHERE id=? AND guild_id=?", (message.author.id, message.guild.id))
+		if cursor.fetchone() == None:
+			cursor.execute('INSERT INTO switches VALUES (?, ?, ?)', (message.author.id, 0, message.guild.id))
+			return
+		else:
+			pass
+		conn.commit()
+
+	def switch(self, message):
+		cursor.execute("SELECT id FROM switches WHERE id=? AND guild_id=?", (ctx.author.id, ctx.guild.id))
+		if cursor.fetchone() == None:
+			cursor.execute('INSERT INTO switches VALUES (?, ?, ?)', (ctx.author.id, 0, ctx.guild.id))
+			return
+		else:
+			pass
+
+	def expam(self, message):
+		cursor.execute("SELECT exp FROM levels WHERE id=? AND guild_id=?", (message.author.id, message.guild.id))
+		if cursor.fetchone() == None:
+			cursor.execute('INSERT INTO levels VALUES (?, ?, ?, ?)', (message.author.id, 0, 0, message.guild.id))
+		else:
+			pass
+		conn.commit()
+		cursor.execute("SELECT id FROM economy WHERE id=? AND guild_id=?", (message.author.id, message.guild.id))
+		if cursor.fetchone() == None:
+			cursor.execute('INSERT INTO economy VALUES (?, ?, ?)', (message.author.id, 100, message.guild.id))
+		else:
+			pass
+		conn.commit()
 class ServerTableCreate:
 	def create(self, ctx):
 		cursor.execute("SELECT id FROM admininfo WHERE id=?", (ctx.guild.id,))

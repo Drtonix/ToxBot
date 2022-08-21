@@ -50,6 +50,10 @@ try:
 					"level"	INT,
 					"exp"	INT,
 					"guild_id"	INT)''')
+				cursor.execute('''CREATE TABLE IF NOT EXISTS switches (
+					"id"	INT,
+					"msgs"	INT,		
+					"guild_id"	INT)''') #0 - сообщения в лс, 1 - сообщение в чат, 2 - отключенные сообщения
 				print_log("info", "База данных загружена.")
 			except Exception as e:
 				print_log('err', "Ошибка базы данных: " + str(e))
@@ -310,9 +314,15 @@ Weriase - 50 рублей
 			author = ctx.message.author
 			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
 			target = target.split(' ')
+			for x in range(len(target)):
+				try:
+					target1 = await ctx.guild.fetch_member(int(target[x]))
+				except:
+					target1 = " ".join(target)
+				else:
+					target.remove(target[x])
+					break
 			try:
-				target1 = await bot.fetch_user(int(target[0]))
-				target.remove(target[0])
 				if len(target) > 0:
 					await ctx.send(f"{author.display_name} изнасиловал(а) {target1.display_name} " + ' '.join(target) + ".")
 				else:
@@ -324,9 +334,15 @@ Weriase - 50 рублей
 			author = ctx.message.author
 			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
 			target = target.split(' ')
+			for x in range(len(target)):
+				try:
+					target1 = await ctx.guild.fetch_member(int(target[x]))
+				except:
+					target1 = " ".join(target)
+				else:
+					target.remove(target[x])
+					break
 			try:
-				target1 = await bot.fetch_user(int(target[0]))
-				target.remove(target[0])
 				if len(target) > 0:
 					await ctx.send(f"{author.display_name} убил(а) {target1.display_name} " + ' '.join(target) + ".")
 				else:
@@ -338,9 +354,15 @@ Weriase - 50 рублей
 			author = ctx.message.author
 			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
 			target = target.split(' ')
+			for x in range(len(target)):
+				try:
+					target1 = await ctx.guild.fetch_member(int(target[x]))
+				except:
+					target1 = " ".join(target)
+				else:
+					target.remove(target[x])
+					break
 			try:
-				target1 = await bot.fetch_user(int(target[0]))
-				target.remove(target[0])
 				if len(target) > 0:
 					await ctx.send(f"{author.display_name} съел(а) {target1.display_name} " + ' '.join(target) + ".")
 				else:
@@ -352,9 +374,15 @@ Weriase - 50 рублей
 			author = ctx.message.author
 			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
 			target = target.split(' ')
+			for x in range(len(target)):
+				try:
+					target1 = await ctx.guild.fetch_member(int(target[x]))
+				except:
+					target1 = " ".join(target)
+				else:
+					target.remove(target[x])
+					break
 			try:
-				target1 = await bot.fetch_user(int(target[0]))
-				target.remove(target[0])
 				if len(target) > 0:
 					await ctx.send(f"{author.display_name} выпил(а) {target1.display_name} " + ' '.join(target) + ".")
 				else:
@@ -366,9 +394,15 @@ Weriase - 50 рублей
 			author = ctx.message.author
 			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
 			target = target.split(' ')
+			for x in range(len(target)):
+				try:
+					target1 = await ctx.guild.fetch_member(int(target[x]))
+				except:
+					target1 = " ".join(target)
+				else:
+					target.remove(target[x])
+					break
 			try:
-				target1 = await bot.fetch_user(int(target[0]))
-				target.remove(target[0])
 				if len(target) > 0:
 					await ctx.send(f"{author.display_name} свернул(а) шею {target1.display_name} " + ' '.join(target) + ".")
 				else:
@@ -380,10 +414,16 @@ Weriase - 50 рублей
 			author = ctx.message.author
 			target = target.replace('<', '').replace('>', '').replace('@', '').replace('&', '')
 			target = target.split(' ')
+			for x in range(len(target)):
+				try:
+					target1 = await ctx.guild.fetch_member(int(target[x]))
+				except:
+					target1 = " ".join(target)
+				else:
+					target.remove(target[x])
+					break
 			try:
-				target1 = await bot.fetch_user(int(target[0]))
-				target.remove(target[0])
-				if len(targer) > 0:
+				if len(target) > 0:
 					await ctx.send(f"{author.display_name} дал(а) {target1.display_name} " + ' '.join(target) + ".")
 				else:
 					await ctx.send(f"{author.display_name} дал(а) {target1.display_name}.")
@@ -501,7 +541,7 @@ Weriase - 50 рублей
 
 		@bot.command(aliases = ["помощьосновное"])
 		async def helpОсновное(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`help` —  Меню команд.\n`info` — Инфо о донатерах и разработчиках.\n`ver` - Версия бота на текущий момент.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`help` —  Меню команд.\n`info` — Инфо о донатерах и разработчиках.\n`ver` — Версия бота на текущий момент.')
 			msg = await ctx.send(embed = embed)
 		@bot.command(aliases = ["помощьвоспроизведение"])
 		async def helpВоспроизведение(ctx):
@@ -509,11 +549,11 @@ Weriase - 50 рублей
 			msg = await ctx.send(embed = embed)
 		@bot.command(aliases = ["помощьизображения"])
 		async def helpИзображения(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`dem` *ссылка на пикчу* *Текст 1* *Текст 2* — Демотиватор.\n`shakal` *ссылка на пикчу* *качество (0-100)* — Зашакаливание.\n`quote` *@Пинг пользователя* *текст цитаты* - Создание цитаты, так же работает если написать команду в ответ на сообщение.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`dem` *ссылка на пикчу* *Текст 1* *Текст 2* — Демотиватор.\n`shakal` *ссылка на пикчу* *качество (0-100)* — Зашакаливание.\n`quote` *@Пинг пользователя* *текст цитаты* — Создание цитаты, так же работает если написать команду в ответ на сообщение.')
 			msg = await ctx.send(embed = embed)
 		@bot.command(aliases = ["помощьдействия"])
 		async def helpДействия(ctx):
-			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`call` *911|255|пинг* *текст* - позвонить в полицию, пиццерию или же любому пользователю, текст не обязателен.\n`kill` *текст* - Убить.\n`twisted` *текст* — Свернуть шею.\n`rape` *текст* — Изнасиловать.\n`eat` *текст* — Съесть.\n`drink` *текст* — Выпить.\n`give` *текст* - Дать.\n`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.\n`coin` - Игра в монетку\n`slots` - Слоты казино.')
+			embed = discord.Embed(title="Помощь по командам", colour=discord.Colour.from_rgb(230,0,0), description='`call` *911|255|пинг* *текст* — позвонить в полицию, пиццерию или же любому пользователю, текст не обязателен.\n`kill` *текст* — Убить.\n`twisted` *текст* — Свернуть шею.\n`rape` *текст* — Изнасиловать.\n`eat` *текст* — Съесть.\n`drink` *текст* — Выпить.\n`give` *текст* - Дать.\n`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.\n`coin` - Игра в монетку\n`slots` — Слоты казино.')
 			msg = await ctx.send(embed = embed)
 		@bot.command(aliases = ["помощьполезности"])
 		async def helpПолезности(ctx):
@@ -693,6 +733,8 @@ Weriase - 50 рублей
 				await ctx.send("Укажите цель!")
 			elif member.bot:
 				await ctx.send("Невозможно выполнить перевод боту.")
+			elif member.id == ctx.author.id:
+				await ctx.send("Вы не можете отправить деньги самому себе")
 			else:
 				UsTaCr.author(ctx)
 				UsTaCr.member(ctx, member)
@@ -799,7 +841,6 @@ Weriase - 50 рублей
 								orow2 = int(row[0])
 								row2 = int(row[0]) + 1
 							cursor.execute(f'UPDATE levels SET level = {row2} WHERE id={message.author.id} AND guild_id={message.guild.id}')
-							await message.author.send(embed = discord.Embed(title="Вы повысили уровень!", description=f"Вы получили новый уровень! Ваш уровень  теперь {row2}!"))
 							conn.commit()
 							UsTaCr.message(message)
 							row3 = 0
@@ -807,7 +848,16 @@ Weriase - 50 рублей
 								orow3 = int(row[0])
 								row3 = int(row[0]) + 20
 							cursor.execute(f'UPDATE economy SET money = {row3} WHERE id={message.author.id} AND guild_id={message.guild.id}')
-							conn.commit()	
+							conn.commit()
+							UsTaCr.switch(message)
+							for row in cursor.execute(f'SELECT "msgs" WHERE id={message.author.id} AND guild_id={message.guild.id}'):
+								row4 = int(row[0])
+							if row4 == 0:
+								await message.author.send(embed = discord.Embed(title="Вы повысили уровень!", description=f"Вы получили новый уровень! Ваш уровень теперь {row2}!"))
+							elif row4 == 1:
+								await message.channel.send(embed = discord.Embed(title="Вы повысили уровень!", description=f"Вы получили новый уровень! Ваш уровень теперь {row2}!"))
+							else:
+								pass
 				except Exception as e:
 					print_log('warn', str(e))
 			await bot.process_commands(message)
@@ -822,6 +872,27 @@ Weriase - 50 рублей
 				for row in cursor.execute(f'SELECT "level" FROM levels WHERE id={member.id} AND guild_id={ctx.guild.id}'):
 					await ctx.send(embed = discord.Embed(title=f"Уровень {member.display_name}", description=f"Уровень {member.display_name} составляет {row[0]} уровня/уровней"))
 					return
+
+		@bot.command(aliases = ["Уведомления"])
+		async def messages(ctx, choice: int = None):
+			if choice is None:
+				await ctx.send("пожалуйста, выберите что-то. \n0 - уведомления в лс \n1 - уведомления в чат \n2 - без уведомлений")
+			else:
+				UsTaCr.switchc(ctx)
+				if choice == 1:
+					result = 1
+					cursor.execute(f'UPDATE switches SET msgs = {row3} WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}')
+				elif choice == 2:
+					result = 2
+					cursor.execute(f'UPDATE switches SET msgs = {row3} WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}')
+				elif choice == 0:
+					result = 0
+					cursor.execute(f'UPDATE switches SET msgs = {result} WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}')
+				else:
+					await ctx.send("возможно вы ввели не то что требуется.")
+				conn.commit()
+
+
 
 		
 		@bot.command(aliases = ["радиолист", "рлист", "radiolist"])
@@ -1090,6 +1161,15 @@ Weriase - 50 рублей
 					await ctx.send("Вставьте ссылку.")
 			else:
 				await ctx.send(embed = embed)	
+
+		wtf = []
+		for x in range(20):
+			wtf2 = "+" * x
+			wtf.append(wtf2)
+
+		@bot.command(aliases = wtf)
+		async def whatthefuckisthisshit(ctx):
+			pass
 		
 	else:
 		print_log('info', 'Сегодня я проснулся от взрывов...')
