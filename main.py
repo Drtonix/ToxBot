@@ -951,7 +951,7 @@ Weriase - 50 рублей
 			await ctx.send("Радио включено.\nИграет: Детское радио")
 		
 
-		@bot.command(aliases = ["выключитьрадио","выклр"])
+		@bot.command(aliases = ["выключитьрадио","выклр","стопрадио"])
 		async def stopradio(ctx):
 			await ctx.voice_client.disconnect()
 			await ctx.send("Радио остановлено.")
