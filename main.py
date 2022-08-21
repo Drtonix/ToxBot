@@ -66,7 +66,7 @@ if init_successful:
 	tz = pytz.timezone('Europe/Moscow')
 	date = datetime.now(tz).strftime("%d%m")
 	if date != "0104":
-		@bot.command()
+		@bot.command(aliases = ["версия", "вер", "version"])
 		async def ver(ctx):
 			try:
 				embed = discord.Embed(title="ToxBot {}!".format(num_ver), description=text_ver, colour=discord.Colour.from_rgb(230, 0, 0))
