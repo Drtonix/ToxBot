@@ -164,7 +164,7 @@ if init_successful:
 `shakal`
 `dem`, `quote`
 🎲**Действия**
-`kill`, `twisted`, `fuck`, `eat`, `give`, `drink`, `call`
+`kill`, `twisted`, `rape`, `eat`, `give`, `drink`, `call`
 `roulette`, `coin`, `slots`
 📚**Полезности**
 `stats`, `membinfo`, `lvl`
