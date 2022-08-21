@@ -158,7 +158,7 @@ if init_successful:
 📌**Основное**
 `help`, `info`, `ver`, `premium`
 🎧**Воспроизведение**
-`p`, `loop`, `skip`, `stop`, `off`
+`p`, `loop`, `skip`, `stop`, `stopradio`
 `rlist`
 🖼️**Изображения**
 `shakal`
