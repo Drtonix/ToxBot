@@ -126,6 +126,6 @@ def calls(bot):
 
     call_center = make_call()
 
-    @bot.command(pass_context=True)
+    @bot.command(pass_context=True, aliases = ["позвонить", "звонок"])
     async def call(ctx, number=None, *, text=None):
         await call_center.call_recognize(ctx, number, text)
