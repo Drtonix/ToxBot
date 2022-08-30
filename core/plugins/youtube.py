@@ -3,16 +3,18 @@ import discord
 import yt_dlp
 
 from core.toxbot_core import print_log, send_embed
-from core.toxbot_core_texts import num_ver
+from core.toxbot_core_texts import num_ver, default_thumbnail
 
 
-def yt(bot, data):
-    # noinspection PyBroadException
+def yt(bot, data, manager_data):
     class yt_main:
 
         # Инициализируем модуль
-        def __init__(self, bot):
-
+        def __init__(self, bot, manager_data):
+            self.name = 'ToxBot_Player'
+            self.ver = '0.6.4b'
+            print_log('wait', '\tОжидание: Загрузка модуля ToxBot Player')
+            print_log('bank', '\t\tВыполняется: Создание базовых параметров воспроизведения')
             # Параметры поиска и воспроизведения
             self.YDL_OPTIONS = {'format': 'worstaudio/best',
                                 'noplaylist': 'True', 'simulate': 'True', 'preferredquality': '192',
@@ -22,20 +24,23 @@ def yt(bot, data):
                                    'options': '-vn'}
 
             # Внутренние переменные модуля
-            self.voice_channel = None  # Хранилище канала воспроизведения
-            self.voice_client = None  # Хранилище клиента воспроизведения
+            self.voice_channel  = None      # Хранилище канала воспроизведения
+            self.voice_client   = None      # Хранилище клиента воспроизведения
 
-            self.is_playing = False  # Состояние клиента воспроизведения
-            self.loop = None  # Состояние "залупления" всех
+            self.is_playing     = False     # Состояние клиента воспроизведения
+            self.loop           = None      # Состояние "залупления" всех
 
-            self.q = []  # Массив очереди
-            self.q_now = 0  # Счетчик очереди
+            self.q              = []        # Массив очереди
+            self.q_now          = 0         # Счетчик очереди
+            self.HELP           = 0         # СЧЕТЧИК ХУЕВ НЕГРОВ В ЖОПЕ ТОНИКСА, ЧТОБЫ ВСЕ ЭТО РАБОТАЛО
 
             # Общий метод бота
             self.bot = bot
 
-            # Выводим сообщение об успешной инициализации модуля
-            print_log('warn', 'Модуль YT инициализирован')
+            # Выводим сообщение об успешной инициализации модуля и передаем информацию в менеджер
+            print_log('info', '\tУспех: Модуль ToxBot Player инициализирован\n')
+            manager_data.loaded_plugins.update({self.name : self.ver}) # Заносим информацию о плагине в список
+            manager_data.plugins_counter+=1                            # Считаем плагин
 
         async def yt_searching(self, ctx, track_name):
             with yt_dlp.YoutubeDL(self.YDL_OPTIONS) as ydl:
@@ -63,11 +68,11 @@ def yt(bot, data):
                 if track_found:
 
                     # Сохраняем информацию о треке который нашли
-                    url = info['formats'][4]['url']  # Ссылка на поток
-                    track_name = info['title']  # Название трека
-                    track_time = info['duration_string']  # Длительность трека
+                    url = info['formats'][4]['url']         # Ссылка на поток
+                    track_name = info['title']              # Название трека
+                    track_time = info['duration_string']    # Длительность трека
                     track_author = ctx.message.author.name  # Кто запросил трек
-                    track_thumbnail = info['thumbnail']  # Превью трека
+                    track_thumbnail = info['thumbnail']     # Превью трека
                     self.q.append(
                         [url, track_name, track_time, track_author, track_thumbnail])  # Запись данных в массив
 
@@ -75,7 +80,7 @@ def yt(bot, data):
                     try:
                         # Если трек первый - запускаем
                         if len(self.q) - 1 == self.q_now:
-
+                            self.HELP = 0
                             # Выводим информацию о треке
                             await send_embed(ctx, 'Сейчас играет:', f'''
                                 Трек: _*{self.q[0][1]}*_
@@ -93,8 +98,8 @@ def yt(bot, data):
                                 Трек: _*{track_name}*_
                                 Продолжительность: _*{track_time}*_
                                 ''',
-                                             f'Запросил: {track_author}',
-                                             track_thumbnail)  # Тут превью видео
+                                f'Запросил: {track_author}',                # Инфо о пользователе
+                                track_thumbnail)                            # Тут превью видео
                     except Exception as e:
                         await ctx.send(str(e))
 
@@ -131,7 +136,7 @@ def yt(bot, data):
                         # Запускаем воспроизведение
                         await self.playing(self.q[self.q_now][0], ctx)
 
-                    elif self.loop is None and self.voice_client:  # Нет - кикаем
+                    elif self.loop is None and self.voice_client.is_connected:  # Нет - кикаем
                         await self.stop_playing(ctx)
             except:
                 pass    # Да, это необходимо чтобы бот не подсирал в чат хуй знает откуда взятые попытки воспроизведения
@@ -140,17 +145,19 @@ def yt(bot, data):
             try:
                 # Проверяем играет ли вообще бот, если да - отключаем
                 voice_channel = ctx.author.voice.channel
-                if self.voice_client.is_connected and self.is_playing:
-                    await self.voice_client.disconnect()  # Отключаем бота
-                    self.is_playing = False  # Снимаем флаг
-                    self.q_now = 0  # Обнуляем счетчик очереди
-                    self.q = []  # Отчищаем массив очереди
-                    await send_embed(ctx, 'Воспроизведение остановлено',
-                                     f'Прервал: {ctx.message.author.name}',
-                                     'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
+                if self.voice_client.is_connected:
+                    if self.is_playing:
+                        await self.voice_client.disconnect()    # Отключаем бота
+                    if self.HELP == 0:                          
+                        await ctx.send("Ок @типо евриван")      # А ЭТО БЛЯТЬ ВОЛШЕБНЫЕ НЕГРЫ, КОТОРЫЙЕ ПИХАЮТ ПО ОДНОМУ @everyone ЧЛЕНУ В ЖОПУ ТОНИКСУ
+                        self.HELP+=1                            # ИНАЧЕ БОТ ВЫВОДИТ СООБЩЕНИЕ ОБ ОСТАНОВКЕ 100 РАЗ
+                    self.is_playing = False                     # Снимаем флаг
+                    self.q_now = 0                              # Обнуляем счетчик очереди
+                    self.q = []                                 # Отчищаем массив очереди
+                    self.loop = None                            # Сбрасываем луп
                 if ctx.author.voice_channel == None:
                     await send_embed(ctx, 'Вы не находитесь в голосовом канале',
-                                     'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
+                                     'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png', default_thumbnail)
             except Exception as e:
                 print_log('err', f'Ошибка: Не удалось прервать воспроизведение. ({str(e)})')
 
@@ -194,7 +201,7 @@ def yt(bot, data):
                 except Exception as e:
                     print_log('err', f'Ошибка: Не удалось запустить воспроизведение. ({str(e)})')
 
-    ytx = yt_main(bot)
+    ytx = yt_main(bot, manager_data)
 
     @bot.command(pass_context=True, aliases = ["play", "youtube", "включить", "п", "плей"])
     async def p(ctx, *, track=None):

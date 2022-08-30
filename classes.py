@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import sqlite3
-
+from core.toxbot_core import print_log, send_embed
 conn = sqlite3.connect('Poor_Warrior_of_Christ.db')
 cursor = conn.cursor()
 

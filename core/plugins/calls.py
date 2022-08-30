@@ -4,10 +4,17 @@ from core.toxbot_core import print_log, send_embed
 from core.toxbot_core_texts import num_ver, default_thumbnail
 
 
-def calls(bot):
+def calls(bot, manager_data):
     class make_call:
-        def __init__(self):
-            print_log('warn', 'Модуль звонков инициализирован')
+        def __init__(self, manager_data):
+            self.name = 'CallCenter_Core'
+            self.ver = '0.2.4a'
+            print_log('wait', '\tОжидание: Загрузка модуля звонков')
+            print_log('bank', '\t\tВыполняется: Проверка таблицы абонентов')
+            #Тут можно потом реализовать базу данных абонентов
+            print_log('info', '\tУспех: Модуль звонков успешно загружен\n')
+            manager_data.loaded_plugins.update({self.name : self.ver})
+            manager_data.plugins_counter+=1
 
         async def call_recognize(self, ctx, number=None, text=None):
             if number == '911':
@@ -124,7 +131,7 @@ def calls(bot):
                     url="https://sun1-22.userapi.com/s/v1/ig2/oLl_jHdbHnIJTa8XG8Y_S5PUu25rsWwApBOd7Zu26sqPqWL9Kq2u_AKIqGEk6-WLV7k9oFmq7-XZ7HKH-EWuVWPv.jpg?size=200x200&quality=96&crop=149,52,420,420&ava=1")
                 await msg.edit(embed=update_emb)
 
-    call_center = make_call()
+    call_center = make_call(manager_data)
 
     @bot.command(pass_context=True, aliases = ["позвонить", "звонок"])
     async def call(ctx, number=None, *, text=None):

@@ -25,19 +25,21 @@ def print_log(type, text):
         print(colored("[ ", "white"), colored(" CALL  ", "magenta"), colored(" ] {}", "white").format(text))
     elif type == 'image':
         print(colored("[ ", "white"), colored(" IMAGE ", "magenta"), colored(" ] {}", "white").format(text))
+    elif type == 'bank':
+        print(f"         {text}")
 
 
-async def send_embed(ctx, title, text, footer, thumbnail):
+async def send_embed(ctx, title, text, footer, thumbnail = None):
     embed = discord.Embed(title=title, description=text, colour=discord.Colour.from_rgb(230, 0, 0))
-    embed.set_thumbnail(url=thumbnail)
-    embed.set_footer(text=footer,
-                     icon_url='https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
+    if thumbnail is not None:
+        embed.set_thumbnail(url=thumbnail)
+    embed.set_footer(text=footer)
     await ctx.send(embed=embed)
 
 
 async def notify(ctx, text):
-    await ctx.send(f"Ошибка: " + str(text))
-    print_log("err", "Ошибка: " + str(text))
+    await ctx.send(f"Ошибка:" + str(text))
+    print_log("err", "Ошибка:" + str(text))
 
 
 # Работа с конфигом
@@ -93,7 +95,7 @@ def first_boot_cofigure(data):
     try:
         data["FirstBoot"] = "False"  # Сбрасываем значение первого запуска
         core_save_data(data)  # Сохраняем данные
-        print_log('info', 'Изменения успешно сохранены.')
+        print_log('info', 'Успех: Изменения успешно сохранены.')
         print(first_boot_success)
         time.sleep(5)
         if data["OS"] == 1:
@@ -106,16 +108,51 @@ def first_boot_cofigure(data):
 
 # Загрузка модулей
 
-def plugins(bot, data):
-    print_log('wait', 'Запуск модулей...')
+class plugins_manager():
+    def __init__(self, bot, data):
+        print_log('warn', 'Запуск модулей...\n')
 
-    import core.plugins.youtube
-    core.plugins.youtube.yt(bot, data)
+        global plugins_counter
+        global loaded_plugins
+        self.plugins_counter = 0
+        self.loaded_plugins = {}
 
-    import core.plugins.calls
-    core.plugins.calls.calls(bot)
+        try:
+            import core.plugins.database_core
+            core.plugins.database_core.DB_Core(self)
+        except:pass
 
-    import core.plugins.images_tricks.images_core
-    core.plugins.images_tricks.images_core.img_tricks(bot)
+        try:
+            import core.plugins.youtube
+            core.plugins.youtube.yt(bot, data, self)
+        except:pass
 
-    print_log('info', 'Успех: Модули инициализированы.')
+        try:
+            import core.plugins.calls
+            core.plugins.calls.calls(bot, self)
+        except:pass
+
+        try:
+            import core.plugins.images_tricks.images_core
+            core.plugins.images_tricks.images_core.img_tricks(bot, self)
+        except:pass
+
+        try:
+            import core.plugins.economy.economy_core
+            core.plugins.economy.economy_core.EcoCore(bot, self)
+        except Exception as e:pass
+
+        try:
+            import core.plugins.leveling_core
+            core.plugins.leveling_core.level_core(bot, self)
+        except Exception as e:pass
+
+        try:
+            import core.plugins.members_voices
+            core.plugins.members_voices.mv(bot, self)
+        except Exception as e:pass
+
+        if len(self.loaded_plugins) == self.plugins_counter:
+            print_log('info', f'Успех: {self.plugins_counter} плагинов успешно загружено!')
+        else:
+            print_log('warn', f'Предупреждение: Модули загружены не полностью\n\t\t\t\t\t\tЗагружено: {len(self.loaded_plugins)} из {self.plugins_counter} плагинов')

@@ -19,12 +19,16 @@ def random_demo():
     return random.choice(strings)
 
 
-def img_tricks(bot):
+def img_tricks(bot, manager_data):
     class img_core:
         def __init__(self):
+            self.name = 'ToxBot_Image'
+            self.ver = '0.9.6'
             # Выводим сообщение об успешной инициализации модуля
-            print_log('warn', 'Модуль изображений инициализирован')
-
+            print_log('wait', '\tОжидание: Запуск модуля изображений')
+            print_log('info', '\tУспех: Модуль изображений инициализирован\n')
+            manager_data.loaded_plugins.update({self.name : self.ver})
+            manager_data.plugins_counter+=1
         @staticmethod
         async def check(ctx):
             await send_embed(ctx, 'Все работает!',

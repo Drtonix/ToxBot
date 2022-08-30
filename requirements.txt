@@ -13,7 +13,6 @@ colorama==0.4.4
 Cybernator==0.6.3
 DateTime==4.4
 discord==1.7.3
-discord-components==2.1.2
 discord.py==1.7.3
 Django==4.0.4
 h11==0.12.0
