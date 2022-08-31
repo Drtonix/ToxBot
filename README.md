@@ -7,4 +7,4 @@
 	ToxBot - Toha is here
 </h1>
 <div align="center">
-	<img alt="Demo" src="https://ibb.co/dMWYXkj">
+	<img alt="Demo" src="https://i.ibb.co/Q7gwggM/2022-08-31-171406182.png">
