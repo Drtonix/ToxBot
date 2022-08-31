@@ -9,7 +9,7 @@ def EcoCore(bot, manager_data):
 	class EcoCore:
 		def __init__(self, manager_data):
 			self.name = 'economy_core'
-			self.ver = '0.1.3d'
+			self.ver = '0.1.3e'
 			self.require = 'DB_Core'
 			self.loaded = False
 			manager_data.plugins_counter+=1
@@ -49,7 +49,7 @@ def EcoCore(bot, manager_data):
 				for row in db.cursor.execute(f'''SELECT * FROM eco_history WHERE user_id = {member.id} AND guild_id = {ctx.guild.id}'''):
 					client = discord.Client()
 					payer = await ctx.guild.fetch_member(row[1])
-					if row[6] != 'None':
+					if row[6] != 'None' and row[6] is not None:
 						comm = '\n\tКомментарий: '+ row[6]
 					else:
 						comm = ''
@@ -141,7 +141,10 @@ def EcoCore(bot, manager_data):
 					if not member.bot:
 						UsTaCr.member(ctx, member)
 						for row in db.cursor.execute(f'SELECT "money" FROM economy WHERE id = {member.id} AND guild_id = {ctx.guild.id}'):
-							await send_embed(ctx, '💵 Выписка по счету 💵', f"Пользователь: `{member.display_name}`\nБаланс: `{row[0]} TXC`\n\n```bash\n{await plugin.get_history(ctx, member, ctx.author)}```", f"Банк ToxBot\nВыписка от {datetime.now().strftime('%x %H:%M:%S')}", 'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
+							await send_embed(ctx, '💵 Выписка по счету 💵', 
+								f"Пользователь: `{member.display_name}`\nБаланс: `{row[0]} TXC`\n\n```bash\n{await plugin.get_history(ctx, member, ctx.author)}```",
+								f"Банк ToxBot\nВыписка от {datetime.now().strftime('%x %H:%M:%S')}",
+								'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
 					else:
 						await ctx.send('Боты не имеют счета.')
 			except Exception as e:

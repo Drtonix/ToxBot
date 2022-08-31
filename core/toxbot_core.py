@@ -11,7 +11,6 @@ import os
 global print_log
 global notify
 
-
 def print_log(type, text):
     if type == 'err':
         print(colored("[ ", "white"), colored(" ERROR ", "red"), colored(" ] {}", "white").format(text))
@@ -33,8 +32,17 @@ async def send_embed(ctx, title, text, footer, thumbnail = None):
     embed = discord.Embed(title=title, description=text, colour=discord.Colour.from_rgb(230, 0, 0))
     if thumbnail is not None:
         embed.set_thumbnail(url=thumbnail)
-    embed.set_footer(text=footer)
+    embed.set_footer(text=footer,
+                     icon_url='https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
     await ctx.send(embed=embed)
+
+def is_premium(ctx):
+    with open('./core/premium.txt', 'r') as file:
+        premium = file.read().split('+')
+    if str(ctx.author.id) in premium:
+        return True
+    else:
+        return False
 
 
 async def notify(ctx, text):
