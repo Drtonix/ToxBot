@@ -123,15 +123,18 @@ def level_core(bot, manager_data):
 		@bot.command(aliases = ["Уведомления"])
 		async def messages(ctx, choice: int = None):
 			if choice is None:
-				await ctx.send("пожалуйста, выберите что-то. \n0 - уведомления в лс \n1 - уведомления в чат \n2 - без уведомлений")
+				await send_embed(ctx, "Пожалуйста, выберите что-то.", "0 - Уведомления в чат\n1 - Уведомления в лс\n2 - Без уведомлений", f"ToxBot Level System {plugin.ver}", None)
 			else:
 				UsTaCr.switchc(ctx)
 				if choice == 1:
 					db.cursor.execute(f'UPDATE switches SET msgs = {choice} WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}')
+					await send_embed(ctx, "Успешно!", "Включены уведомления в личные сообщения.", f"ToxBot Level System {plugin.ver}", None)
 				elif choice == 2:
 					db.cursor.execute(f'UPDATE switches SET msgs = {choice} WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}')
+					await send_embed(ctx, "Успешно!", "Уведомления выключены.", f"ToxBot Level System {plugin.ver}", None)
 				elif choice == 0:
 					db.cursor.execute(f'UPDATE switches SET msgs = {choice} WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}')
+					await send_embed(ctx, "Успешно!", "Включены уведомления в чат.", f"ToxBot Level System {plugin.ver}", None)
 				else:
 					await ctx.send("возможно вы ввели не то что требуется.")
 				db.conn.commit()
