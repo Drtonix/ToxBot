@@ -12,7 +12,7 @@ def yt(bot, data, manager_data):
         # Инициализируем модуль
         def __init__(self, bot, manager_data):
             self.name = 'ToxBot_Player'
-            self.ver = '0.6.4b'
+            self.ver = '0.6.8b'
             print_log('wait', '\tОжидание: Загрузка модуля ToxBot Player')
             print_log('bank', '\t\tВыполняется: Создание базовых параметров воспроизведения')
             # Параметры поиска и воспроизведения
@@ -32,7 +32,7 @@ def yt(bot, data, manager_data):
 
             self.q              = []        # Массив очереди
             self.q_now          = 0         # Счетчик очереди
-            self.HELP           = 0         # СЧЕТЧИК ХУЕВ НЕГРОВ В ЖОПЕ ТОНИКСА, ЧТОБЫ ВСЕ ЭТО РАБОТАЛО
+            #self.HELP           = 0         # СЧЕТЧИК ХУЕВ НЕГРОВ В ЖОПЕ ТОНИКСА, ЧТОБЫ ВСЕ ЭТО РАБОТАЛО
 
             # Общий метод бота
             self.bot = bot
@@ -80,7 +80,6 @@ def yt(bot, data, manager_data):
                     try:
                         # Если трек первый - запускаем
                         if len(self.q) - 1 == self.q_now:
-                            self.HELP = 0
                             # Выводим информацию о треке
                             await send_embed(ctx, 'Сейчас играет:', f'''
                                 Трек: _*{self.q[0][1]}*_
@@ -110,15 +109,16 @@ def yt(bot, data, manager_data):
                     if self.loop == 'all' or self.loop is None:
                         self.q_now += 1  # Увеличиваем счетчик очереди если нет лупа на 1 трек
 
-                    # Выводим информацию о следующем треке
-                    await send_embed(ctx, 'Сейчас играет:', f'''
-                                    Трек: _*{self.q[self.q_now][1]}*_
-                                    Время: _*{self.q[self.q_now][2]}*_''',
-                                     f'Запросил: {self.q[self.q_now][3]}',
-                                     self.q[self.q_now][4])
+                    # Выводим информацию о следующем треке если бот играет
+                    if self.is_playing:
+                        await send_embed(ctx, 'Сейчас играет:', f'''
+                                        Трек: _*{self.q[self.q_now][1]}*_
+                                        Время: _*{self.q[self.q_now][2]}*_''',
+                                         f'Запросил: {self.q[self.q_now][3]}',
+                                         self.q[self.q_now][4])
 
-                    # Запускаем воспроизведение
-                    await self.playing(self.q[self.q_now][0], ctx)
+                        # Запускаем воспроизведение
+                        await self.playing(self.q[self.q_now][0], ctx)
 
                 # Если треки кончились и бот еще в войсе
                 else:
@@ -144,18 +144,16 @@ def yt(bot, data, manager_data):
         async def stop_playing(self, ctx):
             try:
                 # Проверяем играет ли вообще бот, если да - отключаем
-                voice_channel = ctx.author.voice.channel
-                if self.voice_client.is_connected:
-                    if self.is_playing:
+                if ctx.author.voice is not None:
+                    if self.voice_client.is_connected() and self.is_playing:
                         await self.voice_client.disconnect()    # Отключаем бота
-                    if self.HELP == 0:                          
-                        await ctx.send("Ок @типо евриван")      # А ЭТО БЛЯТЬ ВОЛШЕБНЫЕ НЕГРЫ, КОТОРЫЙЕ ПИХАЮТ ПО ОДНОМУ @everyone ЧЛЕНУ В ЖОПУ ТОНИКСУ
-                        self.HELP+=1                            # ИНАЧЕ БОТ ВЫВОДИТ СООБЩЕНИЕ ОБ ОСТАНОВКЕ 100 РАЗ
-                    self.is_playing = False                     # Снимаем флаг
-                    self.q_now = 0                              # Обнуляем счетчик очереди
-                    self.q = []                                 # Отчищаем массив очереди
-                    self.loop = None                            # Сбрасываем луп
-                if ctx.author.voice_channel == None:
+                        await ctx.send('Остановлено.')
+                        self.is_playing = False                     # Снимаем флаг
+                        self.q_now = 0                              # Обнуляем счетчик очереди
+                        self.q = []                                 # Отчищаем массив очереди
+                        self.loop = None                            # Сбрасываем луп
+
+                else:
                     await send_embed(ctx, 'Вы не находитесь в голосовом канале',
                                      'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png', default_thumbnail)
             except Exception as e:
