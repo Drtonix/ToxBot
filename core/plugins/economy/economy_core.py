@@ -44,28 +44,6 @@ def EcoCore(bot, manager_data):
 			except:
 				print_log('warn', f'\tПредупреждение: Не найдена зависимость {self.require}. Плагин может работать некоректно.\n')
 
-		async def get_history(self, ctx, member, author):
-			try:
-				for row in db.cursor.execute(f'''SELECT * FROM eco_history WHERE user_id = {member.id} AND guild_id = {ctx.guild.id}'''):
-					client = discord.Client()
-					payer = await ctx.guild.fetch_member(row[1])
-					if row[6] != 'None' and row[6] is not None:
-						comm = '\n\tКомментарий: '+ row[6]
-					else:
-						comm = ''
-					if row[3] == 'in_pay':
-						return '[+] Перевод от: {}\n\tСумма: {} TXC\n\tДата: {}{}'.format(payer.display_name,round(row[5]-row[4],2),row[7], comm)
-					elif row[3] == 'out_pay':
-						return '[-] Перевод для: {}\n\tСумма: {} TXC\n\tДата: {}{}'.format(payer.display_name,round(row[5]-row[4],2),row[7], comm)
-					elif row[3] == 'deposit':
-						return '[+] Пополнение от: {}\n\tСумма: {} TXC\n\tДата: {}{}'.format(payer.display_name,round(row[5]-row[4],2),row[7], comm)
-					elif row[3] == 'withdraw':
-						return '[-] Конфисковано: {}\n\tСумма: {} TXC\n\tДата: {}{}'.format(payer.display_name,round(row[5]-row[4],2),row[7], comm)
-				if db.cursor.fetchone() == None:
-					return 'С этого счета еще небыло операций'
-			except Exception as e:
-					return 'Не удалось получить информацию' + str(e)
-
 		async def save_history(self, ctx, send_to, sender, type, send_bal_start, send_bal_end,sender_bal_start, sender_bal_end, comment, date):
 			try:
 				# Обрабока истории переводов
@@ -136,13 +114,13 @@ def EcoCore(bot, manager_data):
 				if member is None:
 					UsTaCr.author(ctx)
 					for row in db.cursor.execute(f'SELECT "money" FROM economy WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}'):
-						await send_embed(ctx, '💵 Выписка по счету 💵', f"Пользователь: `{ctx.author.display_name}`\nБаланс: `{row[0]} TXC`\n\n```bash\n{await plugin.get_history(ctx, ctx.author, ctx.author)}```", f"Банк ToxBot\nВыписка от {datetime.now().strftime('%x %H:%M:%S')}", 'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
+						await send_embed(ctx, '💵 Выписка по счету 💵', f"Пользователь: `{ctx.author.display_name}`\nБаланс: `{row[0]} TXC`\n\n```bash\n{await get_history(ctx, ctx.author, ctx.author)}```", f"Банк ToxBot\nВыписка от {datetime.now().strftime('%x %H:%M:%S')}", 'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
 				else:
 					if not member.bot:
 						UsTaCr.member(ctx, member)
 						for row in db.cursor.execute(f'SELECT "money" FROM economy WHERE id = {member.id} AND guild_id = {ctx.guild.id}'):
 							await send_embed(ctx, '💵 Выписка по счету 💵', 
-								f"Пользователь: `{member.display_name}`\nБаланс: `{row[0]} TXC`\n\n```bash\n{await plugin.get_history(ctx, member, ctx.author)}```",
+								f"Пользователь: `{member.display_name}`\nБаланс: `{row[0]} TXC`\n\n```bash\n{await get_history(ctx, member, ctx.author)}```",
 								f"Банк ToxBot\nВыписка от {datetime.now().strftime('%x %H:%M:%S')}",
 								'https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
 					else:
@@ -282,3 +260,26 @@ def EcoCore(bot, manager_data):
 				plugin.create(ctx, member.id, ctx.author.id)
 			except Exception as e:
 				await ctx.send(str(e))
+
+async def get_history(ctx, member, author):
+	try:
+		for row in db.cursor.execute(f'''SELECT * FROM eco_history WHERE user_id = {member.id} AND guild_id = {ctx.guild.id}'''):
+			client = discord.Client()
+			payer = await ctx.guild.fetch_member(row[1])
+			if row[6] != 'None' and row[6] is not None:
+				comm = '\n\tКомментарий: '+ row[6]
+			else:
+				comm = ''
+			if row[3] == 'in_pay':
+				return '[+] Перевод от: {}\n\tСумма: {} TXC\n\tДата: {}{}'.format(payer.display_name,round(row[5]-row[4],2),row[7], comm)
+			elif row[3] == 'out_pay':
+				return '[-] Перевод для: {}\n\tСумма: {} TXC\n\tДата: {}{}'.format(payer.display_name,round(row[5]-row[4],2),row[7], comm)
+			elif row[3] == 'deposit':
+				return '[+] Пополнение от: {}\n\tСумма: {} TXC\n\tДата: {}{}'.format(payer.display_name,round(row[5]-row[4],2),row[7], comm)
+			elif row[3] == 'withdraw':
+				return '[-] Конфисковано: {}\n\tСумма: {} TXC\n\tДата: {}{}'.format(payer.display_name,round(row[5]-row[4],2),row[7], comm)
+		if db.cursor.fetchone() == None:
+			return 'С этого счета еще небыло операций'
+	except Exception as e:
+		return 'Не удалось получить информацию' + str(e)
+	

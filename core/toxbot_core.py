@@ -30,10 +30,6 @@ def print_log(type, text):
 
 async def send_embed(ctx, title, text, footer, thumbnail = None):
     embed = discord.Embed(title=title, description=text, colour=discord.Colour.from_rgb(230, 0, 0))
-    if thumbnail is not None:
-        embed.set_thumbnail(url=thumbnail)
-    embed.set_footer(text=footer,
-                     icon_url='https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png')
     await ctx.send(embed=embed)
 
 def is_premium(ctx):
@@ -101,8 +97,8 @@ def first_boot_cofigure(data):
 ''')
     print_log('wait', 'Сохраняем изменения...')
     try:
-        data["FirstBoot"] = "False"  # Сбрасываем значение первого запуска
-        core_save_data(data)  # Сохраняем данные
+        data["FirstBoot"] = "False"     # Сбрасываем значение первого запуска
+        core_save_data(data)            # Сохраняем данные
         print_log('info', 'Успех: Изменения успешно сохранены.')
         print(first_boot_success)
         time.sleep(5)
@@ -153,12 +149,25 @@ class plugins_manager():
         try:
             import core.plugins.leveling_core
             core.plugins.leveling_core.level_core(bot, self)
+        except Exception as e:
+            print(str(e))
+
+        try:
+            import core.plugins.members.members_voices
+            core.plugins.members.members_voices.mv(bot, self)
         except Exception as e:pass
 
         try:
-            import core.plugins.members_voices
-            core.plugins.members_voices.mv(bot, self)
-        except Exception as e:pass
+            import core.plugins.members.members_core
+            core.plugins.members.members_core.members_core(bot, self)
+        except Exception as e:
+            print(str(e))
+
+        try:
+            import core.plugins.members.members_inventory
+            core.plugins.members.members_inventory.mmbr_inv(bot, self)
+        except Exception as e:
+            print(str(e))
 
         if len(self.loaded_plugins) == self.plugins_counter:
             print_log('info', f'Успех: {self.plugins_counter} плагинов успешно загружено!')

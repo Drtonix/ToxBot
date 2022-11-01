@@ -49,7 +49,6 @@ if init_successful:
 	async def ver(ctx):
 		try:
 			embed = discord.Embed(title="ToxBot {}!".format(num_ver), description=text_ver, colour=discord.Colour.from_rgb(230, 0, 0))
-			embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 			msg = await ctx.send(embed=embed)
 		except Exception as e:
 			print_log('err', f'Ошибка: {e}')
@@ -86,29 +85,6 @@ if init_successful:
 			if ch.name == "💬┃био-отходняк-чат":
 				await bot.get_channel(ch.id).send(f'К сожалению, участник {member.display_name} покинул нас.')
 
-	@bot.command(aliases = ["статистика", "серверстат", "серверстатс", "statistics", "статс"])
-	async def stats(ctx):
-		members = ctx.guild.members
-		online = len(list(filter(lambda x: x.status == discord.Status.online, members)))
-		idle = len(list(filter(lambda x: x.status == discord.Status.idle, members)))
-		offline = len(list(filter(lambda x: x.status == discord.Status.offline, members)))
-		dnd = len(list(filter(lambda x: x.status == discord.Status.dnd, members)))
-		all_members = online+idle+offline+dnd
-		embed = discord.Embed(title="ToxBot", description=f'''\nОнлайн: {online}.\nОффлайн: {offline}.\nНеактивны: {idle}.\nНе беспокоить: {dnd}.\nВсего участников: {all_members}.''', colour = discord.Colour.from_rgb(230,0,0))
-		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-		#use PIL to create leaderboard image and add it to the embed
-		i = 0
-		img = Image.new('RGB', (400, 400), color = (0, 0, 0))
-		draw = ImageDraw.Draw(img)
-		font = ImageFont.truetype("./core/Arial.ttf", 20)
-		draw.text((10, 10), f"Лидеры по опыту:", fill=(255, 255, 255), font=font)
-		for row in cursor.execute(f"SELECT id, level FROM levels WHERE guild_id = {ctx.guild.id} ORDER BY exp DESC LIMIT 3"):
-			user = await bot.fetch_user(row[0])
-			draw.text((10, i*40), f"{user.display_name} - {row[1]}", (255, 255, 255), font=font)
-			i += 1
-		img.save("./core/leaderboard.png")
-		msg = await ctx.send(embed=embed, file=discord.File("./core/leaderboard.png"))
-
 	# help, info
 	@bot.command(aliases = ["помощь", "?","хелп"])
 	async def help(ctx):
@@ -134,7 +110,6 @@ if init_successful:
 Подробнее — `premium`''', colour = discord.Colour.from_rgb(230,0,0))
 		strings = ["Напишите ++helpfull для полных команд"]* 88 + ["Шуруп, забитый молотком, держится крепче, чем гвоздь, закрученный отвёрткой."]*1 +["Обувь будет носиться значительно дольше, если не покупать новую."]*1 + ["Если сосиски отварить с кубиком говяжьего бульона - то они будут пахнуть мясом."]*1 +["Большинство электрических приборов потребляют меньше электричества в выключенном состоянии."]*1 + ["Вегетарианский суп будет питательней, если в него положить немного говядины."]*1 +["Если ваш компьютер заразил вирус - как можно скорее переформатируйте ваш жесткий диск; не давайте вирусу удовольствие самому это сделать."]*1 + ["Если вы хотите приготовить дрожжевое тесто, но у вас нет дрожжей, то ни фига у вас не получится."]*1 +["Если ваш сосед внезапно купил ружье, вам лучше завязать с музыкой."]*1 + ["Нельзя смотреться в зеркало когда ешь - счастье своё проешь. И когда пьёшь - пропьёшь. А в туалете зеркало вообще лучше не вешать.."]*1 +["Если крыть нечем - кройте матом."]*1 + ["Не стой, где попало - попадёт ещё раз"]*1 + ["Если ваша машина издает странные звуки, увеличивайте громкость радио до тех пор, пока не перестанете их слышать."]*1
 		embed.set_footer(text=random.choice(strings))
-		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		msg = await ctx.send(embed = embed)
 
 	@bot.command(aliases = ["информация", "допинфо", "инфо", "ёбаныйобэмэ"])
@@ -142,44 +117,37 @@ if init_successful:
 		embed1 = discord.Embed(title="ToxBot Info (1)", description='''
 💎**Пожертвования на разработку**
 
-Юmoney:
-<https://bit.ly/3vrvWlJ>
-Qiwi:
-TONIXX
 Donationalerts:
-<https://bit.ly/3KSJ6OW>
-Patreon:
-<https://bit.ly/3xud881>
+<https://clck.ru/32Y4WD>
+
+Boosty:
+<https://boosty.to/toxbot>
 ''', colour = discord.Colour.from_rgb(230,0,0))
 		embed1.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		embed2 = discord.Embed(title="ToxBot Info (2)", description='''
+❤️**Донатеры**
+
+Porg_Studio - 433 рубля
+
+Unikum131 - 150 рублей
+CentrumEx - 50 рублей
+Weriase - 50 рублей
+''')
+		embed2.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
+		embed3 = discord.Embed(title="ToxBot Info (3)", description='''
 🔧**Работают над ботом**
-Tonix#5322 , 410#0797, Ampernic#9707
+Tonix#5322 , Ampernic#9707
+
 🏠**Официальный сервер бота**
 https://discord.gg/XMYZKS3b3j
 
- Мы хотим сказать спасибо всем тем,
-у кого мы позаимствовали код.
- Как говорил Линус Торвальдс:
-«Программы — как секс: лучше,
- когда бесплатно.»''')
-		embed2.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
-		embed3 = discord.Embed(title="ToxBot Info (3)", description='''
-❤️**Донатеры**
-
-Porg_Studio - dlc для Dead Sells, 300р
-Ampernic - 200 рублей ежегодно
-Unikum131 - 150 рублей
-CentrumEx - 50 рублей
-Weriase - 50 рублей 
-
-
-Спасибо что пользуетесь ToxBot!''')
+Спасибо что пользуетесь ToxBot!
+''')
 		embed3.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		embeds = [embed1, embed2, embed3]
 		message = await ctx.send(embed = embed1)
 		reactions = ["◀️", "▶️"]
-		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = True, reactions = reactions, timeout = 33)
+		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = False, reactions = reactions, timeout = 33)
 		await page.start()
 
 	@bot.command(aliases = ["премиум", "prem", "прем"])
@@ -187,15 +155,15 @@ Weriase - 50 рублей
 		embed = discord.Embed(title="ToxBot Premium", description='''
 
 Вы можете оформить ToxBot Premium
-за 500 рублей в год. Укажите `id дискорда`
-в сообщениях к донатам или же напишите
-сюда -> `Tonix#5322`.
+за 50 рублей в месяц -
+Для этого оформите подписку
+на нашем бусти: boosty.to/toxbot
 
 Команды премиума будут бесплатно дополняться
 и со временем вы сможете пользоваться большим
 количеством команд.
 
-Купив премиум, вы очень поможете
+Оформив премиум, вы очень поможете
 разработке ToxBot.
 Команды премиума — `++premhelp`.''', colour = discord.Colour.from_rgb(230,0,0))
 		await ctx.send(embed = embed)
@@ -470,7 +438,6 @@ Weriase - 50 рублей
 		slots = ["🍓", "🍋", "🍒", "💣"]
 		r1 = random.choice(slots)
 		embed = discord.Embed(title="ToxCasino777", description="⚫" + "⚫" + "⚫", colour = discord.Colour.from_rgb(230,0,0))
-		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/984411549236101150/unknown.png")
 		msg = await ctx.send(embed=embed)
 		for x in range(4):
 			r1 = random.choice(slots)
@@ -517,23 +484,20 @@ Weriase - 50 рублей
 		embed3 = discord.Embed(title="ToxBot help (3)", description='''
 `dem` *ссылка на пикчу* *Текст 1* *Текст 2* — Демотиватор.
 `shakal` *ссылка на пикчу* *качество (0-100)* — Зашакаливание.
-`quote` *@Пинг пользователя* *текст цитаты* — Создание цитаты, так же работает если написать команду в ответ на сообщение.''', colour = discord.Colour.from_rgb(230,0,0))
+`quote` *ответ на сообщение|@пинг* *текст цитаты* — Создание цитаты.''', colour = discord.Colour.from_rgb(230,0,0))
 		embed4 = discord.Embed(title="ToxBot help (4)", description='''
-`call` *id|пинг* *текст* — позвонить любому пользователю, текст не обязателен.
-`kill` *текст* — Убить.
-`twisted` *текст* — Свернуть шею.
-`rape` *текст* — Изнасиловать.
-`eat` *текст* — Съесть.
-`drink` *текст* — Выпить.
-`give` *текст* - Дать.
+`call` *id|@пинг* *текст* — позвонить любому пользователю, текст не обязателен.
+`kill` *текст|@пинг* — Убить.
+`twisted` *текст|@пинг* — Свернуть шею.
+`rape` *текст|@пинг* — Изнасиловать.
+`eat` *текст|@пинг* — Съесть.
+`drink` *текст|@пинг* — Выпить.
+`give` *текст|@пинг* - Дать.
 `roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.
 `coin` - Игра в монетку
 `slots` — Слоты казино.''', colour = discord.Colour.from_rgb(230,0,0))
 		embed5 = discord.Embed(title="ToxBot help (5)", description='''
-`stats` — Список активностей людей на сервере.
-`membinfo` *@пользователь* — Информация о пользователе.
-`lvl` *@пользователь(опционально) — Узнать уровень свой, или кого либо.
-*`randomto *число*` — Рандом до заданного числа больше одного.
+`randomto *число*` — Рандом до заданного числа больше одного.
 `cal` — Калькулятор.
 `time` — Время по МСК.
 `laugh` — Смех.
@@ -542,10 +506,10 @@ Weriase - 50 рублей
 `welcomechannel` *ID канала* — Канал где будут сообщения о пришедших и ушедших участниках.
 `google|yandex|duckduck|yahoo` *текст* — Поиск по этому запросу.''', colour = discord.Colour.from_rgb(230,0,0))
 		embed6 = discord.Embed(title="ToxBot help (6)", description='''
-`pay` *@пользователь* *сумма* — Отдать кому либо деньги из своего кошелька.
-`add` *@пользователь* *сумма* — Выдать кому либо деньги (для админов).
-`wd` *@пользователь* *сумма* — Забрать у кого либо деньги (для админов).
-`bal` *@пользователь(опционально)* — Узнать баланс свой, или кого либо.
+`stats` *@пинг(опционально)*— Информация о пользователе (Баланс, уровень и тд).
+`pay` *@пинг* *сумма* — Отдать кому либо деньги из своего кошелька.
+`add` *@пинг* *сумма* — Выдать кому либо деньги (для админов).
+`wd` *@пинг* *сумма* — Забрать у кого либо деньги (для админов).
 `premium` — ToxBot Premium.''', colour = discord.Colour.from_rgb(230,0,0))
 		embeds = [embed1, embed2, embed3, embed4, embed5, embed6]
 		message = await ctx.send(embed = embed1)
@@ -559,7 +523,6 @@ Weriase - 50 рублей
 		tz_Moscow = pytz.timezone('Europe/Moscow')
 		datetime_Moscow = datetime.now(tz_Moscow)
 		embed = discord.Embed(title="ToxBot", description=datetime_Moscow.strftime("%H:%M:%S"), colour = discord.Colour.from_rgb(230,0,0))
-		embed.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/943240401031135303/ToxDsBot.png")
 		msg = await ctx.send(embed=embed)
 
 	@bot.command(aliases = ["ничего", "** **"])
@@ -786,18 +749,15 @@ Weriase - 50 рублей
 		await rplay(ctx, "https://str.pcradio.ru/rusradio_deti-hi")
 		await ctx.send("Радио включено.\nИграет: Детское радио")
 		
-	@bot.command(aliases = ["выключитьрадио","выклр","стопрадио"])
+	@bot.command(aliases = ["выключитьрадио","выклр","стопрадио", "stopr", "rstop", "рстоп"])
 	async def stopradio(ctx):
 		await ctx.voice_client.disconnect()
 		await ctx.send("Радио остановлено.")
 		
 	@bot.command(aliases = ["премхелп","спермхелп","премиумхелп","премиум?","prem?","premium?","прем?"])
 	async def premhelp(ctx):
-		embed1 = discord.Embed(title = "Премиум команды", description = '''
-++say *текст* — Сообщение в консоль ToxBot.
-			''')
-
-		embed2 = discord.Embed(title = "Премиум радиостанции", description = '''
+		embed = discord.Embed(title = "Премиум команды", description = '''
+`say` - Сообщение в консоль ToxBot.
 `phz` - Х*й забей радио
 `pchrst` - Христианское радио
 `panime` - радио аниме из Осаки
@@ -806,14 +766,9 @@ Weriase - 50 рублей
 `prhcp` - радио *Red Hot Chili Peppers*
 `pkish` - Радио *Король и Шут*
 `pl` - Радио *Гражданская оборона*
-`p0` *ссылка на поток* - Своё радио 
-Некоторые радиостанции могут временно неработать. ''')
-
-		embeds = [embed1, embed2]
-		message = await ctx.send(embed = embed1)
-		reactions = ["◀️", "▶️"]
-		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = True, reactions = reactions, timeout = 33)
-		await page.start()
+`p0` *ссылка на поток* - Своё радио
+''', colour = discord.Colour.from_rgb(230,0,0))
+		msg = await ctx.send(embed=embed)
 
 
 	wtf = []

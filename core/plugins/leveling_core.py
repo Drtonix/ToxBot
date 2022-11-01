@@ -106,19 +106,19 @@ def level_core(bot, manager_data):
 		@bot.command(aliases = ["уровень", "level"])
 		async def lvl(ctx, member: discord.Member = None):
 			if member is None:
-				for row in db.cursor.execute(f'SELECT "level" FROM levels WHERE id={ctx.author.id} AND guild_id={ctx.guild.id}'):
-					await send_embed(ctx,
-									f"Уровень {ctx.author.display_name}", 
-									f"Ваш Уровень - {row[0]}", 
-									f"ToxBot Level System {plugin.ver}")
-					return
+				for row in db.cursor.execute(f'SELECT row_number() over(order by exp desc), id, exp, level FROM levels WHERE guild_id = {ctx.guild.id} ORDER BY exp DESC'):
+					if row[1] == ctx.author.id:
+							await send_embed(ctx,
+								f"Уровень {ctx.author.display_name}", 
+								f"Ваш Уровень - `{row[3]}`\nВаш опыт - `{row[2]} exp`\nВаше место в топе - `{row[0]}`", 
+								f"ToxBot Level System {plugin.ver}")
 			else:
-				for row in db.cursor.execute(f'SELECT "level" FROM levels WHERE id={member.id} AND guild_id={ctx.guild.id}'):
-					await send_embed(ctx,
-									f"Уровень {member.display_name}", 
-									f"Пользователь находится на {row[0]} уровне", 
-									f"ToxBot Level System {plugin.ver}")
-					return
+				for row in db.cursor.execute(f'SELECT row_number() over(order by exp desc), id, exp, level FROM levels WHERE guild_id = {ctx.guild.id} ORDER BY exp DESC'):
+					if row[1] == member.id:
+						await send_embed(ctx,
+								f"Уровень {member.display_name}", 
+								f"Пользователь находится на `{row[3]}` уровне\nЕго опыт - `{row[2]} exp`\nМесто в топе - `{row[0]}`", 
+								f"ToxBot Level System {plugin.ver}")
 
 		@bot.command(aliases = ["Уведомления"])
 		async def messages(ctx, choice: int = None):
