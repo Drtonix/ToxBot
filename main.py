@@ -779,13 +779,26 @@ https://discord.gg/XMYZKS3b3j
 	async def whatthefuckisthisshit(ctx):
 		pass
 
+	@bot.command(aliases = ["tonix", "newpremsub"])
+	async def nps(ctx, *, text):
+		if ctx.message.author.id == 577054248932605952 and ctx.message.author.id != 929090683841675364:
+			text = int(text)
+			f = open('core/premium.txt', 'a')
+			f.write(f"+{text}")
+			f.close()
+			await ctx.send("Поздравляю с ToxBot Premium!")
+		if ctx.message.author.id == 929090683841675364:
+			await ctx.send("Ampernic, попросите Tonix'а пожалуйста.")
+		else:
+			await ctx.send("Вы не мой создатель.")
+
 
 	@bot.command(aliases = ["сказать", "консольтекст"])
 	async def say(ctx, *, text):
 		embed = discord.Embed(title = "ToxBot Premium", description = '''Ваше сообщение доставлено.''', colour = discord.Colour.from_rgb(230,0,0))
 		embed1 = discord.Embed(title = "ToxBot premium", description = prmmtext)
 		text = text
-		with open('premium.txt', 'r') as file:
+		with open('core/premium.txt', 'r') as file:
 			premium = file.read().split('+')
 		if str(ctx.author.id) in premium:
 			print(text)
@@ -796,7 +809,7 @@ https://discord.gg/XMYZKS3b3j
 	@bot.command(aliases = ["христианское","chrst","пхрист"])
 	async def pchrst(ctx):
 		embed = discord.Embed(title = "ToxBot premium", description = prmmtext)
-		with open('premium.txt', 'r') as file:
+		with open('core/premium.txt', 'r') as file:
 			premium = file.read().split('+')
 		if str(ctx.author.id) in premium:
 			await rplay(ctx, "https://str.pcradio.ru/radio123_by-hi")
@@ -806,7 +819,7 @@ https://discord.gg/XMYZKS3b3j
 	@bot.command(aliases = ["корольишут","киш","kish","пкиш"])
 	async def pkish(ctx):
 		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('premium.txt', 'r') as file:
+		with open('core/premium.txt', 'r') as file:
 			premium = file.read().split('+')
 		if str(ctx.author.id) in premium:
 			await rplay(ctx, "https://str.pcradio.ru/Korol_i_Shut-hi")
@@ -816,7 +829,7 @@ https://discord.gg/XMYZKS3b3j
 	@bot.command(aliases = ["гражданскаяоборона","оборона","летов","letov","пл"])
 	async def pl(ctx):
 		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('premium.txt', 'r') as file:
+		with open('core/premium.txt', 'r') as file:
 			premium = file.read().split('+')
 		if str(ctx.author.id) in premium:
 			await rplay(ctx, "https://str.pcradio.ru/Grazhdanskaja_oborona-hi")
@@ -827,7 +840,7 @@ https://discord.gg/XMYZKS3b3j
 	@bot.command(aliases = ["раммштайн","рмш","rmsh","прмш"])
 	async def prmsh(ctx):
 		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('premium.txt', 'r') as file:
+		with open('core/premium.txt', 'r') as file:
 			premium = file.read().split('+')
 		if str(ctx.author.id) in premium:
 			await rplay(ctx, "https://str.pcradio.ru/Rammstein-hi")
@@ -837,7 +850,7 @@ https://discord.gg/XMYZKS3b3j
 	@bot.command(aliases = ["рхчп","rhcp","прхчп"])
 	async def prhcp(ctx):
 		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('premium.txt', 'r') as file:
+		with open('core/premium.txt', 'r') as file:
 			premium = file.read().split('+')
 		if str(ctx.author.id) in premium:
 			await rplay(ctx, "https://str.pcradio.ru/red_hot_chili_peppers-hi")
@@ -847,7 +860,7 @@ https://discord.gg/XMYZKS3b3j
 	@bot.command(aliases = ["хуйзабей","хз","hz","пхз"])
 	async def phz(ctx):
 		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('premium.txt', 'r') as file:
+		with open('core/premium.txt', 'r') as file:
 			premium = file.read().split('+')
 		if str(ctx.author.id) in premium:
 			await rplay(ctx, "https://str.pcradio.ru/Hui_Zabey-hi")
@@ -857,7 +870,7 @@ https://discord.gg/XMYZKS3b3j
 	@bot.command(aliases = ["паниме"])
 	async def panime(ctx):
 		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('premium.txt', 'r') as file:
+		with open('core/premium.txt', 'r') as file:
 			premium = file.read().split('+')
 		if str(ctx.author.id) in premium:
 			await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
@@ -867,7 +880,7 @@ https://discord.gg/XMYZKS3b3j
 	@bot.command(aliases = ["плофи","лофи","плоуфай","лоуфай","lofi"])
 	async def plofi(ctx):
 		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('premium.txt', 'r') as file:
+		with open('core/premium.txt', 'r') as file:
 			premium = file.read().split('+')
 		if str(ctx.author.id) in premium:
 			await rplay(ctx, "https://usa9.fastcast4u.com/proxy/jamz?mp=/1")
@@ -877,7 +890,7 @@ https://discord.gg/XMYZKS3b3j
 	@bot.command(aliases = ["п0","своёрадио"])
 	async def p0(ctx, *, link: str):
 		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('premium.txt', 'r') as file:
+		with open('core/premium.txt', 'r') as file:
 			premium = file.read().split('+')
 			txt = discord.utils.escape_mentions(link)
 		if str(ctx.author.id) in premium:
