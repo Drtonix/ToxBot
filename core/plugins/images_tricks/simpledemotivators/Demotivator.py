@@ -13,6 +13,7 @@ class Demotivator:
                font_name='times.ttf', top_size=80, bottom_size=60,
                arrange=False, use_url=False, delete_file=False) \
             -> bool:  # Returns True if method executed successfully
+            
 
         if use_url:
             p = requests.get(file)
@@ -69,7 +70,7 @@ class Demotivator:
 
         size_1 = drawer.textsize(self._top_text, font=font_1)
         size_2 = drawer.textsize(self._bottom_text, font=font_2)
-
+        
         if arrange:
             drawer.text((((width + 250) - size_1[0]) / 2, ((height + 190) - size_1[1])),
                         self._top_text, fill=font_color,
@@ -94,7 +95,9 @@ class Demotivator:
 
         img.save(result_filename)
 
+
         if delete_file:
             os.remove(file)
+
 
         return True

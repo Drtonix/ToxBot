@@ -105,7 +105,7 @@ def members_core(bot, manager_data):
 				embeds = [emb1, emb3, emb2, emb4]
 				message = await ctx.send(embed = emb1)
 				reactions = ["◀️", "▶️"]
-				page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = False, reactions = reactions, timeout = 33)
+				page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = False, reactions = reactions, timeout = 99)
 				await page.start()
 			except Exception as e:
 				await ctx.send(str(e))

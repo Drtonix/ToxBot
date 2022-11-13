@@ -41,6 +41,7 @@ def img_tricks(bot, manager_data):
             outfile = './saves/demotivators/{} - Демотиватор от {}.jpg'.format(
                 datetime.strftime(datetime.now(), '%d.%m.%Y %H-%M-%S'), ctx.message.author.name)
 
+            author = ctx.message.author
             ImgDem = Demotivator(text1, text2)
             try:
                 ImgDem.create(url,
@@ -51,7 +52,7 @@ def img_tricks(bot, manager_data):
                               result_filename=outfile,
                               delete_file=True)
                 await send_embed(ctx,
-                                 'Ваш демотиватор создан', f'''
+                                 f'{author}, ваш демотиватор создан', f'''
                                  _*{random_demo()}*_
                                  ''',
                                  f'ToxBot v{num_ver}',
@@ -91,11 +92,12 @@ def img_tricks(bot, manager_data):
             try:
                 outfile = './saves/shakalim/{} - Шакальная хуйня от {}.jpg'.format(
                     datetime.strftime(datetime.now(), '%d.%m.%Y %H-%M-%S'), ctx.message.author.name)
+                author = ctx.message.author
                 raw = requests.get(url, stream=True).raw
                 image = Image.open(raw).convert('RGB')
                 image.save(outfile, 'JPEG', quality=quality)
                 await send_embed(ctx,
-                                 'Шакалы догрызли вашу пикчу', f'''
+                                 f'{author}, шакалы догрызли вашу пикчу', f'''
                                  Вот ваш результат: 
                                  (Текущее качество: `{quality}`)''',
                                  f'ToxBot v{num_ver}',
@@ -126,7 +128,9 @@ def img_tricks(bot, manager_data):
                              f'ToxBot v{num_ver}',
                              default_thumbnail)
         else:
+            await ctx.message.delete()
             await img_edit.dem_create(ctx, url, text1, text2)
+            
 
     # noinspection PyUnboundLocalVariable
     @bot.command(pass_context=True, aliases = ["цитата", "запомните"])
@@ -138,7 +142,7 @@ def img_tricks(bot, manager_data):
             await img_edit.quote_create(ctx, msg.author, msg.content)
         else:
             await send_embed(ctx,
-                             'Не добавить цитату', '''
+                             'Не удалось добавить цитату', '''
                              Неправильно введены параметры для создания
                              Напомню: `++quote пинг Текст цитаты`
                              (Или можете прислать команду в ответ на сообщение)''',
@@ -150,11 +154,12 @@ def img_tricks(bot, manager_data):
         if url is None:
             await send_embed(ctx,
                              'Не удалось зашакалить пикчу', '''
-                             Не введена ссылка на фото
+                             Неправильно введены параметры для создания
                              Напомню: `++shakal ссылка качество`
                              Качество по умолчанию: `7`
                              (Качество можно указать от 0 до 100)''',
                              f'ToxBot v{num_ver}',
                              default_thumbnail)
         else:
+            await ctx.message.delete()
             await img_edit.shakal_create(ctx, url, quality)

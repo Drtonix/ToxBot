@@ -147,7 +147,7 @@ https://discord.gg/XMYZKS3b3j
 		embeds = [embed1, embed2, embed3]
 		message = await ctx.send(embed = embed1)
 		reactions = ["◀️", "▶️"]
-		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = False, reactions = reactions, timeout = 33)
+		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = False, reactions = reactions, timeout = 99)
 		await page.start()
 
 	@bot.command(aliases = ["премиум", "prem", "прем"])
@@ -215,6 +215,23 @@ https://discord.gg/XMYZKS3b3j
 		monetka = ['Орел.'] * 49 + ['Решка.'] * 49 + ['Ребро!'] * 2
 		await ctx.send(random.choice(monetka))
 
+	@bot.command()
+	async def test2(ctx):
+		reactions = ['😀', 
+					'😡']
+		winning_reaction = random.choice(reactions)
+		message = await ctx.channel.send('Выбери эмодзи')
+		for reaction in reactions:
+			await message.add_reaction(reaction)
+		def check(reaction, user):
+			return user == ctx.author and str(reaction) == winning_reaction
+		try:
+			reaction, user = await bot.wait_for('reaction_add', check=check, timeout=60.0)
+			await ctx.send('Угадал')
+		except asyncio.TimeoutError:
+			await ctx.send('Время вышло')
+		else:
+			await ctx.send('Не угадал')
 
 	@bot.command(aliases = ["рандомдо", "рандом"])
 	async def randomto(ctx, text):
@@ -514,7 +531,7 @@ https://discord.gg/XMYZKS3b3j
 		embeds = [embed1, embed2, embed3, embed4, embed5, embed6]
 		message = await ctx.send(embed = embed1)
 		reactions = ["◀️", "▶️"]
-		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = True, reactions = reactions, timeout = 33)
+		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = False, reactions = reactions, timeout = 99)
 		await page.start()
 
 	#Всякие элементарные вещи
@@ -651,7 +668,7 @@ https://discord.gg/XMYZKS3b3j
 		embeds = [embed1, embed2]
 		message = await ctx.send(embed = embed1)
 		reactions = ["◀️", "▶️"]
-		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = True, reactions = reactions, timeout = 33)
+		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = True, reactions = reactions, timeout = 99)
 		await page.start()
 
 	async def rplay(ctx, link: None):
@@ -781,13 +798,13 @@ https://discord.gg/XMYZKS3b3j
 
 	@bot.command(aliases = ["tonix", "newpremsub"])
 	async def nps(ctx, *, text):
-		if ctx.message.author.id == 577054248932605952 and ctx.message.author.id != 929090683841675364:
+		if ctx.message.author.id == 577054248932605952 and ctx.message.author.id != 782209104210427914:
 			text = int(text)
 			f = open('core/premium.txt', 'a')
 			f.write(f"+{text}")
 			f.close()
 			await ctx.send("Поздравляю с ToxBot Premium!")
-		if ctx.message.author.id == 929090683841675364:
+		if ctx.message.author.id == 782209104210427914:
 			await ctx.send("Ampernic, попросите Tonix'а пожалуйста.")
 		else:
 			await ctx.send("Вы не мой создатель.")
