@@ -32,8 +32,8 @@ try:
 		first_boot_cofigure(data)
 	else:
 		print_log('info', "Успех: Значения конфигурации получены.\n")
-		bot = Bot(command_prefix="++", help_command=None, intents=intents, case_insensitive=True)
-		client = discord.ext.commands.Bot(command_prefix="++", intents=discord.Intents.all())
+		bot = Bot(command_prefix="+", help_command=None, intents=intents, case_insensitive=True)
+		client = discord.ext.commands.Bot(command_prefix="+", intents=discord.Intents.all())
 		init_successful = True
 		@bot.event
 		async def on_ready():
@@ -98,19 +98,70 @@ if init_successful:
 `shakal`
 `dem`, `quote`
 🎲**Действия**
-`kill`, `twisted`, `rape`, `eat`, `give`, `drink`, `call`
+`call`, `kill`, `twisted`, `rape`, `eat`, `drink`, `give`
 `roulette`, `coin`, `slots`
 📚**Полезности**
-`stats`, `membinfo`, `lvl`
-`randomto`, `cal`, `time`, `laugh`, `yesorno`, `clear`, `welcomechannel`
-`google`, `yandex`, `duckduck`, `yahoo`
+`randomto`, `laugh`, `yesorno`
+`clear`, `welcomechannel`, `time`, `cal`
 💵**Экономика**
-`pay`, `add`, `wd`, `bal`
+`pay`, `add`, `wd`, `stats`
 🪙**ToxBot Premium**
 Подробнее — `premium`''', colour = discord.Colour.from_rgb(230,0,0))
 		strings = ["Напишите ++helpfull для полных команд"]* 88 + ["Шуруп, забитый молотком, держится крепче, чем гвоздь, закрученный отвёрткой."]*1 +["Обувь будет носиться значительно дольше, если не покупать новую."]*1 + ["Если сосиски отварить с кубиком говяжьего бульона - то они будут пахнуть мясом."]*1 +["Большинство электрических приборов потребляют меньше электричества в выключенном состоянии."]*1 + ["Вегетарианский суп будет питательней, если в него положить немного говядины."]*1 +["Если ваш компьютер заразил вирус - как можно скорее переформатируйте ваш жесткий диск; не давайте вирусу удовольствие самому это сделать."]*1 + ["Если вы хотите приготовить дрожжевое тесто, но у вас нет дрожжей, то ни фига у вас не получится."]*1 +["Если ваш сосед внезапно купил ружье, вам лучше завязать с музыкой."]*1 + ["Нельзя смотреться в зеркало когда ешь - счастье своё проешь. И когда пьёшь - пропьёшь. А в туалете зеркало вообще лучше не вешать.."]*1 +["Если крыть нечем - кройте матом."]*1 + ["Не стой, где попало - попадёт ещё раз"]*1 + ["Если ваша машина издает странные звуки, увеличивайте громкость радио до тех пор, пока не перестанете их слышать."]*1
 		embed.set_footer(text=random.choice(strings))
 		msg = await ctx.send(embed = embed)
+
+	@bot.command(aliases = ["fullhelp", "полнаяпомощь", "помощьполная", "helpf", "помощьп", "хелпф", "хелпфулл"])
+	async def helpfull(ctx):
+		embed1 = discord.Embed(title="ToxBot help (1)", description='''
+`help` —  Меню команд.
+`info` — Инфо о донатерах и разработчиках.
+`ver` — Версия бота на текущий момент.
+''', colour = discord.Colour.from_rgb(230,0,0))
+		embed2 = discord.Embed(title="ToxBot help (2)", description='''
+`p` *URL* — Воспроизведение аудио с ютуба.
+`p1|p2|p3...` — Воспроизведение радио.
+`loop all|one|off` — Вкл/Выкл повтор.
+`skip` — Пропустить трек.
+`stop` — Остановить воспроизведение.
+`stopradio` — Остановить радио
+`rlist` — Лист всех радиостанций.''', colour = discord.Colour.from_rgb(230,0,0))
+		embed3 = discord.Embed(title="ToxBot help (3)", description='''
+`dem` *ссылка на пикчу* *Текст 1* *Текст 2* — Демотиватор.
+`shakal` *ссылка на пикчу* *качество (0-100)* — Зашакаливание.
+`quote` *ответ на сообщение|@пинг* *текст цитаты* — Создание цитаты.''', colour = discord.Colour.from_rgb(230,0,0))
+		embed4 = discord.Embed(title="ToxBot help (4)", description='''
+`call` *id|@пинг* *текст* — позвонить любому пользователю, текст не обязателен.
+`kill` *текст|@пинг* — Убить.
+`twisted` *текст|@пинг* — Свернуть шею.
+`rape` *текст|@пинг* — Изнасиловать.
+`eat` *текст|@пинг* — Съесть.
+`drink` *текст|@пинг* — Выпить.
+`give` *текст|@пинг* - Дать.
+`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.
+`coin` - Игра в монетку.
+`slots` — Слоты казино.''', colour = discord.Colour.from_rgb(230,0,0))
+		embed5 = discord.Embed(title="ToxBot help (5)", description='''
+`randomto *число*` — Рандом до заданного числа больше одного.
+`laugh` — Смех.
+`yesorno` — Да или нет.
+`clear число` —  Удаление сообщений. Только для админов.
+`welcomechannel` *ID канала* — Канал где будут сообщения о пришедших и ушедших участниках.
+`time` — Время по МСК.
+`cal` — Калькулятор.
+''', colour = discord.Colour.from_rgb(230,0,0))
+		embed6 = discord.Embed(title="ToxBot help (6)", description='''
+`pay` *@пинг* *сумма* — Отдать кому либо деньги из своего кошелька.
+`add` *@пинг* *сумма* — Выдать кому либо деньги (для админов).
+`wd` *@пинг* *сумма* — Забрать у кого либо деньги (для админов).
+`stats` *@пинг(опционально)*— Информация о пользователе (Баланс, уровень и тд).
+`premium` — ToxBot Premium.''', colour = discord.Colour.from_rgb(230,0,0))
+		embeds = [embed1, embed2, embed3, embed4, embed5, embed6]
+		message = await ctx.send(embed = embed1)
+		reactions = ["◀️", "▶️"]
+		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = False, reactions = reactions, timeout = 99)
+		await page.start()
+
 
 	@bot.command(aliases = ["информация", "допинфо", "инфо", "ёбаныйобэмэ"])
 	async def info(ctx):
@@ -175,17 +226,36 @@ https://discord.gg/XMYZKS3b3j
 		if isinstance(error, commands.CommandNotFound):
 			await ctx.send(embed = discord.Embed(description = f'**`{ctx.author.name}, данной команды не существует.`**'))
 
-	@bot.command(aliases = ["калькулятор", "кал"])
+	#@bot.command()
+	#async def test2(ctx):
+	#	reactions = ['😀', 
+	#				'😡']
+	#	winning_reaction = random.choice(reactions)
+	#	message = await ctx.channel.send('Выбери эмодзи')
+	#	for reaction in reactions:
+	#		await message.add_reaction(reaction)
+	#	def check(reaction, user):
+	#		return user == ctx.author and str(reaction) == winning_reaction
+	#	try:
+	#		reaction, user = await bot.wait_for('reaction_add', check=check, timeout=60.0)
+	#		await ctx.send('Угадал')
+	#	except asyncio.TimeoutError:
+	#		await ctx.send('Время вышло')
+	#	else:
+	#		await ctx.send('Не угадал')
+	# Потом
+
+	@bot.command(aliases = ["калькулятор", "кал", "calculator"])
 	async def cal(ctx, *, expression:str):
 		try:
 			calculation = eval(expression)
-			await ctx.send('Выражение: {}.\nОтвет: {}.'.format(expression, calculation))
+			await send_embed(ctx, "ToxBot Сalculator", 'Выражение: {}\nОтвет: {}'.format(expression, calculation), None, None)
 		except SyntaxError:
-			await ctx.send("Введите выражение правильно.")
+			await send_embed(ctx, "ToxBot Сalculator", "Введите выражение правильно.", None, None)
 		except ValueError:
-			await ctx.send("Введите выражение правильно.")
+			await send_embed(ctx, "ToxBot Сalculator", "Введите выражение правильно.", None, None)
 		except ZeroDivisionError:
-			await ctx.send("На ноль делить нельзя.")
+			await send_embed(ctx, "ToxBot Сalculator", "На ноль делить нельзя.", None, None)
 
 	@bot.command(aliases = ["мембинфо", "пользовательинфо", "userinfo"])
 	async def membinfo(ctx,member:discord.Member = None, guild: discord.Guild = None):
@@ -213,36 +283,18 @@ https://discord.gg/XMYZKS3b3j
 	@bot.command(aliases = ["монетка"])
 	async def coin(ctx):
 		monetka = ['Орел.'] * 49 + ['Решка.'] * 49 + ['Ребро!'] * 2
-		await ctx.send(random.choice(monetka))
-
-	@bot.command()
-	async def test2(ctx):
-		reactions = ['😀', 
-					'😡']
-		winning_reaction = random.choice(reactions)
-		message = await ctx.channel.send('Выбери эмодзи')
-		for reaction in reactions:
-			await message.add_reaction(reaction)
-		def check(reaction, user):
-			return user == ctx.author and str(reaction) == winning_reaction
-		try:
-			reaction, user = await bot.wait_for('reaction_add', check=check, timeout=60.0)
-			await ctx.send('Угадал')
-		except asyncio.TimeoutError:
-			await ctx.send('Время вышло')
-		else:
-			await ctx.send('Не угадал')
+		await send_embed(ctx, "ToxBot Coin", random.choice(monetka), None, None)
 
 	@bot.command(aliases = ["рандомдо", "рандом"])
 	async def randomto(ctx, text):
 		num2 = str(text)
 		rndm = str(random.randint(1, int(num2[num2.find(" ")+1:len(num2)])))
-		await ctx.send("Выпало число " + rndm +".")
+		await send_embed(ctx, "ToxBot Random", "Выпало число " + rndm +".", None, None)
 
 	@bot.command(aliases = ["данет", "даилинет"])
 	async def yesorno(ctx, *, text):
 		danet = ['Да.'] * 25 + ['Нет.'] * 25 + ['Скорее всего да.'] * 25 + ['Скорее всего нет.'] * 25 + ['Наверное да.'] * 25 + ['Наверное нет.'] * 25 + ['Не уверен.'] * 25 + ['Не могу ответить.']
-		await ctx.send(f"{random.choice(danet)}")
+		await send_embed(ctx, "ToxBot Yes Or No", f"{random.choice(danet)}", None, None)
 
 
 	@bot.command(aliases = ["fuck","изнасиловать","трахать","трахнуть","выебать","игратьвгеншинвместес"])
@@ -260,11 +312,11 @@ https://discord.gg/XMYZKS3b3j
 				break
 		try:
 			if len(target) > 0:
-				await ctx.send(f"{author.display_name} изнасиловал(а) {target1.display_name} " + ' '.join(target) + ".")
+				await send_embed(ctx, "ToxBot Actions", f"{author.display_name} изнасиловал(а) {target1.display_name} " + ' '.join(target) + ".", None, None)
 			else:
-				 await ctx.send(f"{author.display_name} изнасиловал(а) {target1.display_name}.")
+				 await send_embed(ctx, "ToxBot Actions", f"{author.display_name} изнасиловал(а) {target1.display_name}.", None, None)
 		except:
-				await ctx.send(f"{author.display_name} изнасиловал(а) " + ' '.join(target) + '.')
+				await send_embed(ctx, "ToxBot Actions", f"{author.display_name} изнасиловал(а) " + ' '.join(target) + '.', None, None)
 	@bot.command(aliases = ["убить", "килл", "кильнуть", "резня"])
 	async def kill(ctx, *, target):
 		author = ctx.message.author
@@ -280,11 +332,11 @@ https://discord.gg/XMYZKS3b3j
 				break
 		try:
 			if len(target) > 0:
-				await ctx.send(f"{author.display_name} убил(а) {target1.display_name} " + ' '.join(target) + ".")
+				await send_embed(ctx, "ToxBot Actions", f"{author.display_name} убил(а) {target1.display_name} " + ' '.join(target) + ".", None, None)
 			else:
-				await ctx.send(f"{author.display_name} убил(а) {target1.display_name}.")
+				await send_embed(ctx, "ToxBot Actions", f"{author.display_name} убил(а) {target1.display_name}.", None, None)
 		except:
-			await ctx.send(f"{author.display_name} убил(а) {target1}.")
+			await send_embed(ctx, "ToxBot Actions", f"{author.display_name} убил(а) {target1}.", None, None)
 
 	@bot.command(aliases = ["съесть", "захавать","схавать"])
 	async def eat(ctx, *, target):
@@ -301,11 +353,11 @@ https://discord.gg/XMYZKS3b3j
 				break
 		try:
 			if len(target) > 0:
-				await ctx.send(f"{author.display_name} съел(а) {target1.display_name} " + ' '.join(target) + ".")
+				await send_embed(ctx, "ToxBot Actions", f"{author.display_name} съел(а) {target1.display_name} " + ' '.join(target) + ".", None, None)
 			else:
-				await ctx.send(f"{author.display_name} съел(а) {target1.display_name}.")
+				await send_embed(ctx, "ToxBot Actions", f"{author.display_name} съел(а) {target1.display_name}.", None, None)
 		except:
-			await ctx.send(f"{author.display_name} съел(а) {target1}.")
+			await send_embed(ctx, "ToxBot Actions", f"{author.display_name} съел(а) {target1}.", None, None)
 		
 	@bot.command(aliases = ["выпить", "бухать","выбухать"])
 	async def drink(ctx, *, target):
@@ -322,11 +374,11 @@ https://discord.gg/XMYZKS3b3j
 				break
 		try:
 			if len(target) > 0:
-				await ctx.send(f"{author.display_name} выпил(а) {target1.display_name} " + ' '.join(target) + ".")
+				await send_embed(ctx, "ToxBot Actions", f"{author.display_name} выпил(а) {target1.display_name} " + ' '.join(target) + ".", None, None)
 			else:
-				await ctx.send(f"{author.display_name} выпил(а) {target1.display_name}.")
+				await send_embed(ctx, "ToxBot Actions", f"{author.display_name} выпил(а) {target1.display_name}.", None, None)
 		except:
-			await ctx.send(f"{author.display_name} выпил(а) {target1}.")
+			await send_embed(ctx, "ToxBot Actions", f"{author.display_name} выпил(а) {target1}.", None, None)
 	
 	@bot.command(aliases = ["свернутьшею","свернуть"])
 	async def twisted(ctx, *, target):
@@ -343,11 +395,11 @@ https://discord.gg/XMYZKS3b3j
 				break
 		try:
 			if len(target) > 0:
-				await ctx.send(f"{author.display_name} свернул(а) шею {target1.display_name} " + ' '.join(target) + ".")
+				await send_embed(ctx, "ToxBot Actions", f"{author.display_name} свернул(а) шею {target1.display_name} " + ' '.join(target) + ".", None, None)
 			else:
-				await ctx.send(f"{author.display_name} свернул(а) шею {target1.display_name}.")
+				await send_embed(ctx, "ToxBot Actions", f"{author.display_name} свернул(а) шею {target1.display_name}.", None, None)
 		except:
-			await ctx.send(f"{author.display_name} свернул(а) шею {target1}.")
+			await send_embed(ctx, "ToxBot Actions", f"{author.display_name} свернул(а) шею {target1}.", None, None)
 		
 	@bot.command(aliases = ["дать", "отдать"])
 	async def give(ctx, *, target):
@@ -364,11 +416,11 @@ https://discord.gg/XMYZKS3b3j
 				break
 		try:
 			if len(target) > 0:
-				await ctx.send(f"{author.display_name} дал(а) {target1.display_name} " + ' '.join(target) + ".")
+				await send_embed(ctx, "ToxBot Actions", f"{author.display_name} дал(а) {target1.display_name} " + ' '.join(target) + ".", None, None)
 			else:
-				await ctx.send(f"{author.display_name} дал(а) {target1.display_name}.")
+				await send_embed(ctx, "ToxBot Actions", f"{author.display_name} дал(а) {target1.display_name}.", None, None)
 		except:
-			await ctx.send(f"{author.display_name} дал(а) {target1}.")
+			await send_embed(ctx, "ToxBot Actions", f"{author.display_name} дал(а) {target1}.", None, None)
 
 	@commands.has_permissions(administrator=True)
 	@bot.command(aliases = ["очистить"])
@@ -384,37 +436,37 @@ https://discord.gg/XMYZKS3b3j
 	async def roulette(ctx):
 		author = ctx.message.author
 		ruletka = [f'Пусто, {author.mention} остался в живых.'] * 5 + [f'Выстрел, {author.mention} застрелился.'] * 1
-		await ctx.send(random.choice(ruletka))
+		await send_embed(ctx, "ToxBot Russian Roulette",random.choice(ruletka), None, None)
 	
 	@bot.command(aliases = ["рулетка2пули", "русскаярулетка2пули"])
 	async def roulette2bul(ctx):
 		author = ctx.message.author
 		ruletka = [f'Пусто, {author.mention} остался в живых.'] * 4 + [f'Выстрел, {author.mention} застрелился.'] * 2
-		await ctx.send(random.choice(ruletka))
+		await send_embed(ctx, "ToxBot Russian Roulette",random.choice(ruletka), None, None)
 	
 	@bot.command(aliases = ["рулетка3пули", "русскаярулетка3пули"])
 	async def roulette3bul(ctx):
 		author = ctx.message.author
 		ruletka = [f'Пусто, {author.mention} остался в живых.'] * 3 + [f'Выстрел, {author.mention} застрелился.'] * 3
-		await ctx.send(random.choice(ruletka))
+		await send_embed(ctx, "ToxBot Russian Roulette",random.choice(ruletka), None, None)
 	
 	@bot.command(aliases = ["рулетка4пули", "русскаярулетка4пули"])
 	async def roulette4bul(ctx):
 		author = ctx.message.author
 		ruletka = [f'Пусто, {author.mention} остался в живых.'] * 2 + [f'Выстрел, {author.mention} застрелился.'] * 4
-		await ctx.send(random.choice(ruletka))
+		await send_embed(ctx, "ToxBot Russian Roulette",random.choice(ruletka), None, None)
 	
 	@bot.command(aliases = ["рулетка5пуль", "русскаярулетка5пуль"])
 	async def roulette5bul(ctx):
 		author = ctx.message.author
 		ruletka = [f'Пусто, {author.mention} остался в живых.'] * 1 + [f'Выстрел, {author.mention} застрелился.'] * 5
-		await ctx.send(random.choice(ruletka))
+		await send_embed(ctx, "ToxBot Russian Roulette",random.choice(ruletka), None, None)
 	
 	@bot.command(aliases = ["рулетка6пуль", "русскаярулетка6пуль", "яебланяеблан"])
 	async def roulette6bul(ctx):
 		author = ctx.message.author
 		eee = [f"{author.mention} застрелился от своей тупости."] * 999 + [f"{author.mention} каким то чудом смог выжить после попадания пули в лоб" * 1]
-		await ctx.send(random.choice(eee))
+		await send_embed(ctx, "ToxBot Russian Roulette",random.choice(eee), None, None)
 
 	@bot.command(aliases = ["гугл", "поисковик"])
 	async def google(ctx, *, text):
@@ -449,90 +501,42 @@ https://discord.gg/XMYZKS3b3j
 	async def steam(ctx):
 		await ctx.send("Ссылка на рандомную игру из стима:\n<https://store.steampowered.com/explore/random>")
 
-
 	@bot.command(aliases = ["слоты", "казинослоты"])
 	async def slots(ctx):
 		slots = ["🍓", "🍋", "🍒", "💣"]
 		r1 = random.choice(slots)
-		embed = discord.Embed(title="ToxCasino777", description="⚫" + "⚫" + "⚫", colour = discord.Colour.from_rgb(230,0,0))
+		author = ctx.message.author
+		embed = discord.Embed(title=f"{author.display_name}", description="⬛" + "⚫" + "⚫" + "⚫" + "⬛", colour = discord.Colour.from_rgb(230,0,0))
 		msg = await ctx.send(embed=embed)
 		for x in range(4):
 			r1 = random.choice(slots)
 			await asyncio.sleep(0.2)
-			new_emb = discord.Embed(title="ToxCasino777", description=r1 + "⚫" + "⚫", colour = discord.Colour.from_rgb(230,0,0))
-			new_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/984411549236101150/unknown.png")
+			new_emb = discord.Embed(title=f"{author.display_name}.", description="⬛" + r1 + "⚫" + "⚫" + "⬛", colour = discord.Colour.from_rgb(230,0,0))
 			await msg.edit(embed=new_emb)
 			r2 = random.choice(slots)
 		for x in range(4):
 			r2 = random.choice(slots)
+			r11 = random.choice(slots)
 			await asyncio.sleep(0.2)
-			new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2 + "⚫", colour = discord.Colour.from_rgb(230,0,0))
-			new_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/984411549236101150/unknown.png")
+			new_emb = discord.Embed(title=f"{author.display_name}..", description="⬛" + r11 + r2 + "⚫" + "⬛", colour = discord.Colour.from_rgb(230,0,0))
 			await msg.edit(embed=new_emb)
 			r3 = random.choice(slots)
 		for x in range(4):
 			r3 = random.choice(slots)
+			r22 = random.choice(slots)
 			await asyncio.sleep(0.2)
-			new_emb = discord.Embed(title="ToxCasino777", description=r1 + r2 + r3, colour = discord.Colour.from_rgb(230,0,0))
-			new_emb.set_thumbnail(url="https://media.discordapp.net/attachments/939136925095297055/984411549236101150/unknown.png")
+			new_emb = discord.Embed(title=f"{author.display_name}...", description="⬛" + r11 + r22 + r3 + "⬛", colour = discord.Colour.from_rgb(230,0,0))
 			await msg.edit(embed=new_emb)
-		if r1 == r2 == r3 and r1 != "💣":
-			await msg.add_reaction('✅')
-		if r1 == r2 == r3 and r1 == "💣":
-			await msg.add_reaction('💥')
-		if r1 != r2 or r2 != r3 or r1 != r3:
-			await msg.add_reaction('❌')
-
-	@bot.command(aliases = ["fullhelp", "полнаяпомощь", "помощьполная", "helpf", "помощьп", "хелпф", "хелпфулл"])
-	async def helpfull(ctx):
-		embed1 = discord.Embed(title="ToxBot help (1)", description='''
-`help` —  Меню команд.
-`info` — Инфо о донатерах и разработчиках.
-`ver` — Версия бота на текущий момент.
-''', colour = discord.Colour.from_rgb(230,0,0))
-		embed2 = discord.Embed(title="ToxBot help (2)", description='''
-`p` *URL* — Воспроизведение аудио с ютуба.
-`p1|p2|p3...` — Воспроизведение радио.
-`loop all|one|off` — Вкл/Выкл повтор.
-`skip` — Пропустить трек.
-`stop` — Остановить воспроизведение.
-`stopradio` — Остановить радио
-`rlist` — Лист всех радиостанций.''', colour = discord.Colour.from_rgb(230,0,0))
-		embed3 = discord.Embed(title="ToxBot help (3)", description='''
-`dem` *ссылка на пикчу* *Текст 1* *Текст 2* — Демотиватор.
-`shakal` *ссылка на пикчу* *качество (0-100)* — Зашакаливание.
-`quote` *ответ на сообщение|@пинг* *текст цитаты* — Создание цитаты.''', colour = discord.Colour.from_rgb(230,0,0))
-		embed4 = discord.Embed(title="ToxBot help (4)", description='''
-`call` *id|@пинг* *текст* — позвонить любому пользователю, текст не обязателен.
-`kill` *текст|@пинг* — Убить.
-`twisted` *текст|@пинг* — Свернуть шею.
-`rape` *текст|@пинг* — Изнасиловать.
-`eat` *текст|@пинг* — Съесть.
-`drink` *текст|@пинг* — Выпить.
-`give` *текст|@пинг* - Дать.
-`roulette2bul|3bul|4bul...` — Русская рулетка, `roulette` — одна пуля.
-`coin` - Игра в монетку
-`slots` — Слоты казино.''', colour = discord.Colour.from_rgb(230,0,0))
-		embed5 = discord.Embed(title="ToxBot help (5)", description='''
-`randomto *число*` — Рандом до заданного числа больше одного.
-`cal` — Калькулятор.
-`time` — Время по МСК.
-`laugh` — Смех.
-`yesorno` — Да или нет.
-`clear число` —  Удаление сообщений. Только для админов.
-`welcomechannel` *ID канала* — Канал где будут сообщения о пришедших и ушедших участниках.
-`google|yandex|duckduck|yahoo` *текст* — Поиск по этому запросу.''', colour = discord.Colour.from_rgb(230,0,0))
-		embed6 = discord.Embed(title="ToxBot help (6)", description='''
-`stats` *@пинг(опционально)*— Информация о пользователе (Баланс, уровень и тд).
-`pay` *@пинг* *сумма* — Отдать кому либо деньги из своего кошелька.
-`add` *@пинг* *сумма* — Выдать кому либо деньги (для админов).
-`wd` *@пинг* *сумма* — Забрать у кого либо деньги (для админов).
-`premium` — ToxBot Premium.''', colour = discord.Colour.from_rgb(230,0,0))
-		embeds = [embed1, embed2, embed3, embed4, embed5, embed6]
-		message = await ctx.send(embed = embed1)
-		reactions = ["◀️", "▶️"]
-		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = False, reactions = reactions, timeout = 99)
-		await page.start()
+		if r11 == r22 == r3 and r11 != "💣":
+			new_emb = discord.Embed(title=author.display_name, description="✅" + r11 + r22 + r3 + "✅", colour = discord.Colour.from_rgb(230,0,0))
+			await msg.edit(embed=new_emb)
+		if r11 == r22 == r3 and r11 == "💣":
+			new_emb = discord.Embed(title=author.display_name, description="💥" + r11 + r22 + r3 + "💥", colour = discord.Colour.from_rgb(230,0,0))
+			await msg.edit(embed=new_emb)
+		if r11 != r22 or r22 != r3 or r11 != r3:
+			new_emb = discord.Embed(title=author.display_name, description="❌" + r11 + r22 + r3 + "❌", colour = discord.Colour.from_rgb(230,0,0))
+			await msg.edit(embed=new_emb)
+		await ctx.message.delete()
 
 	#Всякие элементарные вещи
 	@bot.command(aliases = ["время"])
@@ -550,7 +554,7 @@ https://discord.gg/XMYZKS3b3j
 	async def laugh(ctx):
 		def rnd_str(min_chars=6, max_chars=10, alphabet=("А", "Х", "П", "а", "х", "п", "а", "А")):
 			return ''.join(random.choices(alphabet, k=random.randint(min_chars, max_chars)))
-		await ctx.send(f"{(rnd_str(6, 10))}!!!")
+		await send_embed(ctx, (rnd_str(6, 10)), f"{(rnd_str(6, 10))}!!!", None, None)
 
 	@bot.command()
 	async def fuck_you(ctx):
@@ -559,8 +563,21 @@ https://discord.gg/XMYZKS3b3j
 
 	@bot.command(aliases = ["пинг"])
 	async def ping(ctx):
-		embed = discord.Embed(title="Понг!", description=f" {round(bot.latency * 1000)} мс.", colour = discord.Colour.from_rgb(230,0,0))
-		await ctx.send(embed=embed)
+		embed = discord.Embed(title="Ping?", description="`🥎---`", colour = discord.Colour.from_rgb(230,0,0))
+		msg = await ctx.reply(embed=embed)
+		new_emb = discord.Embed(title="Ping?", description="`🥎---`", colour = discord.Colour.from_rgb(230,0,0))
+		await msg.edit(embed=new_emb)
+		await asyncio.sleep(0.8)
+		new_emb = discord.Embed(title="Ping?", description="`-🥎--`", colour = discord.Colour.from_rgb(230,0,0))
+		await msg.edit(embed=new_emb)
+		await asyncio.sleep(0.8)
+		new_emb = discord.Embed(title="Ping.", description="`--🥎-`", colour = discord.Colour.from_rgb(230,0,0))
+		await msg.edit(embed=new_emb)
+		new_emb = discord.Embed(title="Ping..", description="`---🥎`", colour = discord.Colour.from_rgb(230,0,0))
+		await msg.edit(embed=new_emb)
+		await asyncio.sleep(0.8)
+		new_emb = discord.Embed(title="Pong!", description=f"`{round(bot.latency * 1000)}ms`", colour = discord.Colour.from_rgb(230,0,0))
+		await msg.edit(embed=new_emb)
 
 	@bot.command()
 	async def c(ctx):
@@ -654,21 +671,21 @@ https://discord.gg/XMYZKS3b3j
 `p9` - Радио 90х
 `p10` - хиты кантри''')
 		embed2 = discord.Embed(title = "Список радиостанций (2)", description = '''
+`p11` - хиты рока
+`p12` - рок фм
+`p13` - психоделик
 `p14` - ссср радио
 `p15` - классический рок
 `p16` - Ретро FM
 `p17` - Хевиметал
 `p18` - Украинское Радио Релакс
 `p19` - детское радио
-`p11` - хиты рока
-`p12` - рок фм
-`p13` - психоделик
-Некоторые радиостанции могут временно неработать.
+`Некоторые радиостанции могут временно неработать.`
 ''')
 		embeds = [embed1, embed2]
 		message = await ctx.send(embed = embed1)
 		reactions = ["◀️", "▶️"]
-		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = True, reactions = reactions, timeout = 99)
+		page = Pag(bot, message, only=ctx.author, use_more=False, embeds=embeds, color = discord.Colour.from_rgb(230,0,0), use_exit = False, reactions = reactions, timeout = 99)
 		await page.start()
 
 	async def rplay(ctx, link: None):
@@ -688,88 +705,93 @@ https://discord.gg/XMYZKS3b3j
 				elif(data["OS"]==0):
 					voice_client.play(discord.FFmpegPCMAudio(executable="ffmpeg", source = link, **FFMPEG_OPTIONS))
 
+	#@bot.command(aliases = ["радио", "р", "r"])
+	#async def radio(ctx):
+	#	await send_embed(ctx, "Радио включено.\nИграет: TEST")
+
+	# Нужно сделать класс кнопок что бы доделать эту команду. Я не умею((((
 
 	@bot.command(aliases = ["п1", "шансон"])
 	async def p1(ctx):
 		await rplay(ctx, "http://chanson.hostingradio.ru:8041/chanson256.mp3")
-		await ctx.send("Радио включено.\nИграет: Шансон")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Шансон", None, None)
 	@bot.command(aliases = ["п2", "дача"])
 	async def p2(ctx):
 		await rplay(ctx, "http://178.217.40.125:8000/rdsat")
-		await ctx.send("Радио включено. \nИграет: Радио дача")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено. \nИграет: Радио дача", None, None)
 	@bot.command(aliases = ["п3","новое"])
 	async def p3(ctx):
 		await rplay(ctx, "http://live.novoeradio.by:8000/novoeradio-128k")
-		await ctx.send("Радио включено.\nИграет: Новое радио")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Новое радио", None, None)
 	@bot.command(aliases = ["п4", "фм"])
 	async def p4(ctx):
 		await rplay(ctx, "http://listen.teploe.net:8100/npkfm")
-		await ctx.send("Радио включено.\nИграет: FM радио")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: FM радио", None, None)
 	@bot.command(aliases = ["п5", "дорожное"])
 	async def p5(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/dorozhnoe_omsk-hi")
-		await ctx.send("Радио включено.\nИграет: Дорожное радио (Омск)")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Дорожное радио (Омск)", None, None)
 	@bot.command(aliases = ["п6", "джаз"])
 	async def p6(ctx):
 		await rplay(ctx, "http://jfm1.hostingradio.ru:14536/jlstream.mp3")
-		await ctx.send("Радио включено. \nИграет: Джаз.")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено. \nИграет: Джаз.", None, None)
 	@bot.command(aliases = ["п7", "70"])
 	async def p7(ctx):
 		await rplay(ctx, "http://prmstrm.1.fm:8000/70s")
-		await ctx.send("Радио включено.\nИграет: Поп радио 70х")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Поп радио 70х", None, None)
 	@bot.command(aliases = ["п8","80"])
 	async def p8(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/pulsradio_80s-hi")
-		await ctx.send("Радио включено.\nИграет: Радио 80х")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Радио 80х", None, None)
 	@bot.command(aliases = ["п9","90"])
 	async def p9(ctx):
 		await rplay(ctx, "http://prmstrm.1.fm:8000/90s")
-		await ctx.send("Радио включено.\nИграет: Радио 90х")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Радио 90х", None, None)
 	@bot.command(aliases = ["п10","кантри"])
 	async def p10(ctx):
 		await rplay(ctx, "http://prmstrm.1.fm:8000/acountry")
-		await ctx.send("Радио включено.\nИграет: Хиты кантри")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Хиты кантри", None, None)
 	@bot.command(aliases = ["п11","рок"])
 	async def p11(ctx):
 		await rplay(ctx, "http://prmstrm.1.fm:8000/x")
-		await ctx.send("Радио включено.\nИграет: Хиты рока")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Хиты рока", None, None)
 	@bot.command(aliases = ["п12","рокфм"])
 	async def p12(ctx):
 		await rplay(ctx, "http://jfm1.hostingradio.ru:14536/rock00.mp3")
-		await ctx.send("Радио включено.\nИграет: Рок FM")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Рок FM", None, None)
 	@bot.command(aliases = ["п13","психоделик"])
 	async def p13(ctx):
 		await rplay(ctx, "http://psyprog.rupsy.ru:8000/psyprog")
-		await ctx.send("Радио включено.\nИграет: Психоделик")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Психоделик", None, None)
 	@bot.command(aliases = ["п14","ссср"])
 	async def p14(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/SSSR-hi")
-		await ctx.send("Радио включено.\nИграет: СССР радио")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: СССР радио", None, None)
 	@bot.command(aliases = ["п15","классическийрок"])
 	async def p15(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/rpr1_de_clasro-hi")
-		await ctx.send("Радио включено.\nИграет: Классический рок")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Классический рок", None, None)
 	@bot.command(aliases = ["п16","ретро"])
 	async def p16(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/retrofm_ru-hi")
-		await ctx.send("Радио включено.\nИграет: Ретро FM")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Ретро FM", None, None)
 	@bot.command(aliases = ["п17","хевиметалл"])
 	async def p17(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/rpr1_de_metal-hi")
-		await ctx.send("Радио включено.\nИграет: Хевиметалл")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Хевиметалл", None, None)
 	@bot.command(aliases = ["п18","украинское"])
 	async def p18(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/radiorelax_ua-hi")
-		await ctx.send("Радио включено.\nИграет: Украинское радио релакс")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Украинское радио релакс", None, None)
 	@bot.command(aliases = ["п19","детское"])
 	async def p19(ctx):
 		await rplay(ctx, "https://str.pcradio.ru/rusradio_deti-hi")
-		await ctx.send("Радио включено.\nИграет: Детское радио")
+		await send_embed(ctx, "ToxBot Radio", "Радио включено.\nИграет: Детское радио", None, None)
 		
 	@bot.command(aliases = ["выключитьрадио","выклр","стопрадио", "stopr", "rstop", "рстоп"])
 	async def stopradio(ctx):
 		await ctx.voice_client.disconnect()
-		await ctx.send("Радио остановлено.")
+		await send_embed(ctx, "ToxBot Radio", "Радио остановлено.", None, None)
 		
 	@bot.command(aliases = ["премхелп","спермхелп","премиумхелп","премиум?","prem?","premium?","прем?"])
 	async def premhelp(ctx):
@@ -812,112 +834,80 @@ https://discord.gg/XMYZKS3b3j
 
 	@bot.command(aliases = ["сказать", "консольтекст"])
 	async def say(ctx, *, text):
-		embed = discord.Embed(title = "ToxBot Premium", description = '''Ваше сообщение доставлено.''', colour = discord.Colour.from_rgb(230,0,0))
-		embed1 = discord.Embed(title = "ToxBot premium", description = prmmtext)
-		text = text
-		with open('core/premium.txt', 'r') as file:
-			premium = file.read().split('+')
-		if str(ctx.author.id) in premium:
+		if is_premium(ctx):
 			print(text)
-			await ctx.send(embed = embed)
+			await send_embed(ctx, "ToxBot Premium", "Ваше сообщение доставлено.", None, None)
 		else:
-			await ctx.send(embed = embed1)		
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)		
 
 	@bot.command(aliases = ["христианское","chrst","пхрист"])
 	async def pchrst(ctx):
-		embed = discord.Embed(title = "ToxBot premium", description = prmmtext)
-		with open('core/premium.txt', 'r') as file:
-			premium = file.read().split('+')
-		if str(ctx.author.id) in premium:
+		if is_premium(ctx):
 			await rplay(ctx, "https://str.pcradio.ru/radio123_by-hi")
-			await ctx.send("Радио включено.\nИграет: Христианское радио")
+			await send_embed(ctx, "ToxBot Radio","Радио включено.\nИграет: Христианское радио", None, None)
 		else:
-			await ctx.send(embed = embed)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)
 	@bot.command(aliases = ["корольишут","киш","kish","пкиш"])
 	async def pkish(ctx):
-		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('core/premium.txt', 'r') as file:
-			premium = file.read().split('+')
-		if str(ctx.author.id) in premium:
+		if is_premium(ctx):
 			await rplay(ctx, "https://str.pcradio.ru/Korol_i_Shut-hi")
-			await ctx.send("Радио включено.\nИграет: Радио Король и Шут")
+			await send_embed(ctx, "ToxBot Radio","Радио включено.\nИграет: Радио Король и Шут", None, None)
 		else:
-			await ctx.send(embed = embed)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
 	@bot.command(aliases = ["гражданскаяоборона","оборона","летов","letov","пл"])
 	async def pl(ctx):
-		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('core/premium.txt', 'r') as file:
-			premium = file.read().split('+')
-		if str(ctx.author.id) in premium:
+		if is_premium(ctx):
 			await rplay(ctx, "https://str.pcradio.ru/Grazhdanskaja_oborona-hi")
-			await ctx.send("Радио включено.\nИграет: Радио Гражданская оборона")
+			await send_embed(ctx, "ToxBot Radio","Радио включено.\nИграет: Радио Гражданская оборона", None, None)
 		else:
-			await ctx.send(embed = embed)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
 		
 	@bot.command(aliases = ["раммштайн","рмш","rmsh","прмш"])
 	async def prmsh(ctx):
-		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('core/premium.txt', 'r') as file:
-			premium = file.read().split('+')
-		if str(ctx.author.id) in premium:
+		if is_premium(ctx):
 			await rplay(ctx, "https://str.pcradio.ru/Rammstein-hi")
-			await ctx.send("Радио включено.\nИграет: Раммштайн")
+			await send_embed(ctx, "ToxBot Radio","Радио включено.\nИграет: Раммштайн", None, None)
 		else:
-			await ctx.send(embed = embed)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
 	@bot.command(aliases = ["рхчп","rhcp","прхчп"])
 	async def prhcp(ctx):
-		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('core/premium.txt', 'r') as file:
-			premium = file.read().split('+')
-		if str(ctx.author.id) in premium:
+		if is_premium(ctx):
 			await rplay(ctx, "https://str.pcradio.ru/red_hot_chili_peppers-hi")
-			await ctx.send("Радио включено.\nИграет: Red Hot Chili Peppers радио")
+			await send_embed(ctx, "ToxBot Radio","Радио включено.\nИграет: Red Hot Chili Peppers радио", None, None)
 		else:
-			await ctx.send(embed = embed)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
 	@bot.command(aliases = ["хуйзабей","хз","hz","пхз"])
 	async def phz(ctx):
-		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('core/premium.txt', 'r') as file:
-			premium = file.read().split('+')
-		if str(ctx.author.id) in premium:
+		if is_premium(ctx):
 			await rplay(ctx, "https://str.pcradio.ru/Hui_Zabey-hi")
-			await ctx.send("Радио включено. \nИграет: Х*й Забей радио")
+			await send_embed(ctx, "ToxBot Radio","Радио включено. \nИграет: Х*й Забей радио", None, None)
 		else:
-			await ctx.send(embed = embed)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
 	@bot.command(aliases = ["паниме"])
 	async def panime(ctx):
-		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('core/premium.txt', 'r') as file:
-			premium = file.read().split('+')
-		if str(ctx.author.id) in premium:
-			await rplay(ctx, "https://japanimradio-osaka.com/radio/8000/stream")
-			await ctx.send("Радио включено. \nИграет: Аниме радио из Осаки.")
+		if is_premium(ctx):
+			await rplay(ctx, "https://pool.anison.fm:9000/AniSonFM(320)")
+			await send_embed(ctx, "ToxBot Radio","Радио включено. \nИграет: Аниме радио из Осаки.", None, None)
 		else:
-			await ctx.send(embed = embed)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
 	@bot.command(aliases = ["плофи","лофи","плоуфай","лоуфай","lofi"])
 	async def plofi(ctx):
-		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('core/premium.txt', 'r') as file:
-			premium = file.read().split('+')
-		if str(ctx.author.id) in premium:
+		if is_premium(ctx):
 			await rplay(ctx, "https://usa9.fastcast4u.com/proxy/jamz?mp=/1")
-			await ctx.send("Радио включено. \nИграет: Lofi.")
+			await send_embed(ctx, "ToxBot Radio","Радио включено. \nИграет: Lofi.", None, None)
 		else:
-			await ctx.send(embed = embed)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
 	@bot.command(aliases = ["п0","своёрадио"])
 	async def p0(ctx, *, link: str):
-		embed = discord.Embed(title = "ToxBot premium", description = prmmtext, color = discord.Colour.from_rgb(230,0,0))
-		with open('core/premium.txt', 'r') as file:
-			premium = file.read().split('+')
-			txt = discord.utils.escape_mentions(link)
-		if str(ctx.author.id) in premium:
+		txt = discord.utils.escape_mentions(link)
+		if is_premium(ctx):
 			if link is not None:
 				await rplay(ctx, str(txt))
-				await ctx.send(f"Радио включено. \nИграет: {str(txt)}")
+				await send_embed(ctx, "ToxBot Radio",f"Радио включено. \nИграет: {str(txt)}", None, None)
 			else:
-				await ctx.send("Вставьте ссылку.")
+				await send_embed(ctx, "ToxBot Radio","Вставьте ссылку.", None, None)
 		else:
-			await ctx.send(embed = embed)		
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)		
 	try:
 		print_log('wait', "Попытка подключится используя токен: {}".format(data["Token"]))
 		bot.run(data["Token"])

@@ -146,8 +146,8 @@ def yt(bot, data, manager_data):
                 # Проверяем играет ли вообще бот, если да - отключаем
                 if ctx.author.voice is not None:
                     if self.voice_client.is_connected() and self.is_playing:
-                        await self.voice_client.disconnect()    # Отключаем бота
-                        await ctx.send('Остановлено.')
+                        await self.voice_client.disconnect()     # Отключаем бота
+                        await ctx.message.add_reaction("✅")      # Добавление реакции
                         self.is_playing = False                     # Снимаем флаг
                         self.q_now = 0                              # Обнуляем счетчик очереди
                         self.q = []                                 # Отчищаем массив очереди
