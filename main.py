@@ -639,6 +639,11 @@ https://discord.gg/XMYZKS3b3j
 		await ctx.send(random.choice(strings))
 
 	@bot.command()
+	async def poles(ctx):
+		strings = ["http://klublady.ru/uploads/posts/2022-02/1645260117_25-klublady-ru-p-obraz-foto-polyaka-v-natsionalnoi-odezhde-25.jpg", "https://ocdn.eu/images/pulscms/MzY7MDA_/bde56d4171c38eda191c75197355745e.jpg", "https://i.eurosport.com/2012/05/28/845948-20384491-1600-900.jpg", "https://www.daugavpils.lv/files/components/news/images/polija_2016.jpg"]
+		await ctx.send(random.choice(strings))
+
+	@bot.command()
 	async def balls(ctx):
 		strings = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ","https://i.ytimg.com/vi/qJPq0EaCRck/maxresdefault.jpg","https://ae01.alicdn.com/kf/HLB1y77JaOrxK1RkHFCcq6AQCVXaf.jpg", "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/60c2c9c4-c5db-443a-ba53-0acc0a5875e7/d2m8je7-0a3eb7d7-5b0c-44d7-a536-bc4db8844b4a.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi82MGMyYzljNC1jNWRiLTQ0M2EtYmE1My0wYWNjMGE1ODc1ZTcvZDJtOGplNy0wYTNlYjdkNy01YjBjLTQ0ZDctYTUzNi1iYzRkYjg4NDRiNGEuanBnIn1dXX0.K08BpRRTK3Oqw_r-PQWbDQ_Ur-H80hIk86LW1grED5Q"]
 		await ctx.send(random.choice(strings))
