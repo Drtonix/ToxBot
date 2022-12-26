@@ -32,8 +32,8 @@ try:
 		first_boot_cofigure(data)
 	else:
 		print_log('info', "Успех: Значения конфигурации получены.\n")
-		bot = Bot(command_prefix="+", help_command=None, intents=intents, case_insensitive=True)
-		client = discord.ext.commands.Bot(command_prefix="+", intents=discord.Intents.all())
+		bot = Bot(command_prefix="++", help_command=None, intents=intents, case_insensitive=True)
+		client = discord.ext.commands.Bot(command_prefix="++", intents=discord.Intents.all())
 		init_successful = True
 		@bot.event
 		async def on_ready():
