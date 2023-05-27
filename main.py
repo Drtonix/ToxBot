@@ -4,6 +4,7 @@ import pytz
 import random
 import asyncio
 import requests
+import openai
 from datetime import datetime
 from Cybernator import Paginator as Pag
 from discord.ext import commands
@@ -13,11 +14,14 @@ from classes import UsTaCr, SeTaCr, conn, cursor
 from core.toxbot_core import *
 from PIL import Image, ImageDraw, ImageFont
 
+
+
 # Переменные
 
 data = None
 init_successful = False
 intents = discord.Intents.all()
+openai.api_key = "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"
 
 # Инициализация
 
@@ -88,7 +92,7 @@ if init_successful:
 	# help, info
 	@bot.command(aliases = ["помощь", "?","хелп"])
 	async def help(ctx):
-		embed = discord.Embed(title="Используйте `++` перед \nначалом команды", description='''		
+		embed = discord.Embed(title="Используйте `++` перед \nначалом команды", description='''     
 📌**Основное**
 `help`, `info`, `ver`
 🎧**Воспроизведение**
@@ -106,7 +110,9 @@ if init_successful:
 💵**Экономика**
 `pay`, `add`, `wd`, `stats`
 🪙**ToxBot Premium**
-Подробнее — `premium`''', colour = discord.Colour.from_rgb(230,0,0))
+Подробнее — `premium`
+🤖**ToxBotAI**
+ToxBotGPT — `gpt`''', colour = discord.Colour.from_rgb(230,0,0))
 		strings = ["Напишите ++helpfull для полных команд"]* 88 + ["Шуруп, забитый молотком, держится крепче, чем гвоздь, закрученный отвёрткой."]*1 +["Обувь будет носиться значительно дольше, если не покупать новую."]*1 + ["Если сосиски отварить с кубиком говяжьего бульона - то они будут пахнуть мясом."]*1 +["Большинство электрических приборов потребляют меньше электричества в выключенном состоянии."]*1 + ["Вегетарианский суп будет питательней, если в него положить немного говядины."]*1 +["Если ваш компьютер заразил вирус - как можно скорее переформатируйте ваш жесткий диск; не давайте вирусу удовольствие самому это сделать."]*1 + ["Если вы хотите приготовить дрожжевое тесто, но у вас нет дрожжей, то ни фига у вас не получится."]*1 +["Если ваш сосед внезапно купил ружье, вам лучше завязать с музыкой."]*1 + ["Нельзя смотреться в зеркало когда ешь - счастье своё проешь. И когда пьёшь - пропьёшь. А в туалете зеркало вообще лучше не вешать.."]*1 +["Если крыть нечем - кройте матом."]*1 + ["Не стой, где попало - попадёт ещё раз"]*1 + ["Если ваша машина издает странные звуки, увеличивайте громкость радио до тех пор, пока не перестанете их слышать."]*1
 		embed.set_footer(text=random.choice(strings))
 		msg = await ctx.send(embed = embed)
@@ -155,7 +161,8 @@ if init_successful:
 `add` *@пинг* *сумма* — Выдать кому либо деньги (для админов).
 `wd` *@пинг* *сумма* — Забрать у кого либо деньги (для админов).
 `stats` *@пинг(опционально)*— Информация о пользователе (Баланс, уровень и тд).
-`premium` — ToxBot Premium.''', colour = discord.Colour.from_rgb(230,0,0))
+`premium` — ToxBot Premium.
+`gpt` *текст* — Чатбот основанный на нейросети GPT3.0 (Время ожидания до 1 минуты)''', colour = discord.Colour.from_rgb(230,0,0))
 		embeds = [embed1, embed2, embed3, embed4, embed5, embed6]
 		message = await ctx.send(embed = embed1)
 		reactions = ["◀️", "▶️"]
@@ -228,22 +235,77 @@ https://discord.gg/XMYZKS3b3j
 
 	#@bot.command()
 	#async def test2(ctx):
-	#	reactions = ['😀', 
-	#				'😡']
-	#	winning_reaction = random.choice(reactions)
-	#	message = await ctx.channel.send('Выбери эмодзи')
-	#	for reaction in reactions:
-	#		await message.add_reaction(reaction)
-	#	def check(reaction, user):
-	#		return user == ctx.author and str(reaction) == winning_reaction
-	#	try:
-	#		reaction, user = await bot.wait_for('reaction_add', check=check, timeout=60.0)
-	#		await ctx.send('Угадал')
-	#	except asyncio.TimeoutError:
-	#		await ctx.send('Время вышло')
-	#	else:
-	#		await ctx.send('Не угадал')
+	#   reactions = ['😀', 
+	#               '😡']
+	#   winning_reaction = random.choice(reactions)
+	#   message = await ctx.channel.send('Выбери эмодзи')
+	#   for reaction in reactions:
+	#       await message.add_reaction(reaction)
+	#   def check(reaction, user):
+	#       return user == ctx.author and str(reaction) == winning_reaction
+	#   try:
+	#       reaction, user = await bot.wait_for('reaction_add', check=check, timeout=60.0)
+	#       await ctx.send('Угадал')
+	#   except asyncio.TimeoutError:
+	#       await ctx.send('Время вышло')
+	#   else:
+	#       await ctx.send('Не угадал')
 	# Потом
+
+	@bot.event
+	async def on_command_error(ctx, error):
+		if isinstance(error, commands.CommandOnCooldown):
+			embed = discord.Embed(title="ToxBotAI", description='Эту команду нельзя использовать слишком часто, пожалуйста подождите', colour=discord.Colour.from_rgb(230, 0, 0))
+			msg = await ctx.reply(embed=embed)
+		raise error
+
+	
+	@commands.cooldown(rate=1, per=10, type=commands.BucketType.user)
+	@bot.command(aliases=["токсботжпт", "жпт", "toxbotgpt", "gpt", "токсgpt"])
+	async def toxgpt(ctx, *, text):
+		gptmess = ['Ожидайте...'] * 33 + ['Ответ уже генерируется...'] * 33 + ['Бот думает над ответом...'] * 33 + ['Время ожидание до минуты...'] * 33
+		embed = discord.Embed(title="ToxBotAI", description=random.choice(gptmess), colour=discord.Colour.from_rgb(230, 0, 0))
+		msg = await ctx.reply(embed=embed)
+		if len(text)<=2:
+			text = "напиши сообщение из несвязанных по смыслу слов, размер от 5 до 15 слов"
+		if is_premium(ctx):
+			max_tokens = 2048
+		else:
+			max_tokens = 512
+		prompt = text
+		completion = openai.Completion.create(
+			engine="text-davinci-003",
+			prompt=prompt,
+			max_tokens=2048,
+			temperature=0.5,
+			top_p=1,
+			frequency_penalty=0,
+			presence_penalty=0)
+		new_emb = discord.Embed(title="ToxBotAI", description=completion.choices[0].text, colour=discord.Colour.from_rgb(230, 0, 0))
+		await msg.edit(embed=new_emb)
+
+	@commands.cooldown(rate=1, per=10, type=commands.BucketType.user)
+	@bot.listen()
+	async def on_message(message):
+		if message.author == bot.user:
+			return
+		if bot.user.mentioned_in(message) and message.mention_everyone is False:
+			gptmess = ['Ожидайте...'] * 33 + ['Ответ уже генерируется...'] * 33 + ['Бот думает над ответом...'] * 33 + ['Время ожидание до минуты...'] * 33
+			embed = discord.Embed(title="ToxBotAI", description=random.choice(gptmess), colour=discord.Colour.from_rgb(230, 0, 0))
+			msg = await message.reply(embed=embed)
+			prompt = 'напиши какой нибудь бред, максимум 20 слов'
+			completion = openai.Completion.create(
+				engine="text-davinci-003",
+				prompt=prompt,
+				max_tokens=256,
+				temperature=0.5,
+				top_p=1,
+				frequency_penalty=0,
+				presence_penalty=0)
+			new_emb = discord.Embed(title="ToxBotAI", description=completion.choices[0].text, colour=discord.Colour.from_rgb(230, 0, 0))
+			await msg.edit(embed=new_emb)
+
+
 
 	@bot.command(aliases = ["калькулятор", "кал", "calculator"])
 	async def cal(ctx, *, expression:str):
@@ -712,7 +774,7 @@ https://discord.gg/XMYZKS3b3j
 
 	#@bot.command(aliases = ["радио", "р", "r"])
 	#async def radio(ctx):
-	#	await send_embed(ctx, "Радио включено.\nИграет: TEST")
+	#   await send_embed(ctx, "Радио включено.\nИграет: TEST")
 
 	# Нужно сделать класс кнопок что бы доделать эту команду. Я не умею((((
 
@@ -843,7 +905,7 @@ https://discord.gg/XMYZKS3b3j
 			print(text)
 			await send_embed(ctx, "ToxBot Premium", "Ваше сообщение доставлено.", None, None)
 		else:
-			await send_embed(ctx, "ToxBot Premium", prmmtext, None)		
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)     
 
 	@bot.command(aliases = ["христианское","chrst","пхрист"])
 	async def pchrst(ctx):
@@ -858,14 +920,14 @@ https://discord.gg/XMYZKS3b3j
 			await rplay(ctx, "https://str.pcradio.ru/Korol_i_Shut-hi")
 			await send_embed(ctx, "ToxBot Radio","Радио включено.\nИграет: Радио Король и Шут", None, None)
 		else:
-			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)             
 	@bot.command(aliases = ["гражданскаяоборона","оборона","летов","letov","пл"])
 	async def pl(ctx):
 		if is_premium(ctx):
 			await rplay(ctx, "https://str.pcradio.ru/Grazhdanskaja_oborona-hi")
 			await send_embed(ctx, "ToxBot Radio","Радио включено.\nИграет: Радио Гражданская оборона", None, None)
 		else:
-			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)             
 		
 	@bot.command(aliases = ["раммштайн","рмш","rmsh","прмш"])
 	async def prmsh(ctx):
@@ -873,35 +935,35 @@ https://discord.gg/XMYZKS3b3j
 			await rplay(ctx, "https://str.pcradio.ru/Rammstein-hi")
 			await send_embed(ctx, "ToxBot Radio","Радио включено.\nИграет: Раммштайн", None, None)
 		else:
-			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)             
 	@bot.command(aliases = ["рхчп","rhcp","прхчп"])
 	async def prhcp(ctx):
 		if is_premium(ctx):
 			await rplay(ctx, "https://str.pcradio.ru/red_hot_chili_peppers-hi")
 			await send_embed(ctx, "ToxBot Radio","Радио включено.\nИграет: Red Hot Chili Peppers радио", None, None)
 		else:
-			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)             
 	@bot.command(aliases = ["хуйзабей","хз","hz","пхз"])
 	async def phz(ctx):
 		if is_premium(ctx):
 			await rplay(ctx, "https://str.pcradio.ru/Hui_Zabey-hi")
 			await send_embed(ctx, "ToxBot Radio","Радио включено. \nИграет: Х*й Забей радио", None, None)
 		else:
-			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)             
 	@bot.command(aliases = ["паниме"])
 	async def panime(ctx):
 		if is_premium(ctx):
 			await rplay(ctx, "https://pool.anison.fm:9000/AniSonFM(320)")
 			await send_embed(ctx, "ToxBot Radio","Радио включено. \nИграет: Аниме радио из Осаки.", None, None)
 		else:
-			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)             
 	@bot.command(aliases = ["плофи","лофи","плоуфай","лоуфай","lofi"])
 	async def plofi(ctx):
 		if is_premium(ctx):
 			await rplay(ctx, "https://usa9.fastcast4u.com/proxy/jamz?mp=/1")
 			await send_embed(ctx, "ToxBot Radio","Радио включено. \nИграет: Lofi.", None, None)
 		else:
-			await send_embed(ctx, "ToxBot Premium", prmmtext, None)				
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)             
 	@bot.command(aliases = ["п0","своёрадио"])
 	async def p0(ctx, *, link: str):
 		txt = discord.utils.escape_mentions(link)
@@ -912,7 +974,7 @@ https://discord.gg/XMYZKS3b3j
 			else:
 				await send_embed(ctx, "ToxBot Radio","Вставьте ссылку.", None, None)
 		else:
-			await send_embed(ctx, "ToxBot Premium", prmmtext, None)		
+			await send_embed(ctx, "ToxBot Premium", prmmtext, None)     
 	try:
 		print_log('wait', "Попытка подключится используя токен: {}".format(data["Token"]))
 		bot.run(data["Token"])
