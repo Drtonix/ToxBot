@@ -231,7 +231,12 @@ https://discord.gg/XMYZKS3b3j
 	@bot.event
 	async def on_command_error(ctx, error):
 		if isinstance(error, commands.CommandNotFound):
-			await ctx.send(embed = discord.Embed(description = f'**`{ctx.author.name}, данной команды не существует.`**'))
+			embed = discord.Embed(description = f'**`{ctx.author.name}, данной команды не существует.`**')
+			msg = await ctx.reply(embed=embed)
+		if isinstance(error, commands.CommandOnCooldown):
+			embed = discord.Embed(title="ToxBotAI", description='Эту команду нельзя использовать слишком часто, пожалуйста подождите', colour=discord.Colour.from_rgb(230, 0, 0))
+			msg = await ctx.reply(embed=embed)
+		raise error
 
 	#@bot.command()
 	#async def test2(ctx):
@@ -252,12 +257,7 @@ https://discord.gg/XMYZKS3b3j
 	#       await ctx.send('Не угадал')
 	# Потом
 
-	@bot.event
-	async def on_command_error(ctx, error):
-		if isinstance(error, commands.CommandOnCooldown):
-			embed = discord.Embed(title="ToxBotAI", description='Эту команду нельзя использовать слишком часто, пожалуйста подождите', colour=discord.Colour.from_rgb(230, 0, 0))
-			msg = await ctx.reply(embed=embed)
-		raise error
+
 
 	
 	@commands.cooldown(rate=1, per=10, type=commands.BucketType.user)
