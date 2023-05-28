@@ -233,8 +233,9 @@ https://discord.gg/XMYZKS3b3j
 		if isinstance(error, commands.CommandNotFound):
 			embed = discord.Embed(description = f'**`{ctx.author.name}, данной команды не существует.`**')
 			msg = await ctx.reply(embed=embed)
+			await ctx.send(embed = discord.Embed())
 		if isinstance(error, commands.CommandOnCooldown):
-			embed = discord.Embed(title="ToxBotAI", description='Эту команду нельзя использовать слишком часто, пожалуйста подождите', colour=discord.Colour.from_rgb(230, 0, 0))
+			embed = discord.Embed(description='Эту команду нельзя использовать так часто, пожалуйста подождите')
 			msg = await ctx.reply(embed=embed)
 		raise error
 
